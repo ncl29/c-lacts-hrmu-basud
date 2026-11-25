@@ -691,10 +691,12 @@
 
             <!-- Date of Filing (Box 3) -->
             <div>
-                <label for="date_of_filing" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    Date of Filing (Box 3) <span class="text-rose-500">*</span>
+                <label for="date_of_filing" class="block text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                    <i class="ph ph-calendar-check text-gov-700 text-sm"></i>
+                    <span>Date of Filing (Box 3)</span>
+                    <span class="text-rose-500">*</span>
                 </label>
-                <input type="date" id="date_of_filing" name="date_of_filing" value="{{ date('Y-m-d') }}" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                <input type="date" id="date_of_filing" name="date_of_filing" value="{{ date('Y-m-d') }}" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
             </div>
 
             <!-- Salary (Box 5) -->
@@ -736,18 +738,27 @@
             </div>
 
             <!-- Inclusive Dates Grid (Box 6.C) -->
-            <div id="inclusive_dates_container" class="grid grid-cols-2 gap-3.5">
-                <div>
-                    <label for="date_from" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Date From <span class="text-rose-500">*</span>
-                    </label>
-                    <input type="date" id="date_from" name="date_from" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                </div>
-                <div>
-                    <label for="date_to" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                        Date To <span class="text-rose-500">*</span>
-                    </label>
-                    <input type="date" id="date_to" name="date_to" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+            <div id="inclusive_dates_container" class="space-y-1.5">
+                <label class="block text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider font-mono">
+                    6.C Inclusive Dates of Leave <span class="text-rose-500">*</span>
+                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                    <div class="bg-slate-50/70 p-3 rounded-xl border border-slate-200">
+                        <label for="date_from" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <i class="ph ph-calendar text-gov-700 text-sm"></i>
+                            <span>Date From</span>
+                            <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="date" id="date_from" name="date_from" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                    </div>
+                    <div class="bg-slate-50/70 p-3 rounded-xl border border-slate-200">
+                        <label for="date_to" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                            <i class="ph ph-calendar text-gov-700 text-sm"></i>
+                            <span>Date To</span>
+                            <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="date" id="date_to" name="date_to" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                    </div>
                 </div>
             </div>
 
@@ -759,10 +770,12 @@
 
             <!-- Number of Days (Discrete with 3 decimal precision) -->
             <div>
-                <label for="days_requested" id="days_requested_label" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    Number of Working Days Applied For <span class="text-rose-500">*</span>
+                <label for="days_requested" id="days_requested_label" class="block text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                    <i class="ph ph-clock text-gov-700 text-sm"></i>
+                    <span>Number of Working Days Applied For (Box 6.C)</span>
+                    <span class="text-rose-500">*</span>
                 </label>
-                <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
             </div>
 
             <!-- 6.B Details of Leave Selector (Exact Match to CSC Form 6) -->
@@ -1563,15 +1576,28 @@
         if (detailsSelect && (detailsSelect.value === 'monetization' || detailsSelect.value === 'monetization_special')) {
             return;
         }
-        const from = document.getElementById('date_from').value;
-        const to = document.getElementById('date_to').value;
-        if (from && to) {
+        const fromInput = document.getElementById('date_from');
+        const toInput = document.getElementById('date_to');
+        const from = fromInput ? fromInput.value : '';
+        const to = toInput ? toInput.value : '';
+
+        // Dynamically enforce that date_to cannot precede date_from
+        if (from && toInput) {
+            toInput.min = from;
+            if (to && to < from) {
+                toInput.value = from;
+            }
+        }
+
+        const effectiveTo = toInput ? toInput.value : to;
+        if (from && effectiveTo) {
             const start = new Date(from);
-            const end = new Date(to);
+            const end = new Date(effectiveTo);
             if (end >= start) {
                 const diffTime = Math.abs(end - start);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                document.getElementById('days_requested').value = diffDays.toFixed(3);
+                const daysInput = document.getElementById('days_requested');
+                if (daysInput) daysInput.value = diffDays.toFixed(3);
             }
         }
         evaluateSupportingDocumentRequirements();
