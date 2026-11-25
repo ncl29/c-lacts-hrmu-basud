@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <!-- Circular text paths -->
+    <path id="textPathTop" d="M 28 100 A 72 72 0 0 1 172 100" />
+    <path id="textPathBottom" d="M 172 100 A 72 72 0 0 1 28 100" />
+    <linearGradient id="goldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4af37" />
+      <stop offset="50%" stop-color="#ffd700" />
+      <stop offset="100%" stop-color="#b8860b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer gold / black border -->
+  <circle cx="100" cy="100" r="98" fill="#ffffff" stroke="#003366" stroke-width="3" />
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="2" />
+  
+  <!-- Outer Blue Ring -->
+  <circle cx="100" cy="100" r="85" fill="#003366" stroke="#002244" stroke-width="1.5" />
+  
+  <!-- Text in Outer Ring -->
+  <text fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" letter-spacing="1.5">
+    <textPath href="#textPathTop" startOffset="50%" text-anchor="middle">MUNICIPALITY OF BASUD</textPath>
+  </text>
+  <text fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="8.5" font-weight="bold" letter-spacing="1">
+    <textPath href="#textPathBottom" startOffset="50%" text-anchor="middle">PROVINCE OF CAMARINES NORTE</textPath>
+  </text>
+  
+  <!-- Inner ring divider -->
+  <circle cx="100" cy="100" r="66" fill="#ffffff" stroke="#d4af37" stroke-width="2" />
+  
+  <!-- Inner Field Background (Sky and Sea) -->
+  <clipPath id="innerCircleClip">
+    <circle cx="100" cy="100" r="64" />
+  </clipPath>
+  
+  <g clip-path="url(#innerCircleClip)">
+    <!-- Sky -->
+    <rect x="36" y="36" width="128" height="64" fill="#87ceeb" />
+    <!-- Sun & Rays -->
+    <circle cx="100" cy="78" r="18" fill="#ffd700" stroke="#d4af37" stroke-width="1" />
+    <!-- Green Hills -->
+    <path d="M 36 102 Q 65 82 100 95 Q 135 80 164 102 L 164 164 L 36 164 Z" fill="#2e7d32" />
+    <path d="M 36 112 Q 70 96 110 108 Q 140 98 164 114 L 164 164 L 36 164 Z" fill="#4caf50" />
+    
+    <!-- Water / Ocean Waves at bottom -->
+    <path d="M 36 130 Q 55 125 75 130 Q 95 135 115 130 Q 135 125 164 130 L 164 164 L 36 164 Z" fill="#0288d1" />
+    <path d="M 36 142 Q 60 137 85 142 Q 110 147 135 142 Q 150 138 164 142 L 164 164 L 36 164 Z" fill="#01579b" />
+    
+    <!-- Coconut / Palm Tree on left bank -->
+    <!-- Trunk -->
+    <path d="M 68 135 Q 73 115 76 95 L 79 96 Q 76 115 71 135 Z" fill="#5d4037" />
+    <!-- Fronds -->
+    <path d="M 77 95 Q 60 88 52 96 Q 64 94 77 95 Z" fill="#1b5e20" />
+    <path d="M 77 95 Q 66 82 62 76 Q 72 84 77 95 Z" fill="#2e7d32" />
+    <path d="M 77 95 Q 85 80 92 78 Q 87 86 77 95 Z" fill="#1b5e20" />
+    <path d="M 77 95 Q 92 90 98 97 Q 88 94 77 95 Z" fill="#2e7d32" />
+    
+    <!-- Golden Rice Sheaves on right -->
+    <path d="M 125 135 Q 123 115 120 100" stroke="#fbc02d" stroke-width="2" fill="none" />
+    <circle cx="118" cy="100" r="2.5" fill="#f57f17" />
+    <circle cx="122" cy="106" r="2.5" fill="#f57f17" />
+    <circle cx="117" cy="112" r="2.5" fill="#f57f17" />
+    <circle cx="123" cy="118" r="2.5" fill="#f57f17" />
+    
+    <!-- Year of founding ribbon / text -->
+    <rect x="74" y="148" width="52" height="13" rx="2" fill="#d4af37" stroke="#8c6d1f" stroke-width="0.5" />
+    <text x="100" y="158" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#002244" text-anchor="middle">OFFICIAL SEAL</text>
+  </g>
+</svg>

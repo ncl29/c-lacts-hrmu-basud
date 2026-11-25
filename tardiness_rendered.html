@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="goDcdPRndLxGzTeDVIlTpATOEowSMAxUB5vKHXK5">
+    <title>HR Attendance &amp; Starla Deduction Terminal - C-LACTS HRMU Basud</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gov: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#b9ddfe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            navy: '#0f172a',
+                            emerald: '#065f46',
+                            gold: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
+        }
+        #sidePanel {
+            scrollbar-width: thin;
+            scrollbar-color: #334155 transparent;
+        }
+        #sidePanel::-webkit-scrollbar {
+            width: 4px;
+        }
+        #sidePanel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #sidePanel::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Top GovTech Official Header (Sticky) -->
+    <header class="sticky top-0 z-40 bg-gov-navy text-white border-b-4 border-amber-500 shadow-md">
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Branding with Official Municipal Seal -->
+                <div class="flex items-center gap-3">
+                                            <button type="button" onclick="toggleSidePanel()" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer" aria-label="Toggle navigation side panel">
+                            <i class="ph-bold ph-list text-xl"></i>
+                        </button>
+                    
+                    <a href="http://localhost:8080/employee/dashboard" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-lg">
+                        <div class="w-11 h-11 rounded-full bg-white p-0.5 shadow-sm border border-amber-400/80 shrink-0 flex items-center justify-center overflow-hidden">
+                            <img src="http://localhost:8080/images/basud-seal.svg" alt="Seal of the Municipality of Basud" class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <div class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400 font-semibold leading-tight">Republic of the Philippines • Region V</div>
+                            <div class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                                <span>Municipality of Basud</span>
+                                <span class="text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/80 border border-amber-600/50">HRMU</span>
+                            </div>
+                            <div class="text-[11px] text-slate-300 hidden sm:block">Centralized Leave Application & Credit Tracking System (C-LACTS)</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- User Profile Badge & Logout -->
+                <div class="flex items-center gap-3">
+                                            <div class="flex items-center gap-3 pl-3">
+                            <div class="text-right hidden sm:block">
+                                <div class="text-xs font-bold text-white flex items-center justify-end gap-2">
+                                    <span>Vicky Alvaro</span>
+                                                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950 text-purple-300 border border-purple-600/50">Admin</span>
+                                                                    </div>
+                                <div class="text-[10px] text-slate-400 font-mono truncate max-w-[160px]">Human Resource Management Unit (HRMU)</div>
+                            </div>
+
+                            <!-- Logout Form -->
+                            <form method="POST" action="http://localhost:8080/logout" class="inline">
+                                <input type="hidden" name="_token" value="goDcdPRndLxGzTeDVIlTpATOEowSMAxUB5vKHXK5" autocomplete="off">                                <button type="submit" class="px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-950 hover:text-rose-300 border border-slate-700 hover:border-rose-700/50 text-slate-300 transition flex items-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500" title="Sign out of C-LACTS">
+                                    <i class="ph-bold ph-sign-out text-base"></i>
+                                    <span class="hidden md:inline">Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body Layout (Side Panel + Main Content) -->
+    <div class="flex-1 flex min-h-0">
+                    <!-- Mobile Overlay Backdrop -->
+            <div id="sidePanelBackdrop" onclick="toggleSidePanel()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-30 hidden md:hidden"></div>
+
+            <!-- Side Panel (Desktop Sticky + Mobile Off-Canvas) -->
+            <aside id="sidePanel" class="fixed md:sticky top-0 md:top-[72px] inset-y-0 md:inset-y-auto left-0 z-50 md:z-30 w-64 bg-slate-900 text-slate-200 border-r border-slate-800 shrink-0 flex flex-col transition-transform duration-200 ease-in-out -translate-x-full md:translate-x-0 md:self-start h-full md:h-[calc(100vh-72px)] overflow-y-auto">
+                
+                <!-- Mobile Close Bar -->
+                <div class="md:hidden flex items-center justify-between p-4 border-b border-slate-800 bg-slate-950">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Navigation Menu</span>
+                    <button type="button" onclick="toggleSidePanel()" class="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer">
+                        <i class="ph-bold ph-x text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation Items -->
+                <nav class="p-3 space-y-1.5 flex-1 overflow-y-auto">
+                    <!-- 1. Self-Service (Accessible to all authenticated users) -->
+                    <a href="http://localhost:8080/employee/dashboard" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="ph ph-user text-base shrink-0"></i>
+                        <span>Self-Service</span>
+                    </a>
+
+                    <!-- 2. My Leave Record -->
+                    <a href="http://localhost:8080/employee/leave-record" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="ph ph-notebook text-base shrink-0"></i>
+                        <span>My Leave Record</span>
+                    </a>
+
+                    <!-- 3. QR Document Scanner & Desk Terminal (Accessible to All for Testing/Evaluation) -->
+                    <a href="http://localhost:8080/clerk/scanner" class="px-3 py-2 rounded-lg flex items-center justify-between text-xs font-medium transition text-slate-200 hover:text-white hover:bg-slate-800" title="Unified QR barcode scanning and document custody terminal">
+                        <div class="flex items-center gap-3">
+                            <i class="ph-bold ph-qr-code text-base shrink-0 text-amber-400"></i>
+                            <span>QR Document Scanner</span>
+                        </div>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">SCAN</span>
+                    </a>
+
+                    <!-- 4. Leave Records & Starla Engine (HR Staff, Admin) -->
+                                            <a href="http://localhost:8080/hr/leave-records" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-amber-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph-bold ph-identification-card text-base shrink-0"></i>
+                            <span>Leave Records</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/tardiness" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition bg-gov-700 text-white shadow-xs font-semibold">
+                            <i class="ph ph-calculator text-base shrink-0"></i>
+                            <span>HR Starla Engine</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/starla-tables" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph ph-table text-base shrink-0"></i>
+                            <span>Starla Tables</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/transmittals" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph ph-file-arrow-up text-base shrink-0"></i>
+                            <span>Batch Transmittals</span>
+                        </a>
+                    
+                    <!-- 5. Admin Control (Admin Level 4 Only) -->
+                                            <a href="http://localhost:8080/admin/dashboard" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-purple-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph-bold ph-shield-star text-amber-400 text-base shrink-0"></i>
+                            <span>Admin Control</span>
+                        </a>
+                                    </nav>
+            </aside>
+        
+        <!-- Main Content Area Column -->
+        <div class="flex-1 flex flex-col min-w-0 bg-slate-50">
+            <!-- Flash Alert Messages -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+                
+                
+                
+                            </div>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="space-y-6">
+
+    <!-- Header Banner -->
+    <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                    <i class="ph-bold ph-sparkle text-amber-600"></i>
+                    <span>Starla Engine Matrix</span>
+                </span>
+                <span class="text-xs text-slate-500 font-mono">CSC MC No. 41, s. 1998 • Rule XVI</span>
+            </div>
+            <h1 class="text-xl font-bold text-slate-900 mt-1">Semi-Monthly Attendance & Tardiness Encoding</h1>
+            <p class="text-xs text-slate-500 mt-0.5">
+                Encodes HR-verified aggregate tardiness and absences from physical DTRs. Zero raw biometric ingestion (Guardrail #1).
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-end sm:items-center gap-3">
+            <div class="text-right hidden sm:block">
+                <span class="text-xs text-slate-400 block font-mono">Year 2026 Processing</span>
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-gov-50 text-gov-800 border border-gov-200 mt-1">
+                    <i class="ph-bold ph-shield-check text-gov-700"></i>
+                    <span>Double-Deduction Shield Active</span>
+                </span>
+            </div>
+            <a 
+                href="http://localhost:8080/hr/starla-tables" 
+                class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 shadow-xs transition flex items-center gap-2 shrink-0 cursor-pointer"
+                title="View digitized CSC Starla conversion matrices (Tables II, III, & IV)"
+            >
+                <i class="ph-bold ph-table text-amber-700 text-sm"></i>
+                <span>View Starla Tables</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main 2-Column Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Column 1: The Starla Computation Input Form (5 Cols) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl shadow-xs border border-slate-200 p-6 space-y-5">
+            <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <i class="ph-bold ph-calculator text-gov-700 text-base"></i>
+                    <span>DTR Summary Input</span>
+                </h2>
+                <span class="text-[11px] text-slate-400 font-mono">Days / Hours / Mins</span>
+            </div>
+
+            <form method="POST" action="http://localhost:8080/hr/tardiness/store" id="starlaForm" class="space-y-4">
+                <input type="hidden" name="_token" value="goDcdPRndLxGzTeDVIlTpATOEowSMAxUB5vKHXK5" autocomplete="off">
+                <!-- Municipal Office / Department Filter (Placed First to Avoid Clutter) -->
+                <div class="space-y-1">
+                    <div class="flex items-center justify-between mb-1">
+                        <label for="office_filter" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="ph-bold ph-buildings text-gov-700"></i>
+                            <span>Municipal Office / Department</span>
+                        </label>
+                        <span class="text-[11px] text-slate-400 font-medium" id="officeFilterCount">
+                            36 Offices
+                        </span>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="ph ph-buildings text-base"></i>
+                        </div>
+                        <select 
+                            id="office_filter" 
+                            name="office_id_filter"
+                            class="w-full pl-9 pr-8 py-2 text-sm text-slate-800 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gov-600 focus:border-transparent transition shadow-xs cursor-pointer"
+                        >
+                            <option value="">— All Municipal Offices (50 personnel) —</option>
+                                                            <option value="27" >
+                                    Accounting Office (3)
+                                </option>
+                                                            <option value="19" >
+                                    Business Permit Licensing Office (2)
+                                </option>
+                                                            <option value="18" >
+                                    General Service Office (1)
+                                </option>
+                                                            <option value="11" >
+                                    General Services Office (GSO) (1)
+                                </option>
+                                                            <option value="21" >
+                                    Human Resource Management Office (0)
+                                </option>
+                                                            <option value="1" >
+                                    Human Resource Management Unit (HRMU) (3)
+                                </option>
+                                                            <option value="22" >
+                                    Local Youth Development Office (1)
+                                </option>
+                                                            <option value="9" >
+                                    Municipal Accounting Office (0)
+                                </option>
+                                                            <option value="25" >
+                                    Municipal Agriculture Office (3)
+                                </option>
+                                                            <option value="8" >
+                                    Municipal Agriculture Office (MAO) (0)
+                                </option>
+                                                            <option value="13" >
+                                    Municipal Assessor&#039;s Office (MASSO) (0)
+                                </option>
+                                                            <option value="28" >
+                                    Municipal Assessors Office (2)
+                                </option>
+                                                            <option value="29" >
+                                    Municipal Budget Office (2)
+                                </option>
+                                                            <option value="10" >
+                                    Municipal Budget Office (MBO) (0)
+                                </option>
+                                                            <option value="24" >
+                                    Municipal Civil Registrar (2)
+                                </option>
+                                                            <option value="14" >
+                                    Municipal Civil Registrar (MCR) (0)
+                                </option>
+                                                            <option value="36" >
+                                    Municipal Cooperative and Development Office (2)
+                                </option>
+                                                            <option value="30" >
+                                    Municipal Disaster Risk Reduction Office (2)
+                                </option>
+                                                            <option value="35" >
+                                    Municipal Engineering Office (3)
+                                </option>
+                                                            <option value="5" >
+                                    Municipal Engineering Office (MEO) (0)
+                                </option>
+                                                            <option value="16" >
+                                    Municipal Environment and Natural Resources Office (1)
+                                </option>
+                                                            <option value="34" >
+                                    Municipal Health Office (3)
+                                </option>
+                                                            <option value="6" >
+                                    Municipal Health Office (MHO) (0)
+                                </option>
+                                                            <option value="17" >
+                                    Municipal Legal Office (1)
+                                </option>
+                                                            <option value="20" >
+                                    Municipal Library (2)
+                                </option>
+                                                            <option value="15" >
+                                    Municipal Persons with Disability Affairs Office (1)
+                                </option>
+                                                            <option value="23" >
+                                    Municipal Planning and Development Office (0)
+                                </option>
+                                                            <option value="4" >
+                                    Municipal Planning and Development Office (MPDO) (3)
+                                </option>
+                                                            <option value="33" >
+                                    Municipal Social Welfare and Development Office (2)
+                                </option>
+                                                            <option value="7" >
+                                    Municipal Social Welfare and Development Office (MSWDO) (0)
+                                </option>
+                                                            <option value="32" >
+                                    Municipal Treasurer&#039;s Office (2)
+                                </option>
+                                                            <option value="12" >
+                                    Municipal Treasury Office (MTO) (1)
+                                </option>
+                                                            <option value="31" >
+                                    OSSB / OSB (2)
+                                </option>
+                                                            <option value="2" >
+                                    Office of the Municipal Mayor (3)
+                                </option>
+                                                            <option value="3" >
+                                    Office of the Municipal Vice Mayor / Sangguniang Bayan (0)
+                                </option>
+                                                            <option value="26" >
+                                    Public Employment Service Office (2)
+                                </option>
+                                                    </select>
+                    </div>
+                    <p class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                        <i class="ph ph-funnel text-slate-400"></i>
+                        <span>Select an office first to unclutter employee selection, or view all.</span>
+                    </p>
+                </div>
+
+                <!-- Employee Selection Searchable Combobox -->
+                <div class="relative" id="employeeComboboxContainer">
+                    <div class="flex items-center justify-between mb-1">
+                        <label for="employee_search_input" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                            Select Employee <span class="text-rose-500">*</span>
+                        </label>
+                        <span id="employeeCounter" class="text-[11px] text-slate-400 font-medium">Type to search (50)</span>
+                    </div>
+
+                    <!-- Hidden Input holding the submitted ID -->
+                    <input type="hidden" name="employee_id" id="employee_id" value="">
+
+                    <!-- Typeable Search Input -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i class="ph ph-magnifying-glass text-base"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="employee_search_input" 
+                            autocomplete="off"
+                            spellcheck="false"
+                            placeholder="Type employee name, badge # (e.g. 101), or office..." 
+                            class="w-full pl-9 pr-14 py-2 text-sm text-slate-800 placeholder-slate-400 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gov-600 focus:border-transparent transition shadow-xs "
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-2 flex items-center gap-0.5">
+                            <button 
+                                type="button" 
+                                id="clearEmployeeBtn" 
+                                class="hidden p-1 text-slate-400 hover:text-slate-600 rounded-md transition focus:outline-none"
+                                title="Clear search"
+                            >
+                                <i class="ph-bold ph-x text-sm"></i>
+                            </button>
+                            <button 
+                                type="button" 
+                                id="toggleEmployeeDropdownBtn" 
+                                class="p-1 text-slate-400 hover:text-slate-600 rounded-md transition focus:outline-none"
+                                title="Show all municipal employees"
+                            >
+                                <i class="ph-bold ph-caret-down text-sm transition-transform duration-150" id="employeeCaretIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filterable Dropdown List -->
+                    <div 
+                        id="employeeDropdownList" 
+                        class="hidden absolute z-50 left-0 right-0 mt-1 max-h-60 overflow-y-auto bg-white rounded-xl shadow-xl border border-slate-200 divide-y divide-slate-100 text-xs text-slate-700"
+                    ></div>
+
+                    <!-- Client/Server Error Message -->
+                    <p id="employeeSelectionError" class="hidden text-xs text-rose-600 mt-1 flex items-center gap-1 font-medium">
+                        <i class="ph-bold ph-warning-circle"></i>
+                        <span>Please select a municipal employee from the list.</span>
+                    </p>
+                    
+                    <!-- Selected Employee Confirmation Card -->
+                    <div id="selectedEmployeeCard" class="hidden mt-2 p-2.5 bg-gov-50/90 border border-gov-200 rounded-xl flex items-center justify-between gap-3 text-xs shadow-xs transition">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <div id="cardAvatar" class="w-7 h-7 rounded-full bg-gov-700 text-white font-bold flex items-center justify-center text-[11px] shrink-0 font-mono">
+                                --
+                            </div>
+                            <div class="min-w-0">
+                                <div id="cardEmpName" class="font-bold text-slate-900 truncate text-xs leading-tight"></div>
+                                <div id="cardEmpDetails" class="text-[10px] text-slate-500 font-mono truncate leading-tight mt-0.5"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0 text-[10px] font-mono">
+                            <span id="cardVlBadge" class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200" title="Certified Vacation Leave balance">VL: 0.000</span>
+                            <span id="cardSlBadge" class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-semibold border border-indigo-200" title="Certified Sick Leave balance">SL: 0.000</span>
+                        </div>
+                    </div>
+
+                    <!-- Graceful No-JS Fallback -->
+                    <noscript>
+                        <select name="employee_id" required class="w-full mt-1 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white">
+                            <option value="" disabled selected>— Choose Municipal Employee —</option>
+                                                            <optgroup label="Accounting Office (3)">
+                                                                            <option value="197">Bernard C. Adano (BASUD-DUMMY-0503)</option>
+                                                                            <option value="195">Jan Mark De Vera (BASUD-DUMMY-0501)</option>
+                                                                            <option value="196">Patricia B. Reyes (BASUD-DUMMY-0502)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Business Permit Licensing Office (2)">
+                                                                            <option value="222">Diosdado P. Macapagal (BASUD-DUMMY-0528)</option>
+                                                                            <option value="223">Renesson B. Solver (BASUD-DUMMY-0529)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="General Service Office (1)">
+                                                                            <option value="232">Alex T. Mendoza (BASUD-DUMMY-0538)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="General Services Office (GSO) (1)">
+                                                                            <option value="6">ShalieMar De Vera (BASUD-EMP-102)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Human Resource Management Office (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Human Resource Management Unit (HRMU) (3)">
+                                                                            <option value="2">Camille Faurillo (BASUD-HR-002)</option>
+                                                                            <option value="5">Grace Bolos (BASUD-EMP-101)</option>
+                                                                            <option value="1">Vicky C. Alvaro (BASUD-ADM-001)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Local Youth Development Office (1)">
+                                                                            <option value="226">Jose P. Laurel (BASUD-DUMMY-0532)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Accounting Office (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Agriculture Office (3)">
+                                                                            <option value="199">Emilio K. Jacinto (BASUD-DUMMY-0505)</option>
+                                                                            <option value="198">Juan M. Dela Cruz (BASUD-DUMMY-0504)</option>
+                                                                            <option value="200">Pio D. Valenzuela (BASUD-DUMMY-0506)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Agriculture Office (MAO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Assessor&#039;s Office (MASSO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Assessors Office (2)">
+                                                                            <option value="212">Elpidio R. Quirino (BASUD-DUMMY-0518)</option>
+                                                                            <option value="211">Manuel A. Roxas (BASUD-DUMMY-0517)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Budget Office (2)">
+                                                                            <option value="213">Manuel L. Quezon (BASUD-DUMMY-0519)</option>
+                                                                            <option value="214">Sergio S. Osmeña (BASUD-DUMMY-0520)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Budget Office (MBO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Civil Registrar (2)">
+                                                                            <option value="209">Apolinario M. Mabini (BASUD-DUMMY-0515)</option>
+                                                                            <option value="210">Francisco P. Balagtas (BASUD-DUMMY-0516)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Civil Registrar (MCR) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Cooperative and Development Office (2)">
+                                                                            <option value="229">Cayetano S. Arellano (BASUD-DUMMY-0535)</option>
+                                                                            <option value="230">Joy P. Jamito (BASUD-DUMMY-0536)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Disaster Risk Reduction Office (2)">
+                                                                            <option value="216">Carlos P. Garcia (BASUD-DUMMY-0522)</option>
+                                                                            <option value="215">Ramon F. Magsaysay (BASUD-DUMMY-0521)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Engineering Office (3)">
+                                                                            <option value="202">Antonio N. Luna (BASUD-DUMMY-0508)</option>
+                                                                            <option value="203">Bayani R. Juance (BASUD-DUMMY-0509)</option>
+                                                                            <option value="201">Jose P. Rizal (BASUD-DUMMY-0507)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Engineering Office (MEO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Environment and Natural Resources Office (1)">
+                                                                            <option value="220">Graciano P. Lopez Jaena (BASUD-DUMMY-0526)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Health Office (3)">
+                                                                            <option value="204">Gabriela C. Silang (BASUD-DUMMY-0510)</option>
+                                                                            <option value="205">Marcelo H. Del Pilar (BASUD-DUMMY-0511)</option>
+                                                                            <option value="206">Remedios M. Taal (BASUD-DUMMY-0512)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Health Office (MHO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Legal Office (1)">
+                                                                            <option value="221">Jose W. Diokno (BASUD-DUMMY-0527)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Library (2)">
+                                                                            <option value="225">Clarissa A. Odi (BASUD-DUMMY-0531)</option>
+                                                                            <option value="224">Claro M. Recto (BASUD-DUMMY-0530)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Persons with Disability Affairs Office (1)">
+                                                                            <option value="219">Mariano T. Ponce (BASUD-DUMMY-0525)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Planning and Development Office (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Planning and Development Office (MPDO) (3)">
+                                                                            <option value="4">Divine Ponciano (BASUD-CLK-004)</option>
+                                                                            <option value="12">Johann Chavez (BASUD-EMP-105)</option>
+                                                                            <option value="9">Marjory A. Santillan (BASUD-DEP-001)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Social Welfare and Development Office (2)">
+                                                                            <option value="207">Corazon T. Aquino (BASUD-DUMMY-0513)</option>
+                                                                            <option value="208">Josefa L. Escoda (BASUD-DUMMY-0514)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Social Welfare and Development Office (MSWDO) (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Treasurer&#039;s Office (2)">
+                                                                            <option value="234">Diego M. Silang (BASUD-DUMMY-0540)</option>
+                                                                            <option value="233">Maria Clara C. Santos (BASUD-DUMMY-0539)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Municipal Treasury Office (MTO) (1)">
+                                                                            <option value="7">Craton Z. Genorga (BASUD-EMP-103)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="OSSB / OSB (2)">
+                                                                            <option value="228">Manuelita L. Guillermo (BASUD-DUMMY-0534)</option>
+                                                                            <option value="227">Teodoro A. Agoncillo (BASUD-DUMMY-0533)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Office of the Municipal Mayor (3)">
+                                                                            <option value="8">Hon. Shunn Frederick S. Davoco (BASUD-OFF-001)</option>
+                                                                            <option value="231">Mateo R. Santos (BASUD-DUMMY-0537)</option>
+                                                                            <option value="3">Mikylla Nanez (BASUD-CLK-003)</option>
+                                                                    </optgroup>
+                                                            <optgroup label="Office of the Municipal Vice Mayor / Sangguniang Bayan (0)">
+                                                                    </optgroup>
+                                                            <optgroup label="Public Employment Service Office (2)">
+                                                                            <option value="218">Eleanor Y. Cabangon (BASUD-DUMMY-0524)</option>
+                                                                            <option value="217">Pedro A. Paterno (BASUD-DUMMY-0523)</option>
+                                                                    </optgroup>
+                                                    </select>
+                    </noscript>
+                </div>
+
+                <!-- Pay Period Dropdown -->
+                <div>
+                    <label for="pay_period_id" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Semi-Monthly Pay Period <span class="text-rose-500">*</span>
+                    </label>
+                    <select id="pay_period_id" name="pay_period_id" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white">
+                                                    <option value="24" selected>
+                                Month 12 (2nd Half: 16-End) • Dec 16 - Dec 31, 2026
+                            </option>
+                                                    <option value="23" >
+                                Month 12 (1st Half: 1-15) • Dec 01 - Dec 15, 2026
+                            </option>
+                                                    <option value="22" >
+                                Month 11 (2nd Half: 16-End) • Nov 16 - Nov 30, 2026
+                            </option>
+                                                    <option value="21" >
+                                Month 11 (1st Half: 1-15) • Nov 01 - Nov 15, 2026
+                            </option>
+                                                    <option value="20" >
+                                Month 10 (2nd Half: 16-End) • Oct 16 - Oct 31, 2026
+                            </option>
+                                                    <option value="19" >
+                                Month 10 (1st Half: 1-15) • Oct 01 - Oct 15, 2026
+                            </option>
+                                                    <option value="18" >
+                                Month 9 (2nd Half: 16-End) • Sep 16 - Sep 30, 2026
+                            </option>
+                                                    <option value="17" >
+                                Month 9 (1st Half: 1-15) • Sep 01 - Sep 15, 2026
+                            </option>
+                                                    <option value="16" >
+                                Month 8 (2nd Half: 16-End) • Aug 16 - Aug 31, 2026
+                            </option>
+                                                    <option value="15" >
+                                Month 8 (1st Half: 1-15) • Aug 01 - Aug 15, 2026
+                            </option>
+                                                    <option value="14" >
+                                Month 7 (2nd Half: 16-End) • Jul 16 - Jul 31, 2026
+                            </option>
+                                                    <option value="13" >
+                                Month 7 (1st Half: 1-15) • Jul 01 - Jul 15, 2026
+                            </option>
+                                                    <option value="12" >
+                                Month 6 (2nd Half: 16-End) • Jun 16 - Jun 30, 2026
+                            </option>
+                                                    <option value="11" >
+                                Month 6 (1st Half: 1-15) • Jun 01 - Jun 15, 2026
+                            </option>
+                                                    <option value="10" >
+                                Month 5 (2nd Half: 16-End) • May 16 - May 31, 2026
+                            </option>
+                                                    <option value="9" >
+                                Month 5 (1st Half: 1-15) • May 01 - May 15, 2026
+                            </option>
+                                                    <option value="8" >
+                                Month 4 (2nd Half: 16-End) • Apr 16 - Apr 30, 2026
+                            </option>
+                                                    <option value="7" >
+                                Month 4 (1st Half: 1-15) • Apr 01 - Apr 15, 2026
+                            </option>
+                                                    <option value="6" >
+                                Month 3 (2nd Half: 16-End) • Mar 16 - Mar 31, 2026
+                            </option>
+                                                    <option value="5" >
+                                Month 3 (1st Half: 1-15) • Mar 01 - Mar 15, 2026
+                            </option>
+                                                    <option value="4" >
+                                Month 2 (2nd Half: 16-End) • Feb 16 - Feb 28, 2026
+                            </option>
+                                                    <option value="3" >
+                                Month 2 (1st Half: 1-15) • Feb 01 - Feb 15, 2026
+                            </option>
+                                                    <option value="2" >
+                                Month 1 (2nd Half: 16-End) • Jan 16 - Jan 31, 2026
+                            </option>
+                                                    <option value="1" >
+                                Month 1 (1st Half: 1-15) • Jan 01 - Jan 15, 2026
+                            </option>
+                                            </select>
+                </div>
+
+                <!-- Aggregate Tardiness Grid (Hours & Minutes) -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <div class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center justify-between">
+                        <span>Tardiness & Undertime (Table IV)</span>
+                        <a href="http://localhost:8080/hr/starla-tables?tab=table_4" target="_blank" class="text-[11px] font-semibold text-gov-700 hover:text-gov-800 flex items-center gap-1 cursor-pointer">
+                            <i class="ph-bold ph-arrow-square-out text-xs"></i>
+                            <span>View Table IV</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="late_hours" class="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                                Late Hours
+                            </label>
+                            <input 
+                                type="number" 
+                                id="late_hours" 
+                                name="late_hours" 
+                                min="0" 
+                                max="160" 
+                                value="0" 
+                                oninput="triggerLivePreview()"
+                                class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono font-bold text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
+                            >
+                        </div>
+                        <div>
+                            <label for="late_minutes" class="block text-[11px] font-semibold text-slate-600 uppercase mb-1">
+                                Late Minutes
+                            </label>
+                            <input 
+                                type="number" 
+                                id="late_minutes" 
+                                name="late_minutes" 
+                                min="0" 
+                                max="59" 
+                                value="0" 
+                                oninput="triggerLivePreview()"
+                                class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono font-bold text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unexcused Absences -->
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label for="days_absent" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                            Unexcused Absences (Days)
+                        </label>
+                        <a href="http://localhost:8080/hr/starla-tables?tab=table_2" target="_blank" class="text-[11px] font-semibold text-gov-700 hover:text-gov-800 flex items-center gap-1 cursor-pointer">
+                            <i class="ph-bold ph-arrow-square-out text-xs"></i>
+                            <span>Table II / III Matrix</span>
+                        </a>
+                    </div>
+                    <input 
+                        type="number" 
+                        step="0.5" 
+                        min="0" 
+                        max="31" 
+                        id="days_absent" 
+                        name="days_absent" 
+                        value="0" 
+                        oninput="triggerLivePreview()"
+                        placeholder="e.g. 0.00, 1.00, 2.50" 
+                        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono font-bold text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
+                    >
+                    <span class="text-[11px] text-slate-400 mt-1 block">Cross-referenced against approved leave to prevent double deduction.</span>
+                </div>
+
+                <!-- Live Mathematical Preview Card (Instant Starla Lookup) -->
+                <div class="bg-gov-50 border border-gov-200 rounded-xl p-4 text-xs space-y-2">
+                    <div class="font-bold text-gov-900 flex items-center justify-between">
+                        <span>Starla Math Calculation Preview:</span>
+                        <a href="http://localhost:8080/hr/starla-tables" target="_blank" id="previewTag" class="text-[10px] bg-gov-700 hover:bg-gov-800 text-white px-2 py-0.5 rounded font-mono transition flex items-center gap-1" title="View CSC discrete conversion matrices">
+                            <span>Discrete Table Lookup</span>
+                            <i class="ph-bold ph-arrow-square-out text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <div class="flex justify-between text-slate-600">
+                        <span>Tardiness Equivalent (Table IV):</span>
+                        <strong class="font-mono text-gov-800" id="prevTardy">0.000 days</strong>
+                    </div>
+
+                    <div class="flex justify-between text-slate-600">
+                        <span>Absence Deduction (Table II/III):</span>
+                        <strong class="font-mono text-gov-800" id="prevAbsence">0.000 days</strong>
+                    </div>
+
+                    <div class="pt-2 border-t border-gov-200 flex justify-between text-sm font-bold text-gov-950">
+                        <span>Total Leave Credit Deducted:</span>
+                        <span class="font-mono text-base text-gov-900" id="prevTotal">0.000 days</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="w-full py-3 bg-gov-700 hover:bg-gov-800 active:bg-gov-900 text-white font-bold rounded-xl text-sm shadow-xs transition flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 focus:ring-offset-2"
+                >
+                    <i class="ph-bold ph-calculator text-lg"></i>
+                    <span>Compute & Deduct (Starla)</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Column 2: Recent Ledger Audit Records (7 Cols) -->
+        <div class="lg:col-span-7 space-y-4">
+            <!-- Calculation Result Callout (if just submitted) -->
+            
+            <!-- Digital Ledger History Table -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900">Recent Attendance Deductions</h3>
+                        <p class="text-xs text-slate-500">History of semi-monthly Starla ledger debits</p>
+                    </div>
+                    <span class="text-xs text-slate-400 font-mono">3 recorded</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-700">
+                        <thead class="bg-slate-50 text-[11px] font-semibold uppercase text-slate-500 border-b border-slate-200">
+                            <tr>
+                                <th class="py-3 px-3">Employee</th>
+                                <th class="py-3 px-3">Period</th>
+                                <th class="py-3 px-3 text-center">Tardiness</th>
+                                <th class="py-3 px-3 text-center">Absence</th>
+                                <th class="py-3 px-3 text-right">Deducted</th>
+                                <th class="py-3 px-3">Encoded</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                                                            <tr class="hover:bg-slate-50/80 transition">
+                                    <td class="py-3 px-3 font-semibold text-slate-900">
+                                        Divine Ponciano
+                                        <span class="block text-[10px] text-slate-400 font-mono">BASUD-CLK-004 • Municipal Planning and Development Office (MPDO)</span>
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap">
+                                        Month 12 (H2)
+                                        <span class="block text-[10px] text-slate-400">Dec 16 - 31</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        1h 0m
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        0.00d
+                                    </td>
+                                    <td class="py-3 px-3 text-right font-mono font-bold text-rose-600">
+                                        -0.125
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap text-slate-500 text-[11px]">
+                                        Oct 30, 03:09 AM
+                                        <span class="block text-[10px] text-slate-400">by hr_staff01</span>
+                                    </td>
+                                </tr>
+                                                            <tr class="hover:bg-slate-50/80 transition">
+                                    <td class="py-3 px-3 font-semibold text-slate-900">
+                                        Johann Chavez
+                                        <span class="block text-[10px] text-slate-400 font-mono">BASUD-EMP-105 • Municipal Planning and Development Office (MPDO)</span>
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap">
+                                        Month 12 (H2)
+                                        <span class="block text-[10px] text-slate-400">Dec 16 - 31</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        1h 5m
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        0.00d
+                                    </td>
+                                    <td class="py-3 px-3 text-right font-mono font-bold text-rose-600">
+                                        -0.135
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap text-slate-500 text-[11px]">
+                                        Oct 30, 02:43 AM
+                                        <span class="block text-[10px] text-slate-400">by hr_staff01</span>
+                                    </td>
+                                </tr>
+                                                            <tr class="hover:bg-slate-50/80 transition">
+                                    <td class="py-3 px-3 font-semibold text-slate-900">
+                                        ShalieMar De Vera
+                                        <span class="block text-[10px] text-slate-400 font-mono">BASUD-EMP-102 • General Services Office (GSO)</span>
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap">
+                                        Month 10 (H1)
+                                        <span class="block text-[10px] text-slate-400">Oct 01 - 15</span>
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        0h 45m
+                                    </td>
+                                    <td class="py-3 px-3 text-center font-mono">
+                                        0.00d
+                                    </td>
+                                    <td class="py-3 px-3 text-right font-mono font-bold text-rose-600">
+                                        -0.094
+                                    </td>
+                                    <td class="py-3 px-3 whitespace-nowrap text-slate-500 text-[11px]">
+                                        Oct 18, 10:30 AM
+                                        <span class="block text-[10px] text-slate-400">by hr_staff01</span>
+                                    </td>
+                                </tr>
+                                                    </tbody>
+                    </table>
+                </div>
+
+                            </div>
+        </div>
+    </div>
+</div>
+            </main>
+
+            <!-- GovTech System Footer -->
+            <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-xs text-slate-500">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <img src="http://localhost:8080/images/basud-seal.svg" alt="Basud Seal" class="w-5 h-5 object-contain">
+                        <span>© 2026 <strong>Municipal Government of Basud, Camarines Norte</strong> — Human Resource Management Unit (HRMU)</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-3 text-slate-400 text-[11px]">
+                        <span>CSC Form 6 (Rev. 2020)</span>
+                        <span>•</span>
+                        <span>Rule XVI 5-Day SLA</span>
+                        <span>•</span>
+                        <span>Starla Tables II, III, IV</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Side Panel Controller Script -->
+    <script>
+        function toggleSidePanel() {
+            const panel = document.getElementById('sidePanel');
+            const backdrop = document.getElementById('sidePanelBackdrop');
+            if (panel && backdrop) {
+                const isClosed = panel.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    panel.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden', 'md:overflow-auto');
+                } else {
+                    panel.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden', 'md:overflow-auto');
+                }
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const panel = document.getElementById('sidePanel');
+                const backdrop = document.getElementById('sidePanelBackdrop');
+                if (panel && backdrop && !panel.classList.contains('-translate-x-full')) {
+                    panel.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden', 'md:overflow-auto');
+                }
+            }
+        });
+    </script>
+
+    <script>
+    // -------------------------------------------------------------------------
+    // 1. Employee Searchable Combobox & Office Filtering Logic
+    // -------------------------------------------------------------------------
+    const municipalEmployees = [{"id":232,"no":"BASUD-DUMMY-0538","name":"Alex T. Mendoza","office_id":18,"office":"General Service Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":202,"no":"BASUD-DUMMY-0508","name":"Antonio N. Luna","office_id":35,"office":"Municipal Engineering Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":209,"no":"BASUD-DUMMY-0515","name":"Apolinario M. Mabini","office_id":24,"office":"Municipal Civil Registrar","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":203,"no":"BASUD-DUMMY-0509","name":"Bayani R. Juance","office_id":35,"office":"Municipal Engineering Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":197,"no":"BASUD-DUMMY-0503","name":"Bernard C. Adano","office_id":27,"office":"Accounting Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":2,"no":"BASUD-HR-002","name":"Camille Faurillo","office_id":1,"office":"Human Resource Management Unit (HRMU)","position":"Administrative Assistant II","vl":"15.625","sl":"12.500"},{"id":216,"no":"BASUD-DUMMY-0522","name":"Carlos P. Garcia","office_id":30,"office":"Municipal Disaster Risk Reduction Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":229,"no":"BASUD-DUMMY-0535","name":"Cayetano S. Arellano","office_id":36,"office":"Municipal Cooperative and Development Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":225,"no":"BASUD-DUMMY-0531","name":"Clarissa A. Odi","office_id":20,"office":"Municipal Library","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":224,"no":"BASUD-DUMMY-0530","name":"Claro M. Recto","office_id":20,"office":"Municipal Library","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":207,"no":"BASUD-DUMMY-0513","name":"Corazon T. Aquino","office_id":33,"office":"Municipal Social Welfare and Development Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":7,"no":"BASUD-EMP-103","name":"Craton Z. Genorga","office_id":12,"office":"Municipal Treasury Office (MTO)","position":"Administrative Aide I","vl":"0.500","sl":"0.000"},{"id":234,"no":"BASUD-DUMMY-0540","name":"Diego M. Silang","office_id":32,"office":"Municipal Treasurer\u0027s Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":222,"no":"BASUD-DUMMY-0528","name":"Diosdado P. Macapagal","office_id":19,"office":"Business Permit Licensing Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":4,"no":"BASUD-CLK-004","name":"Divine Ponciano","office_id":4,"office":"Municipal Planning and Development Office (MPDO)","position":"Administrative Aide IV - MPDO Receiving","vl":"9.500","sl":"7.000"},{"id":218,"no":"BASUD-DUMMY-0524","name":"Eleanor Y. Cabangon","office_id":26,"office":"Public Employment Service Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":212,"no":"BASUD-DUMMY-0518","name":"Elpidio R. Quirino","office_id":28,"office":"Municipal Assessors Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":199,"no":"BASUD-DUMMY-0505","name":"Emilio K. Jacinto","office_id":25,"office":"Municipal Agriculture Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":210,"no":"BASUD-DUMMY-0516","name":"Francisco P. Balagtas","office_id":24,"office":"Municipal Civil Registrar","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":204,"no":"BASUD-DUMMY-0510","name":"Gabriela C. Silang","office_id":34,"office":"Municipal Health Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":5,"no":"BASUD-EMP-101","name":"Grace Bolos","office_id":1,"office":"Human Resource Management Unit (HRMU)","position":"Senior Administrative Assistant I","vl":"24.500","sl":"18.250"},{"id":220,"no":"BASUD-DUMMY-0526","name":"Graciano P. Lopez Jaena","office_id":16,"office":"Municipal Environment and Natural Resources Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":8,"no":"BASUD-OFF-001","name":"Hon. Shunn Frederick S. Davoco","office_id":2,"office":"Office of the Municipal Mayor","position":"Municipal Mayor","vl":"30.000","sl":"30.000"},{"id":195,"no":"BASUD-DUMMY-0501","name":"Jan Mark De Vera","office_id":27,"office":"Accounting Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":12,"no":"BASUD-EMP-105","name":"Johann Chavez","office_id":4,"office":"Municipal Planning and Development Office (MPDO)","position":"Planning Assistant","vl":"25.114","sl":"23.250"},{"id":226,"no":"BASUD-DUMMY-0532","name":"Jose P. Laurel","office_id":22,"office":"Local Youth Development Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":201,"no":"BASUD-DUMMY-0507","name":"Jose P. Rizal","office_id":35,"office":"Municipal Engineering Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":221,"no":"BASUD-DUMMY-0527","name":"Jose W. Diokno","office_id":17,"office":"Municipal Legal Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":208,"no":"BASUD-DUMMY-0514","name":"Josefa L. Escoda","office_id":33,"office":"Municipal Social Welfare and Development Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":230,"no":"BASUD-DUMMY-0536","name":"Joy P. Jamito","office_id":36,"office":"Municipal Cooperative and Development Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":198,"no":"BASUD-DUMMY-0504","name":"Juan M. Dela Cruz","office_id":25,"office":"Municipal Agriculture Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":211,"no":"BASUD-DUMMY-0517","name":"Manuel A. Roxas","office_id":28,"office":"Municipal Assessors Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":213,"no":"BASUD-DUMMY-0519","name":"Manuel L. Quezon","office_id":29,"office":"Municipal Budget Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":228,"no":"BASUD-DUMMY-0534","name":"Manuelita L. Guillermo","office_id":31,"office":"OSSB \/ OSB","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":205,"no":"BASUD-DUMMY-0511","name":"Marcelo H. Del Pilar","office_id":34,"office":"Municipal Health Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":233,"no":"BASUD-DUMMY-0539","name":"Maria Clara C. Santos","office_id":32,"office":"Municipal Treasurer\u0027s Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":219,"no":"BASUD-DUMMY-0525","name":"Mariano T. Ponce","office_id":15,"office":"Municipal Persons with Disability Affairs Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":9,"no":"BASUD-DEP-001","name":"Marjory A. Santillan","office_id":4,"office":"Municipal Planning and Development Office (MPDO)","position":"Municipal Planning \u0026 Development Coordinator","vl":"21.375","sl":"16.500"},{"id":231,"no":"BASUD-DUMMY-0537","name":"Mateo R. Santos","office_id":2,"office":"Office of the Municipal Mayor","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":3,"no":"BASUD-CLK-003","name":"Mikylla Nanez","office_id":2,"office":"Office of the Municipal Mayor","position":"Administrative Aide VI - Mayor\u0027s Receiving","vl":"11.250","sl":"9.375"},{"id":196,"no":"BASUD-DUMMY-0502","name":"Patricia B. Reyes","office_id":27,"office":"Accounting Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":217,"no":"BASUD-DUMMY-0523","name":"Pedro A. Paterno","office_id":26,"office":"Public Employment Service Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":200,"no":"BASUD-DUMMY-0506","name":"Pio D. Valenzuela","office_id":25,"office":"Municipal Agriculture Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":215,"no":"BASUD-DUMMY-0521","name":"Ramon F. Magsaysay","office_id":30,"office":"Municipal Disaster Risk Reduction Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":206,"no":"BASUD-DUMMY-0512","name":"Remedios M. Taal","office_id":34,"office":"Municipal Health Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":223,"no":"BASUD-DUMMY-0529","name":"Renesson B. Solver","office_id":19,"office":"Business Permit Licensing Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":214,"no":"BASUD-DUMMY-0520","name":"Sergio S. Osme\u00f1a","office_id":29,"office":"Municipal Budget Office","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":6,"no":"BASUD-EMP-102","name":"ShalieMar De Vera","office_id":11,"office":"General Services Office (GSO)","position":"General Services Assistant II","vl":"8.125","sl":"5.000"},{"id":227,"no":"BASUD-DUMMY-0533","name":"Teodoro A. Agoncillo","office_id":31,"office":"OSSB \/ OSB","position":"Regular Municipal Personnel (Dummy)","vl":"0.000","sl":"0.000"},{"id":1,"no":"BASUD-ADM-001","name":"Vicky C. Alvaro","office_id":1,"office":"Human Resource Management Unit (HRMU)","position":"Administrative Officer IV - HRMU II","vl":"35.250","sl":"28.125"}];
+    const officeFilter = document.getElementById('office_filter');
+    const employeeCounter = document.getElementById('employeeCounter');
+    const searchInput = document.getElementById('employee_search_input');
+    const hiddenIdInput = document.getElementById('employee_id');
+    const dropdown = document.getElementById('employeeDropdownList');
+    const caretIcon = document.getElementById('employeeCaretIcon');
+    const clearBtn = document.getElementById('clearEmployeeBtn');
+    const toggleBtn = document.getElementById('toggleEmployeeDropdownBtn');
+    const selectionError = document.getElementById('employeeSelectionError');
+    const card = document.getElementById('selectedEmployeeCard');
+    const cardAvatar = document.getElementById('cardAvatar');
+    const cardEmpName = document.getElementById('cardEmpName');
+    const cardEmpDetails = document.getElementById('cardEmpDetails');
+    const cardVlBadge = document.getElementById('cardVlBadge');
+    const cardSlBadge = document.getElementById('cardSlBadge');
+
+    let highlightedIndex = -1;
+    let filteredEmployees = [...municipalEmployees];
+    let selectedEmployee = null;
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag] || tag));
+    }
+
+    function highlightMatch(text, query) {
+        if (!query) return escapeHtml(text);
+        const escapedText = escapeHtml(text);
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedQuery})`, 'gi');
+        return escapedText.replace(regex, '<mark class="bg-amber-200 text-amber-950 font-bold px-0.5 rounded-xs">$1</mark>');
+    }
+
+    function getInitials(name) {
+        if (!name) return '??';
+        const parts = name.trim().split(/\s+/).filter(Boolean);
+        if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function getOfficeFilteredEmployees() {
+        const selectedOfficeId = officeFilter ? officeFilter.value : '';
+        if (!selectedOfficeId) {
+            return municipalEmployees;
+        }
+        return municipalEmployees.filter(emp => String(emp.office_id) === String(selectedOfficeId));
+    }
+
+    function updateOfficeFilterState() {
+        const selectedOfficeId = officeFilter ? officeFilter.value : '';
+        const selectedOfficeText = (officeFilter && officeFilter.selectedIndex >= 0) 
+            ? officeFilter.options[officeFilter.selectedIndex].text.replace(/\s*\(\d+\)$/, '').trim() 
+            : '';
+        const pool = getOfficeFilteredEmployees();
+
+        if (selectedOfficeId) {
+            if (employeeCounter) {
+                employeeCounter.innerText = `${pool.length} personnel in office`;
+            }
+            if (searchInput) {
+                searchInput.placeholder = `Search personnel in ${selectedOfficeText}...`;
+            }
+        } else {
+            if (employeeCounter) {
+                employeeCounter.innerText = `Type to search (${municipalEmployees.length})`;
+            }
+            if (searchInput) {
+                searchInput.placeholder = "Type employee name, badge # (e.g. 101), or office...";
+            }
+        }
+
+        // If currently selected employee does not belong to this office, clear selection
+        if (selectedEmployee && selectedOfficeId && String(selectedEmployee.office_id) !== String(selectedOfficeId)) {
+            clearSelection(false);
+        }
+
+        // Re-apply filter if dropdown is open
+        if (!dropdown.classList.contains('hidden')) {
+            applySearch(searchInput.value.trim());
+        }
+    }
+
+    function applySearch(query = '') {
+        const pool = getOfficeFilteredEmployees();
+        if (!query) {
+            renderDropdown(pool, '');
+            return;
+        }
+
+        const q = query.toLowerCase();
+        const matches = pool.filter(emp => {
+            return emp.name.toLowerCase().includes(q) ||
+                   emp.no.toLowerCase().includes(q) ||
+                   emp.office.toLowerCase().includes(q) ||
+                   (emp.position && emp.position.toLowerCase().includes(q));
+        });
+
+        renderDropdown(matches, query);
+    }
+
+    function renderDropdown(items, query = '') {
+        filteredEmployees = items;
+        highlightedIndex = -1;
+
+        if (items.length === 0) {
+            const isOfficeFiltered = officeFilter && officeFilter.value;
+            dropdown.innerHTML = `
+                <div class="p-4 text-center text-slate-400">
+                    <i class="ph ph-${isOfficeFiltered ? 'user-minus' : 'magnifying-glass'} text-2xl mb-1 text-slate-300 block"></i>
+                    <div class="text-xs font-semibold text-slate-600">${isOfficeFiltered ? 'No personnel found in this office' : 'No personnel found'}</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">
+                        ${query ? `No match for "${escapeHtml(query)}"` : 'Try selecting "All Municipal Offices" or choose another office'}
+                    </div>
+                </div>
+            `;
+            dropdown.classList.remove('hidden');
+            caretIcon.classList.add('rotate-180');
+            return;
+        }
+
+        let html = '';
+        items.forEach((emp, index) => {
+            const isSelected = selectedEmployee && selectedEmployee.id === emp.id;
+            html += `
+                <div 
+                    class="employee-item px-3 py-2.5 cursor-pointer transition flex items-center justify-between gap-3 ${isSelected ? 'bg-gov-50 text-gov-900 font-semibold border-l-4 border-gov-600' : 'hover:bg-slate-50'}"
+                    data-index="${index}"
+                    role="option"
+                >
+                    <div class="min-w-0">
+                        <div class="text-xs font-bold text-slate-900 truncate">
+                            ${highlightMatch(emp.name, query)}
+                        </div>
+                        <div class="text-[10px] text-slate-500 font-mono truncate mt-0.5">
+                            <span class="text-gov-700 font-semibold">${highlightMatch(emp.no, query)}</span>
+                            <span class="text-slate-300 mx-1">•</span>
+                            <span>${highlightMatch(emp.office, query)}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 text-[10px] font-mono">
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">VL ${emp.vl}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">SL ${emp.sl}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        dropdown.innerHTML = html;
+        dropdown.classList.remove('hidden');
+        caretIcon.classList.add('rotate-180');
+
+        // Attach item click listeners
+        dropdown.querySelectorAll('.employee-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const index = parseInt(el.getAttribute('data-index'), 10);
+                selectEmployee(filteredEmployees[index]);
+            });
+        });
+    }
+
+    function openDropdown() {
+        applySearch(searchInput.value.trim());
+    }
+
+    function closeDropdown() {
+        dropdown.classList.add('hidden');
+        caretIcon.classList.remove('rotate-180');
+        highlightedIndex = -1;
+    }
+
+    function selectEmployee(emp) {
+        selectedEmployee = emp;
+        hiddenIdInput.value = emp.id;
+        searchInput.value = emp.name;
+        clearBtn.classList.remove('hidden');
+
+        // Auto-sync office filter dropdown if currently not set to that office
+        if (officeFilter && (!officeFilter.value || officeFilter.value != emp.office_id)) {
+            officeFilter.value = emp.office_id;
+            updateOfficeFilterState();
+        }
+
+        // Update Confirmation Card
+        cardAvatar.innerText = getInitials(emp.name);
+        cardEmpName.innerText = emp.name;
+        cardEmpDetails.innerText = `${emp.no} • ${emp.office}`;
+        cardVlBadge.innerText = `VL: ${emp.vl}`;
+        cardSlBadge.innerText = `SL: ${emp.sl}`;
+        card.classList.remove('hidden');
+
+        // Clear error styling
+        searchInput.classList.remove('border-rose-500', 'ring-1', 'ring-rose-500', 'ring-2');
+        selectionError.classList.add('hidden');
+
+        closeDropdown();
+    }
+
+    function clearSelection(openAgain = true) {
+        selectedEmployee = null;
+        hiddenIdInput.value = '';
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        card.classList.add('hidden');
+        filteredEmployees = getOfficeFilteredEmployees();
+        if (openAgain) {
+            searchInput.focus();
+            openDropdown();
+        }
+    }
+
+    // Office filter change listener
+    if (officeFilter) {
+        officeFilter.addEventListener('change', function() {
+            updateOfficeFilterState();
+            if (this.value) {
+                searchInput.focus();
+                openDropdown();
+            }
+        });
+    }
+
+    // Filter on typing
+    searchInput.addEventListener('input', function() {
+        clearBtn.classList.toggle('hidden', this.value.length === 0);
+
+        if (selectedEmployee && selectedEmployee.name.toLowerCase() !== this.value.trim().toLowerCase()) {
+            hiddenIdInput.value = '';
+            card.classList.add('hidden');
+            selectedEmployee = null;
+        }
+
+        applySearch(this.value.trim());
+    });
+
+    // Focus opens dropdown & selects text for quick replacement
+    searchInput.addEventListener('focus', function() {
+        if (selectedEmployee) {
+            this.select();
+        }
+        applySearch(this.value.trim());
+    });
+
+    // Keyboard navigation
+    searchInput.addEventListener('keydown', function(e) {
+        if (dropdown.classList.contains('hidden')) {
+            if (e.key === 'ArrowDown' || e.key === 'Enter') {
+                e.preventDefault();
+                openDropdown();
+                return;
+            }
+        }
+
+        const items = dropdown.querySelectorAll('.employee-item');
+        if (!items.length) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            highlightedIndex = (highlightedIndex + 1) % items.length;
+            updateHighlight(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+            updateHighlight(items);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (highlightedIndex >= 0 && highlightedIndex < filteredEmployees.length) {
+                selectEmployee(filteredEmployees[highlightedIndex]);
+            } else if (filteredEmployees.length === 1) {
+                selectEmployee(filteredEmployees[0]);
+            }
+        } else if (e.key === 'Escape') {
+            closeDropdown();
+        }
+    });
+
+    function updateHighlight(items) {
+        items.forEach((item, idx) => {
+            if (idx === highlightedIndex) {
+                item.classList.add('bg-gov-100', 'text-gov-900', 'border-l-4', 'border-gov-600');
+                item.scrollIntoView({ block: 'nearest' });
+            } else {
+                item.classList.remove('bg-gov-100', 'text-gov-900', 'border-l-4', 'border-gov-600');
+            }
+        });
+    }
+
+    clearBtn.addEventListener('click', () => clearSelection(true));
+
+    toggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (dropdown.classList.contains('hidden')) {
+            searchInput.focus();
+            openDropdown();
+        } else {
+            closeDropdown();
+        }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+        const container = document.getElementById('employeeComboboxContainer');
+        if (container && !container.contains(e.target) && (!officeFilter || !officeFilter.contains(e.target))) {
+            closeDropdown();
+            if (selectedEmployee) {
+                searchInput.value = selectedEmployee.name;
+            } else if (!hiddenIdInput.value) {
+                searchInput.value = '';
+                clearBtn.classList.add('hidden');
+            }
+        }
+    });
+
+    // Form submission validation check
+    const starlaForm = document.getElementById('starlaForm');
+    if (starlaForm) {
+        starlaForm.addEventListener('submit', function(e) {
+            if (!hiddenIdInput.value) {
+                e.preventDefault();
+                searchInput.classList.add('border-rose-500', 'ring-2', 'ring-rose-500');
+                selectionError.classList.remove('hidden');
+                searchInput.focus();
+                openDropdown();
+            }
+        });
+    }
+
+    // Restore previous selection on initial load (e.g. from validation errors or old input)
+    const initialEmpId = null;
+    if (initialEmpId) {
+        const found = municipalEmployees.find(e => e.id == initialEmpId);
+        if (found) {
+            if (officeFilter && found.office_id) {
+                officeFilter.value = found.office_id;
+            }
+            selectEmployee(found);
+        }
+    } else if (officeFilter && officeFilter.value) {
+        updateOfficeFilterState();
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. Starla Live Preview Calculation
+    // -------------------------------------------------------------------------
+    let previewDebounce = null;
+
+    function triggerLivePreview() {
+        clearTimeout(previewDebounce);
+        previewDebounce = setTimeout(fetchPreview, 250);
+    }
+
+    async function fetchPreview() {
+        const hours = document.getElementById('late_hours').value || 0;
+        const minutes = document.getElementById('late_minutes').value || 0;
+        const days = document.getElementById('days_absent').value || 0.0;
+
+        try {
+            const res = await fetch(`/api/starla/preview?late_hours=${hours}&late_minutes=${minutes}&days_absent=${days}`);
+            const data = await res.json();
+
+            if (data.success) {
+                document.getElementById('prevTardy').innerText = `${data.tardiness_deduction.toFixed(3)} days`;
+                document.getElementById('prevAbsence').innerText = `${data.absence_deduction.toFixed(3)} days`;
+                document.getElementById('prevTotal').innerText = `${data.total_deduction.toFixed(3)} days`;
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // Run preview once on page load
+    document.addEventListener('DOMContentLoaded', fetchPreview);
+</script>
+</body>
+</html>
+
+

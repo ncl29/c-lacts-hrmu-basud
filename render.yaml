@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: clacts-hrmu-basud
+    runtime: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/database/database.sqlite
+      - key: MAIL_MAILER
+        value: smtp
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        value: mikyllanicolen@gmail.com
+      - key: MAIL_PASSWORD
+        value: xofexlzlzkzrffsv
+      - key: MAIL_ENCRYPTION
+        value: tls
+      - key: MAIL_FROM_ADDRESS
+        value: mikyllanicolen@gmail.com
+      - key: MAIL_FROM_NAME
+        value: "HRMU Basud (C-LACTS)"

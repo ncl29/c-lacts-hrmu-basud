@@ -1,0 +1,10 @@
+{
+  "entries": [
+    { "path": ".agents/skills/agent-context" },
+    { "path": ".agents/skills/code-quality" },
+    { "path": ".agents/skills/database-data" },
+    { "path": ".agents/skills/frontend" },
+    { "path": ".agents/skills/security-auth" },
+    { "path": ".agents/skills/testing-debugging" }
+  ]
+}

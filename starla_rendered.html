@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="rrbkxDxD7au0cqmkAkuyBrKtOiLtzK8XHdaZCZpp">
+    <title>Civil Service Starla Conversion Tables - HRMU Basud - C-LACTS HRMU Basud</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gov: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#b9ddfe',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            navy: '#0f172a',
+                            emerald: '#065f46',
+                            gold: '#b45309',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap');
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
+        }
+        #sidePanel {
+            scrollbar-width: thin;
+            scrollbar-color: #334155 transparent;
+        }
+        #sidePanel::-webkit-scrollbar {
+            width: 4px;
+        }
+        #sidePanel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #sidePanel::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Top GovTech Official Header (Sticky) -->
+    <header class="sticky top-0 z-40 bg-gov-navy text-white border-b-4 border-amber-500 shadow-md">
+        <div class="w-full px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Branding with Official Municipal Seal -->
+                <div class="flex items-center gap-3">
+                                            <button type="button" onclick="toggleSidePanel()" class="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer" aria-label="Toggle navigation side panel">
+                            <i class="ph-bold ph-list text-xl"></i>
+                        </button>
+                    
+                    <a href="http://localhost:8080/employee/dashboard" class="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-lg">
+                        <div class="w-11 h-11 rounded-full bg-white p-0.5 shadow-sm border border-amber-400/80 shrink-0 flex items-center justify-center overflow-hidden">
+                            <img src="http://localhost:8080/images/basud-seal.svg" alt="Seal of the Municipality of Basud" class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <div class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-400 font-semibold leading-tight">Republic of the Philippines • Region V</div>
+                            <div class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                                <span>Municipality of Basud</span>
+                                <span class="text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-950/80 border border-amber-600/50">HRMU</span>
+                            </div>
+                            <div class="text-[11px] text-slate-300 hidden sm:block">Centralized Leave Application & Credit Tracking System (C-LACTS)</div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- User Profile Badge & Logout -->
+                <div class="flex items-center gap-3">
+                                            <div class="flex items-center gap-3 pl-3">
+                            <div class="text-right hidden sm:block">
+                                <div class="text-xs font-bold text-white flex items-center justify-end gap-2">
+                                    <span>Vicky Alvaro</span>
+                                                                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-950 text-purple-300 border border-purple-600/50">Admin</span>
+                                                                    </div>
+                                <div class="text-[10px] text-slate-400 font-mono truncate max-w-[160px]">Human Resource Management Unit (HRMU)</div>
+                            </div>
+
+                            <!-- Logout Form -->
+                            <form method="POST" action="http://localhost:8080/logout" class="inline">
+                                <input type="hidden" name="_token" value="rrbkxDxD7au0cqmkAkuyBrKtOiLtzK8XHdaZCZpp" autocomplete="off">                                <button type="submit" class="px-3 py-2 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-rose-950 hover:text-rose-300 border border-slate-700 hover:border-rose-700/50 text-slate-300 transition flex items-center gap-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500" title="Sign out of C-LACTS">
+                                    <i class="ph-bold ph-sign-out text-base"></i>
+                                    <span class="hidden md:inline">Logout</span>
+                                </button>
+                            </form>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body Layout (Side Panel + Main Content) -->
+    <div class="flex-1 flex min-h-0">
+                    <!-- Mobile Overlay Backdrop -->
+            <div id="sidePanelBackdrop" onclick="toggleSidePanel()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-30 hidden md:hidden"></div>
+
+            <!-- Side Panel (Desktop Sticky + Mobile Off-Canvas) -->
+            <aside id="sidePanel" class="fixed md:sticky top-0 md:top-[72px] inset-y-0 md:inset-y-auto left-0 z-50 md:z-30 w-64 bg-slate-900 text-slate-200 border-r border-slate-800 shrink-0 flex flex-col transition-transform duration-200 ease-in-out -translate-x-full md:translate-x-0 md:self-start h-full md:h-[calc(100vh-72px)] overflow-y-auto">
+                
+                <!-- Mobile Close Bar -->
+                <div class="md:hidden flex items-center justify-between p-4 border-b border-slate-800 bg-slate-950">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Navigation Menu</span>
+                    <button type="button" onclick="toggleSidePanel()" class="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer">
+                        <i class="ph-bold ph-x text-lg"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation Items -->
+                <nav class="p-3 space-y-1.5 flex-1 overflow-y-auto">
+                    <!-- 1. Self-Service (Accessible to all authenticated users) -->
+                    <a href="http://localhost:8080/employee/dashboard" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="ph ph-user text-base shrink-0"></i>
+                        <span>Self-Service</span>
+                    </a>
+
+                    <!-- 2. My Leave Record -->
+                    <a href="http://localhost:8080/employee/leave-record" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="ph ph-notebook text-base shrink-0"></i>
+                        <span>My Leave Record</span>
+                    </a>
+
+                    <!-- 3. QR Document Scanner & Desk Terminal (Accessible to All for Testing/Evaluation) -->
+                    <a href="http://localhost:8080/clerk/scanner" class="px-3 py-2 rounded-lg flex items-center justify-between text-xs font-medium transition text-slate-200 hover:text-white hover:bg-slate-800" title="Unified QR barcode scanning and document custody terminal">
+                        <div class="flex items-center gap-3">
+                            <i class="ph-bold ph-qr-code text-base shrink-0 text-amber-400"></i>
+                            <span>QR Document Scanner</span>
+                        </div>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">SCAN</span>
+                    </a>
+
+                    <!-- 4. Leave Records & Starla Engine (HR Staff, Admin) -->
+                                            <a href="http://localhost:8080/hr/leave-records" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-amber-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph-bold ph-identification-card text-base shrink-0"></i>
+                            <span>Leave Records</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/tardiness" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph ph-calculator text-base shrink-0"></i>
+                            <span>HR Starla Engine</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/starla-tables" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition bg-gov-700 text-white shadow-xs font-semibold">
+                            <i class="ph ph-table text-base shrink-0"></i>
+                            <span>Starla Tables</span>
+                        </a>
+                        <a href="http://localhost:8080/hr/transmittals" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-slate-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph ph-file-arrow-up text-base shrink-0"></i>
+                            <span>Batch Transmittals</span>
+                        </a>
+                    
+                    <!-- 5. Admin Control (Admin Level 4 Only) -->
+                                            <a href="http://localhost:8080/admin/dashboard" class="px-3 py-2 rounded-lg flex items-center gap-3 text-xs font-medium transition text-purple-300 hover:text-white hover:bg-slate-800">
+                            <i class="ph-bold ph-shield-star text-amber-400 text-base shrink-0"></i>
+                            <span>Admin Control</span>
+                        </a>
+                                    </nav>
+            </aside>
+        
+        <!-- Main Content Area Column -->
+        <div class="flex-1 flex flex-col min-w-0 bg-slate-50">
+            <!-- Flash Alert Messages -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+                
+                
+                
+                            </div>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="space-y-6">
+
+    <!-- Top GovTech Header Banner -->
+    <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                    <i class="ph-bold ph-sparkle text-amber-600"></i>
+                    <span>⭐ STARLA ⭐ Reference Binder</span>
+                </span>
+                <span class="text-xs text-slate-500 font-mono">Civil Service Commission (CSC) Omnibus Rules on Leave</span>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <i class="ph-bold ph-shield-check text-emerald-600"></i>
+                    <span>159 Verified Lookups</span>
+                </span>
+            </div>
+            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                Civil Service "Starla" Fractional Conversion Tables
+            </h1>
+            <p class="text-xs text-slate-500 mt-0.5 max-w-3xl">
+                Official digitized reference matrix from the physical binder filed at the Human Resource Management Unit (HRMU), Municipality of Basud. Used for discrete semi-monthly tardiness conversions and leave accrual computations.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <a 
+                href="http://localhost:8080/hr/tardiness" 
+                class="px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition border border-slate-300 flex items-center gap-2 shadow-xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-400"
+            >
+                <i class="ph-bold ph-arrow-left text-sm"></i>
+                <span>Tardiness Encoding</span>
+            </a>
+            <button 
+                type="button" 
+                onclick="window.print()" 
+                class="px-3.5 py-2 text-xs font-bold text-white bg-gov-700 hover:bg-gov-800 rounded-xl transition flex items-center gap-2 shadow-xs cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600"
+            >
+                <i class="ph-bold ph-printer text-sm"></i>
+                <span>Print Desk Reference</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Quick Stat Cards (3-Column: Tables IV, II, & Calculator) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 print:hidden">
+        <!-- Card 1: Table IV -->
+        <button 
+            type="button"
+            onclick="switchTableTab('table_4')"
+            class="bg-white rounded-xl p-4 border border-slate-200 shadow-xs hover:border-gov-600 hover:shadow-md transition text-left cursor-pointer group"
+        >
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider group-hover:text-gov-700 transition">Table IV</span>
+                <i class="ph-bold ph-clock text-gov-700 text-lg"></i>
+            </div>
+            <div class="text-2xl font-extrabold text-slate-900 font-mono tracking-tight">
+                68 <span class="text-xs font-normal text-slate-500 font-sans">Rules</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mt-2 pt-2 border-t border-slate-100 truncate">
+                8 Hours (8) • 60 Mins (60)
+            </div>
+        </button>
+
+        <!-- Card 2: Table II -->
+        <button 
+            type="button"
+            onclick="switchTableTab('table_2')"
+            class="bg-white rounded-xl p-4 border border-slate-200 shadow-xs hover:border-gov-600 hover:shadow-md transition text-left cursor-pointer group"
+        >
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider group-hover:text-gov-700 transition">Table II</span>
+                <i class="ph-bold ph-calendar text-emerald-700 text-lg"></i>
+            </div>
+            <div class="text-2xl font-extrabold text-slate-900 font-mono tracking-tight">
+                30 <span class="text-xs font-normal text-slate-500 font-sans">Days</span>
+            </div>
+            <div class="text-[11px] text-slate-500 mt-2 pt-2 border-t border-slate-100 truncate">
+                Daily VL & SL Accrual (1–30 Days)
+            </div>
+        </button>
+
+        <!-- Card 3: Quick Calculator Trigger -->
+        <button 
+            type="button"
+            onclick="switchTableTab('calculator')"
+            class="bg-white rounded-xl p-4 border border-slate-200 shadow-xs hover:border-amber-500 hover:shadow-md transition text-left cursor-pointer group"
+        >
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider group-hover:text-amber-700 transition">Interactive</span>
+                <i class="ph-bold ph-calculator text-amber-600 text-lg"></i>
+            </div>
+            <div class="text-2xl font-extrabold text-amber-700 font-mono tracking-tight">
+                Instant Lookup
+            </div>
+            <div class="text-[11px] text-slate-500 mt-2 pt-2 border-t border-slate-100 truncate">
+                Hours, Mins & Absence Tester
+            </div>
+        </button>
+    </div>
+
+    <!-- Main Navigation Tabs & Instant Search Box -->
+    <div class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
+        
+        <!-- Tab Bar & Search Header -->
+        <div class="bg-slate-50 border-b border-slate-200 p-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-4 print:hidden">
+            <!-- Navigation Tabs -->
+            <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold" id="tableTabsContainer">
+                <button 
+                    type="button" 
+                    onclick="switchTableTab('table_4')" 
+                    id="tabBtn_table_4" 
+                    class="px-3.5 py-2 rounded-xl transition border text-white bg-gov-700 border-gov-700 shadow-xs flex items-center gap-1.5 cursor-pointer"
+                >
+                    <i class="ph-bold ph-clock"></i>
+                    <span>Table IV: Hours & Mins (p.15)</span>
+                </button>
+                <button 
+                    type="button" 
+                    onclick="switchTableTab('table_2')" 
+                    id="tabBtn_table_2" 
+                    class="px-3.5 py-2 rounded-xl transition border text-slate-600 hover:text-slate-900 bg-white border-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer"
+                >
+                    <i class="ph-bold ph-calendar"></i>
+                    <span>Table II: Daily Accrual (p.13)</span>
+                </button>
+                <button 
+                    type="button" 
+                    onclick="switchTableTab('all')" 
+                    id="tabBtn_all" 
+                    class="px-3.5 py-2 rounded-xl transition border text-slate-600 hover:text-slate-900 bg-white border-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer"
+                >
+                    <i class="ph-bold ph-table"></i>
+                    <span>Full Cheat Sheet</span>
+                </button>
+                <button 
+                    type="button" 
+                    onclick="switchTableTab('calculator')" 
+                    id="tabBtn_calculator" 
+                    class="px-3.5 py-2 rounded-xl transition border text-slate-600 hover:text-slate-900 bg-white border-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer"
+                >
+                    <i class="ph-bold ph-calculator"></i>
+                    <span>Live Calculator</span>
+                </button>
+                <button 
+                    type="button" 
+                    onclick="switchTableTab('legal')" 
+                    id="tabBtn_legal" 
+                    class="px-3.5 py-2 rounded-xl transition border text-slate-600 hover:text-slate-900 bg-white border-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer"
+                >
+                    <i class="ph-bold ph-book-bookmark"></i>
+                    <span>Legal Basis</span>
+                </button>
+            </div>
+
+            <!-- Instant Live Table Filter Search -->
+            <div class="relative w-full md:w-72 shrink-0">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <i class="ph ph-magnifying-glass text-base"></i>
+                </div>
+                <input 
+                    type="text" 
+                    id="starlaTableSearch" 
+                    oninput="filterStarlaRows(this.value)"
+                    placeholder="Search minutes, hours, days..." 
+                    class="w-full pl-9 pr-8 py-2 text-xs text-slate-800 placeholder-slate-400 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-gov-600 transition shadow-xs"
+                >
+                <button 
+                    type="button" 
+                    id="clearSearchBtn" 
+                    onclick="clearSearch()" 
+                    class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600"
+                    title="Clear filter"
+                >
+                    <i class="ph-bold ph-x text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: TABLE IV - HOURS & MINUTES (Page 15)                       -->
+        <!-- ================================================================= -->
+        <div id="tabContent_table_4" class="p-4 sm:p-6 space-y-6">
+            <!-- Context Callout Banner -->
+            <div class="bg-gov-50 border-l-4 border-gov-700 p-4 rounded-r-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div>
+                    <h3 class="font-bold text-gov-900 text-sm flex items-center gap-2">
+                        <i class="ph-bold ph-info text-gov-700"></i>
+                        <span>Table IV: Conversion of Working Hours/Minutes into Fractions of a Day (Page 15)</span>
+                    </h3>
+                    <p class="text-slate-600 mt-0.5">
+                        Civil Service 8-Hour Workday conversion standard. Used by HRMU Basud to compute decimal deductions for tardiness and undertime.
+                    </p>
+                </div>
+                <div class="shrink-0 font-mono text-[11px] bg-white px-3 py-1.5 rounded-lg border border-gov-200 text-gov-800 font-bold">
+                    8 Hours = 1.000 Day • 1 Hour = 0.125 Day
+                </div>
+            </div>
+
+            <!-- Discrete CSC Rounding Highlight Banner -->
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1">
+                <div class="font-bold flex items-center gap-1.5">
+                    <i class="ph-bold ph-warning text-amber-600"></i>
+                    <span>CSC Discrete Rounding Parity Guarantee (Zero Decimal Discrepancies)</span>
+                </div>
+                <p class="text-amber-800 text-[11px] leading-relaxed">
+                    Notice specific discrete entries on Page 15 of the official physical binder: 
+                    <strong>30 min = .062</strong> (not .063), 
+                    <strong>18 min = .037</strong> (not .038), 
+                    <strong>42 min = .087</strong> (not .088), and 
+                    <strong>54 min = .112</strong> (not .113). 
+                    C-LACTS guarantees 100% exact parity with HRMU physical desk calculations by strictly querying these digitized discrete values.
+                </p>
+            </div>
+
+            <!-- Working Hours (1 to 8 Hours) Grid -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <i class="ph-bold ph-hourglass-high text-gov-700"></i>
+                    <span>Part 1: Working Hours (1 to 8 Hours)</span>
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="1 hour 0.125 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">1 hour</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.125
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                60 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="2 hours 0.25 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">2 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.250
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                120 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="3 hours 0.375 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">3 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.375
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                180 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="4 hours 0.5 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">4 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.500
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                240 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="5 hours 0.625 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">5 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.625
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                300 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="6 hours 0.75 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">6 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.750
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                360 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="7 hours 0.875 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">7 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                0.875
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                420 mins
+                            </span>
+                        </div>
+                                                                    <div class="searchable-item bg-slate-50 border border-slate-200 rounded-xl p-3 text-center transition hover:border-gov-600 hover:bg-gov-50/50" data-search="8 hours 1 hour hours">
+                            <span class="text-[11px] text-slate-500 font-semibold block">8 hours</span>
+                            <strong class="text-base font-extrabold font-mono text-gov-900 block mt-1">
+                                1.000
+                            </strong>
+                            <span class="text-[10px] text-slate-400 font-mono mt-0.5 block">
+                                480 mins
+                            </span>
+                        </div>
+                                    </div>
+            </div>
+
+            <!-- Working Minutes (1 to 60 Minutes) in 4 Columns -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="ph-bold ph-timer text-gov-700"></i>
+                        <span>Part 2: Working Minutes (1 to 60 Minutes)</span>
+                    </h4>
+                    <span class="text-[11px] text-slate-400 font-mono">Sorted 1–15, 16–30, 31–45, 46–60</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
+                                            <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <div class="bg-slate-100 px-3 py-2 text-[11px] font-bold text-slate-700 border-b border-slate-200 flex justify-between">
+                                <span>Minutes 1 – 15</span>
+                                <span class="font-mono text-slate-500">Day Equiv.</span>
+                            </div>
+                            <div class="divide-y divide-slate-100 text-xs">
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="1 min 0.002 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">1</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">min</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.002
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="2 mins 0.004 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">2</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.004
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="3 mins 0.0006 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">3</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.001
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="4 mins 0.008 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">4</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.008
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="5 mins 0.01 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">5</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.010
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="6 mins 0.012 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">6</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.012
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="7 mins 0.015 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">7</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.015
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="8 mins 0.017 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">8</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.017
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="9 mins 0.019 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">9</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.019
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="10 mins 0.021 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">10</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.021
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="11 mins 0.023 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">11</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.023
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="12 mins 0.025 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">12</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.025
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="13 mins 0.027 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">13</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.027
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="14 mins 0.029 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">14</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.029
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="15 mins 0.031 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">15</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.031
+                                        </div>
+                                    </div>
+                                                            </div>
+                        </div>
+                                            <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <div class="bg-slate-100 px-3 py-2 text-[11px] font-bold text-slate-700 border-b border-slate-200 flex justify-between">
+                                <span>Minutes 16 – 30</span>
+                                <span class="font-mono text-slate-500">Day Equiv.</span>
+                            </div>
+                            <div class="divide-y divide-slate-100 text-xs">
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="16 mins 0.033 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">16</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.033
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="17 mins 0.035 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">17</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.035
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="18 mins 0.037 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">18</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.037
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="19 mins 0.04 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">19</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.040
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="20 mins 0.042 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">20</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.042
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="21 mins 0.044 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">21</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.044
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="22 mins 0.046 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">22</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.046
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="23 mins 0.048 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">23</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.048
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="24 mins 0.05 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">24</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.050
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="25 mins 0.052 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">25</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.052
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="26 mins 0.054 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">26</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.054
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="27 mins 0.056 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">27</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.056
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="28 mins 0.058 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">28</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.058
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="29 mins 0.06 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">29</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.060
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="30 mins 0.062 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">30</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                            <span class="text-[9px] font-bold px-1.5 py-0.2 bg-amber-200 text-amber-900 rounded font-mono">.062</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.062
+                                        </div>
+                                    </div>
+                                                            </div>
+                        </div>
+                                            <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <div class="bg-slate-100 px-3 py-2 text-[11px] font-bold text-slate-700 border-b border-slate-200 flex justify-between">
+                                <span>Minutes 31 – 45</span>
+                                <span class="font-mono text-slate-500">Day Equiv.</span>
+                            </div>
+                            <div class="divide-y divide-slate-100 text-xs">
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="31 mins 0.065 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">31</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.065
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="32 mins 0.067 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">32</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.067
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="33 mins 0.069 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">33</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.069
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="34 mins 0.071 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">34</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.071
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="35 mins 0.073 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">35</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.073
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="36 mins 0.075 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">36</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.075
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="37 mins 0.077 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">37</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.077
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="38 mins 0.079 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">38</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.079
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="39 mins 0.081 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">39</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.081
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="40 mins 0.083 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">40</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.083
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="41 mins 0.085 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">41</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.085
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="42 mins 0.087 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">42</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.087
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="43 mins 0.09 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">43</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.090
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="44 mins 0.092 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">44</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.092
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="45 mins 0.094 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">45</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.094
+                                        </div>
+                                    </div>
+                                                            </div>
+                        </div>
+                                            <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                            <div class="bg-slate-100 px-3 py-2 text-[11px] font-bold text-slate-700 border-b border-slate-200 flex justify-between">
+                                <span>Minutes 46 – 60</span>
+                                <span class="font-mono text-slate-500">Day Equiv.</span>
+                            </div>
+                            <div class="divide-y divide-slate-100 text-xs">
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="46 mins 0.096 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">46</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.096
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="47 mins 0.098 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">47</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.098
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="48 mins 0.1 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">48</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.100
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="49 mins 0.102 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">49</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.102
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="50 mins 0.104 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">50</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.104
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="51 mins 0.106 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">51</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.106
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="52 mins 0.108 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">52</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.108
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="53 mins 0.11 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">53</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.110
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="54 mins 0.112 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">54</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.112
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="55 mins 0.115 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">55</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.115
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="56 mins 0.117 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">56</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.117
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="57 mins 0.119 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">57</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.119
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="58 mins 0.121 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">58</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.121
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 " data-search="59 mins 0.123 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">59</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.123
+                                        </div>
+                                    </div>
+                                                                                                        <div class="searchable-item px-3 py-2 flex items-center justify-between transition hover:bg-slate-50 bg-amber-50/40" data-search="60 mins 0.125 min mins minute minutes">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-mono font-bold text-slate-800 w-8 text-right">60</span>
+                                            <span class="text-slate-400 text-[11px] font-mono">mins</span>
+                                                                                            <span class="text-[9px] font-bold px-1.5 py-0.2 bg-gov-200 text-gov-900 rounded font-mono">1 hr</span>
+                                                                                    </div>
+                                        <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
+                                            0.125
+                                        </div>
+                                    </div>
+                                                            </div>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 2: TABLE II - DAILY ACCRUAL (Page 13)                         -->
+        <!-- ================================================================= -->
+        <div id="tabContent_table_2" class="hidden p-4 sm:p-6 space-y-6">
+            <!-- Context Callout -->
+            <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div>
+                    <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-2">
+                        <i class="ph-bold ph-calendar text-emerald-700"></i>
+                        <span>Table II: Vacation & Sick Leave Credits Earned on a Daily Basis (Page 13)</span>
+                    </h3>
+                    <p class="text-slate-600 mt-0.5">
+                        Computes partial monthly service earnings. Vacation Leave (VL) and Sick Leave (SL) accrue at identical rates up to 1.250 days per full month (30 days).
+                    </p>
+                </div>
+                <div class="shrink-0 font-mono text-[11px] bg-white px-3 py-1.5 rounded-lg border border-emerald-200 text-emerald-800 font-bold">
+                    15 Days = 0.625 Day • 30 Days = 1.250 Days
+                </div>
+            </div>
+
+            <!-- Table II 2-Column Side-by-Side Presentation -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- First Half: Days 1 to 15 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                    <div class="bg-slate-100 px-4 py-2.5 text-xs font-bold text-slate-800 border-b border-slate-200 flex items-center justify-between">
+                        <span>Days of Service: 1 to 15 Days</span>
+                        <span class="text-[11px] text-slate-500 font-mono">VL & SL (Each)</span>
+                    </div>
+                    <table class="w-full text-xs">
+                        <thead class="bg-slate-50 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-2 text-left">Service Days</th>
+                                <th class="px-4 py-2 text-right">VL Earned</th>
+                                <th class="px-4 py-2 text-right">SL Earned</th>
+                                <th class="px-4 py-2 text-right">Total Combined</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="1 day 0.042 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        1 day
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.042
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.042
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.084
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="2 days 0.083 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        2 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.083
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.083
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.166
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="3 days 0.125 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        3 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.125
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.125
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.250
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="4 days 0.167 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        4 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.167
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.167
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.334
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="5 days 0.208 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        5 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.208
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.208
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.416
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="6 days 0.25 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        6 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.250
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.250
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.500
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="7 days 0.292 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        7 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.292
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.292
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.584
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="8 days 0.333 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        8 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.333
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.333
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.666
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="9 days 0.375 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        9 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.375
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.375
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.750
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="10 days 0.417 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        10 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.417
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.417
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.834
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="11 days 0.458 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        11 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.458
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.458
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        0.916
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="12 days 0.5 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        12 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.500
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.500
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.000
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="13 days 0.542 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        13 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.542
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.542
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.084
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="14 days 0.583 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        14 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.583
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.583
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.166
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition bg-emerald-50/60 font-bold" data-search="15 days 0.625 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        15 days
+                                                                                    <span class="text-[9px] bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded ml-1 font-bold">1/2 Month</span>
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.625
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.625
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.250
+                                    </td>
+                                </tr>
+                                                    </tbody>
+                    </table>
+                </div>
+
+                <!-- Second Half: Days 16 to 30 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
+                    <div class="bg-slate-100 px-4 py-2.5 text-xs font-bold text-slate-800 border-b border-slate-200 flex items-center justify-between">
+                        <span>Days of Service: 16 to 30 Days</span>
+                        <span class="text-[11px] text-slate-500 font-mono">VL & SL (Each)</span>
+                    </div>
+                    <table class="w-full text-xs">
+                        <thead class="bg-slate-50 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200">
+                            <tr>
+                                <th class="px-4 py-2 text-left">Service Days</th>
+                                <th class="px-4 py-2 text-right">VL Earned</th>
+                                <th class="px-4 py-2 text-right">SL Earned</th>
+                                <th class="px-4 py-2 text-right">Total Combined</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="16 days 0.667 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        16 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.667
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.667
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.334
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="17 days 0.708 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        17 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.708
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.708
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.416
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="18 days 0.75 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        18 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.750
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.750
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.500
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="19 days 0.792 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        19 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.792
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.792
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.584
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="20 days 0.833 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        20 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.833
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.833
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.666
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="21 days 0.875 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        21 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.875
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.875
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.750
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="22 days 0.917 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        22 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.917
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.917
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.834
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="23 days 0.958 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        23 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        0.958
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        0.958
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        1.916
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="24 days 1 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        24 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.000
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.000
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.000
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="25 days 1.042 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        25 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.042
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.042
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.084
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="26 days 1.083 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        26 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.083
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.083
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.166
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="27 days 1.125 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        27 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.125
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.125
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.250
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="28 days 1.167 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        28 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.167
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.167
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.334
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition " data-search="29 days 1.208 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        29 days
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.208
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.208
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.416
+                                    </td>
+                                </tr>
+                                                                                            <tr class="searchable-item hover:bg-slate-50 transition bg-emerald-100/70 font-bold" data-search="30 days 1.25 day days">
+                                    <td class="px-4 py-2 font-mono text-slate-800">
+                                        30 days
+                                                                                    <span class="text-[9px] bg-emerald-700 text-white px-1.5 py-0.5 rounded ml-1 font-bold">Full Month</span>
+                                                                            </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-emerald-800">
+                                        1.250
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        1.250
+                                    </td>
+                                    <td class="px-4 py-2 font-mono font-extrabold text-right text-slate-900">
+                                        2.500
+                                    </td>
+                                </tr>
+                                                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+            <div class="border-b border-slate-200 pb-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base font-extrabold text-slate-900">
+                        ⭐ STARLA ⭐ Master Civil Service Conversion Reference Sheet
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                        Civil Service Commission (CSC) Omnibus Rules on Leave (Rule XVI) • HRMU Municipality of Basud
+                    </p>
+                </div>
+                <div class="font-mono text-xs text-slate-400">
+                    Tables II & IV Complete Digitized Set
+                </div>
+            </div>
+
+            <!-- Print View Header Block (Visible on Print) -->
+            <div class="hidden print:block border-b-2 border-slate-800 pb-4 mb-4 text-center">
+                <div class="text-xs uppercase font-bold tracking-widest text-slate-600">Republic of the Philippines • Region V</div>
+                <div class="text-lg font-bold text-slate-900">Municipality of Basud, Camarines Norte</div>
+                <div class="text-sm font-semibold text-slate-800">Human Resource Management Unit (HRMU)</div>
+                <div class="text-xs text-slate-600 mt-1">⭐ STARLA ⭐ Civil Service Leave Deduction & Accrual Matrix (Tables II & IV)</div>
+            </div>
+
+            <!-- Section 1: Table IV Summary -->
+            <div class="space-y-3">
+                <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-gov-700"></span>
+                    <span>1. CSC Table IV: Conversion of Working Hours/Minutes into Fractions of a Day</span>
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 text-center text-xs">
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">1 hour</span>
+                            <strong class="font-mono text-xs text-gov-900">0.125</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">2 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.250</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">3 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.375</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">4 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.500</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">5 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.625</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">6 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.750</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">7 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">0.875</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-slate-50">
+                            <span class="text-[10px] text-slate-500 block">8 hours</span>
+                            <strong class="font-mono text-xs text-gov-900">1.000</strong>
+                        </div>
+                                    </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 text-xs font-mono">
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">5 mins</span>
+                            <strong class="text-gov-900">0.010</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">10 mins</span>
+                            <strong class="text-gov-900">0.021</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">15 mins</span>
+                            <strong class="text-gov-900">0.031</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">18 mins</span>
+                            <strong class="text-gov-900">0.037</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">20 mins</span>
+                            <strong class="text-gov-900">0.042</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">25 mins</span>
+                            <strong class="text-gov-900">0.052</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">30 mins</span>
+                            <strong class="text-gov-900">0.062</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">35 mins</span>
+                            <strong class="text-gov-900">0.073</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">40 mins</span>
+                            <strong class="text-gov-900">0.083</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">42 mins</span>
+                            <strong class="text-gov-900">0.087</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">45 mins</span>
+                            <strong class="text-gov-900">0.094</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">50 mins</span>
+                            <strong class="text-gov-900">0.104</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">54 mins</span>
+                            <strong class="text-gov-900">0.112</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">55 mins</span>
+                            <strong class="text-gov-900">0.115</strong>
+                        </div>
+                                            <div class="p-2 border border-slate-200 rounded-lg bg-white flex justify-between">
+                            <span class="text-slate-600">60 mins</span>
+                            <strong class="text-gov-900">0.125</strong>
+                        </div>
+                                    </div>
+            </div>
+
+            <!-- Section 2: Table II Summary -->
+            <div class="space-y-3 pt-4 border-t border-slate-200">
+                <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                    <span>2. CSC Table II: Daily Vacation & Sick Leave Accrual (Key Milestones)</span>
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs font-mono">
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">1 day</span>
+                            <strong class="text-sm text-emerald-800">0.042</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">5 days</span>
+                            <strong class="text-sm text-emerald-800">0.208</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">10 days</span>
+                            <strong class="text-sm text-emerald-800">0.417</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">15 days</span>
+                            <strong class="text-sm text-emerald-800">0.625</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">20 days</span>
+                            <strong class="text-sm text-emerald-800">0.833</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">25 days</span>
+                            <strong class="text-sm text-emerald-800">1.042</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                            <div class="p-2.5 border border-slate-200 rounded-lg bg-slate-50 flex flex-col justify-between">
+                            <span class="text-[10px] text-slate-500 font-sans">30 days</span>
+                            <strong class="text-sm text-emerald-800">1.250</strong>
+                            <span class="text-[9px] text-slate-400 font-sans mt-0.5">VL & SL each</span>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: INTERACTIVE LIVE CONVERTER & CALCULATOR                     -->
+        <!-- ================================================================= -->
+        <div id="tabContent_calculator" class="hidden p-4 sm:p-6 space-y-6">
+            <div class="max-w-2xl mx-auto space-y-5">
+                <div class="text-center">
+                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                        <i class="ph-bold ph-calculator text-amber-600"></i>
+                        <span>Interactive Verification Tool</span>
+                    </span>
+                    <h3 class="text-lg font-bold text-slate-900 mt-2">
+                        HR Starla Instant Leave Deduction Calculator
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Cross-check physical DTR numbers against the digitized CSC conversion tables with 100% mathematical transparency.
+                    </p>
+                </div>
+
+                <!-- Input Card -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label for="calc_hours" class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                Late Hours (Table IV)
+                            </label>
+                            <input 
+                                type="number" 
+                                id="calc_hours" 
+                                min="0" 
+                                max="160" 
+                                value="0" 
+                                oninput="computeInteractiveStarla()"
+                                class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold text-slate-900 bg-white focus:ring-2 focus:ring-gov-600"
+                            >
+                        </div>
+                        <div>
+                            <label for="calc_minutes" class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                Late Minutes (Table IV)
+                            </label>
+                            <input 
+                                type="number" 
+                                id="calc_minutes" 
+                                min="0" 
+                                max="59" 
+                                value="0" 
+                                oninput="computeInteractiveStarla()"
+                                class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold text-slate-900 bg-white focus:ring-2 focus:ring-gov-600"
+                            >
+                        </div>
+                        <div>
+                            <label for="calc_absent" class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                                Absences (Table II/III)
+                            </label>
+                            <input 
+                                type="number" 
+                                step="0.5" 
+                                min="0" 
+                                max="31" 
+                                id="calc_absent" 
+                                value="0.0" 
+                                oninput="computeInteractiveStarla()"
+                                class="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold text-slate-900 bg-white focus:ring-2 focus:ring-gov-600"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Breakdown & Result Box -->
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 text-xs space-y-3">
+                        <div class="font-bold text-slate-800 border-b border-slate-100 pb-2 flex items-center justify-between">
+                            <span>Calculation Breakdown:</span>
+                            <span class="text-[10px] text-gov-700 font-mono font-semibold" id="calcSourceLabel">Table IV + Table II Discrete Matches</span>
+                        </div>
+
+                        <div class="flex items-center justify-between text-slate-600">
+                            <span>Hours Portion (Table IV):</span>
+                            <span class="font-mono font-bold text-gov-900" id="calcHoursEquiv">0.000 days</span>
+                        </div>
+
+                        <div class="flex items-center justify-between text-slate-600">
+                            <span>Minutes Portion (Table IV):</span>
+                            <span class="font-mono font-bold text-gov-900" id="calcMinsEquiv">0.000 days</span>
+                        </div>
+
+                        <div class="flex items-center justify-between text-slate-600">
+                            <span>Absence Deduction (Table II / III):</span>
+                            <span class="font-mono font-bold text-gov-900" id="calcAbsenceEquiv">0.000 days</span>
+                        </div>
+
+                        <div class="pt-3 border-t-2 border-slate-200 flex items-center justify-between text-sm">
+                            <span class="font-bold text-slate-900">Total Leave Credit Deducted:</span>
+                            <span class="text-xl font-extrabold font-mono text-rose-600" id="calcTotalDeduction">0.000 days</span>
+                        </div>
+                    </div>
+
+                    <!-- Deduct Priority Reminder -->
+                    <div class="bg-gov-50 border border-gov-200 rounded-xl p-3 text-[11px] text-gov-900 flex items-start gap-2">
+                        <i class="ph-bold ph-shield-check text-gov-700 text-base shrink-0 mt-0.5"></i>
+                        <div>
+                            <strong>CSC Deduction Priority Rule:</strong> Tardiness & absences are debited first against <strong>Vacation Leave (VL)</strong>. If VL is exhausted, remaining is debited against <strong>Sick Leave (SL)</strong>. If both are exhausted, it converts to <strong>Leave Without Pay (LWOP)</strong>.
+                        </div>
+                    </div>
+
+                    <!-- Action Button: Go to Encoding Form -->
+                    <div class="text-center pt-2">
+                        <a 
+                            href="http://localhost:8080/hr/tardiness" 
+                            class="inline-flex items-center gap-2 px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white font-bold rounded-xl text-xs shadow-xs transition"
+                        >
+                            <i class="ph-bold ph-pencil-simple text-sm"></i>
+                            <span>Encode in Semi-Monthly Attendance Terminal</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 6: LEGAL BASIS & PHYSICAL BINDER METADATA                     -->
+        <!-- ================================================================= -->
+        <div id="tabContent_legal" class="hidden p-4 sm:p-6 space-y-6">
+            <div class="max-w-3xl space-y-5">
+                <div>
+                    <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="ph-bold ph-book-bookmark text-gov-700"></i>
+                        <span>Legal Authority & Physical Artifact Verification</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">
+                        Historical and statutory codification of leave accruals and decimal conversions in the Philippine Civil Service.
+                    </p>
+                </div>
+
+                <!-- Legal Cards -->
+                <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1">
+                        <h4 class="font-bold text-slate-900">1. Physical Evidence at HRMU Basud:</h4>
+                        <p>
+                            Verified scans of the primary reference binder filed at the Human Resource Management Unit (HRMU), Municipal Hall, Basud, Camarines Norte, explicitly titled <strong>"⭐ STARLA ⭐"</strong>.
+                        </p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                            <li><strong>Cover Page:</strong> Explicitly marked <em>SPECIAL PRIVILEGE LEAVE (3 DAYS)</em> and <em>MANDATORY FORCE LEAVE (5 DAYS)</em>.</li>
+                            <li><strong>Page 13:</strong> Table II: Vacation and Sick Leave Credits Earned on a Daily Basis (1 to 30 days).</li>
+                            <li><strong>Page 14:</strong> Table III: Leave Credits Earned with LWOP (Omitted per HRMU Basud operational policy; staff exclusively utilizes Table II and Table IV).</li>
+                            <li><strong>Page 15:</strong> Table IV: Conversion of Working Hours/Minutes into Fractions of a Day (8-Hour Workday; 1 to 8 Hours and 1 to 60 Minutes).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1">
+                        <h4 class="font-bold text-slate-900">2. Statutory Civil Service Issuances:</h4>
+                        <ul class="list-disc list-inside mt-1 space-y-1 text-slate-600">
+                            <li><strong>Civil Service Commission Omnibus Rules on Leave (Rule XVI of Executive Order No. 292):</strong> Statutory framework governing leave accruals, mandatory forced leave, special privilege leave, and tardiness deductions.</li>
+                            <li><strong>CSC Memorandum Circular No. 41, s. 1998:</strong> Guidelines on the application and deduction of leave credits.</li>
+                            <li><strong>CSC Memorandum Circular No. 14, s. 1999:</strong> Prescribing the fractional conversion matrix for hours and minutes.</li>
+                            <li><strong>CSC Memorandum Circular No. 01, s. 2026:</strong> Institutionalization of Wellness Leave (5 working days).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-1">
+                        <h4 class="font-bold text-slate-900">3. Non-Negotiable System Guardrails (C-LACTS):</h4>
+                        <ul class="list-disc list-inside mt-1 space-y-1 text-slate-600">
+                            <li><strong>Guardrail #1:</strong> Zero raw biometric ingestion. System accepts only pre-verified aggregate summaries.</li>
+                            <li><strong>Guardrail #6:</strong> Double-deduction shield: automatically prevents deducting absences covered by approved leave applications.</li>
+                            <li><strong>Guardrail #7:</strong> Immutability of Starla conversion tables: multipliers are never hardcoded in controllers; all conversions strictly query <code>starla_reference</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Data Dictionary for Live Calculator in JS -->
+<script>
+    // Digitize Starla Table IV into JavaScript for instantaneous client-side calculation
+    const starlaHours = {
+                    1: 0.125,
+                    2: 0.25,
+                    3: 0.375,
+                    4: 0.5,
+                    5: 0.625,
+                    6: 0.75,
+                    7: 0.875,
+                    8: 1,
+            };
+
+    const starlaMinutes = {
+                    1: 0.002,
+                    2: 0.004,
+                    3: 0.0006,
+                    4: 0.008,
+                    5: 0.01,
+                    6: 0.012,
+                    7: 0.015,
+                    8: 0.017,
+                    9: 0.019,
+                    10: 0.021,
+                    11: 0.023,
+                    12: 0.025,
+                    13: 0.027,
+                    14: 0.029,
+                    15: 0.031,
+                    16: 0.033,
+                    17: 0.035,
+                    18: 0.037,
+                    19: 0.04,
+                    20: 0.042,
+                    21: 0.044,
+                    22: 0.046,
+                    23: 0.048,
+                    24: 0.05,
+                    25: 0.052,
+                    26: 0.054,
+                    27: 0.056,
+                    28: 0.058,
+                    29: 0.06,
+                    30: 0.062,
+                    31: 0.065,
+                    32: 0.067,
+                    33: 0.069,
+                    34: 0.071,
+                    35: 0.073,
+                    36: 0.075,
+                    37: 0.077,
+                    38: 0.079,
+                    39: 0.081,
+                    40: 0.083,
+                    41: 0.085,
+                    42: 0.087,
+                    43: 0.09,
+                    44: 0.092,
+                    45: 0.094,
+                    46: 0.096,
+                    47: 0.098,
+                    48: 0.1,
+                    49: 0.102,
+                    50: 0.104,
+                    51: 0.106,
+                    52: 0.108,
+                    53: 0.11,
+                    54: 0.112,
+                    55: 0.115,
+                    56: 0.117,
+                    57: 0.119,
+                    58: 0.121,
+                    59: 0.123,
+                    60: 0.125,
+            };
+
+    const starlaDaily = {
+                    1: 0.042,
+                    2: 0.083,
+                    3: 0.125,
+                    4: 0.167,
+                    5: 0.208,
+                    6: 0.25,
+                    7: 0.292,
+                    8: 0.333,
+                    9: 0.375,
+                    10: 0.417,
+                    11: 0.458,
+                    12: 0.5,
+                    13: 0.542,
+                    14: 0.583,
+                    15: 0.625,
+                    16: 0.667,
+                    17: 0.708,
+                    18: 0.75,
+                    19: 0.792,
+                    20: 0.833,
+                    21: 0.875,
+                    22: 0.917,
+                    23: 0.958,
+                    24: 1,
+                    25: 1.042,
+                    26: 1.083,
+                    27: 1.125,
+                    28: 1.167,
+                    29: 1.208,
+                    30: 1.25,
+            };
+
+    // Tab Switcher
+    function switchTableTab(tabId) {
+        const tabs = ['table_4', 'table_2', 'all', 'calculator', 'legal'];
+        
+        tabs.forEach(t => {
+            const content = document.getElementById(`tabContent_${t}`);
+            const btn = document.getElementById(`tabBtn_${t}`);
+
+            if (content) {
+                if (t === tabId) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            }
+
+            if (btn) {
+                if (t === tabId) {
+                    btn.className = 'px-3.5 py-2 rounded-xl transition border text-white bg-gov-700 border-gov-700 shadow-xs flex items-center gap-1.5 cursor-pointer font-bold';
+                } else {
+                    btn.className = 'px-3.5 py-2 rounded-xl transition border text-slate-600 hover:text-slate-900 bg-white border-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer font-bold';
+                }
+            }
+        });
+    }
+
+    // Instant Search / Filter Rows
+    function filterStarlaRows(query) {
+        const cleanQuery = query.toLowerCase().trim();
+        const clearBtn = document.getElementById('clearSearchBtn');
+        
+        if (cleanQuery.length > 0) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
+
+        const items = document.querySelectorAll('.searchable-item');
+        items.forEach(el => {
+            const searchData = el.getAttribute('data-search') || '';
+            if (cleanQuery === '' || searchData.toLowerCase().includes(cleanQuery)) {
+                el.style.display = '';
+                if (cleanQuery !== '') {
+                    el.classList.add('ring-2', 'ring-gov-600', 'bg-gov-50');
+                } else {
+                    el.classList.remove('ring-2', 'ring-gov-600', 'bg-gov-50');
+                }
+            } else {
+                el.style.display = 'none';
+                el.classList.remove('ring-2', 'ring-gov-600', 'bg-gov-50');
+            }
+        });
+    }
+
+    function clearSearch() {
+        const input = document.getElementById('starlaTableSearch');
+        if (input) {
+            input.value = '';
+            filterStarlaRows('');
+            input.focus();
+        }
+    }
+
+    // Interactive Starla Calculator
+    function computeInteractiveStarla() {
+        let hours = parseInt(document.getElementById('calc_hours').value) || 0;
+        let minutes = parseInt(document.getElementById('calc_minutes').value) || 0;
+        let daysAbsent = parseFloat(document.getElementById('calc_absent').value) || 0.0;
+
+        if (hours < 0) hours = 0;
+        if (minutes < 0) minutes = 0;
+        if (daysAbsent < 0) daysAbsent = 0;
+
+        // Normalize minutes >= 60
+        if (minutes >= 60) {
+            hours += Math.floor(minutes / 60);
+            minutes = minutes % 60;
+        }
+
+        // 1. Hours equivalent
+        let hoursEquiv = 0.000;
+        if (hours > 0) {
+            const fullDays = Math.floor(hours / 8);
+            const remHours = hours % 8;
+            hoursEquiv = fullDays * 1.000;
+            if (remHours > 0 && starlaHours[remHours]) {
+                hoursEquiv += starlaHours[remHours];
+            }
+        }
+
+        // 2. Minutes equivalent
+        let minsEquiv = 0.000;
+        if (minutes > 0 && starlaMinutes[minutes]) {
+            minsEquiv = starlaMinutes[minutes];
+        }
+
+        // 3. Absence equivalent (Table II daily accrual basis)
+        let absenceEquiv = 0.000;
+        if (daysAbsent > 0) {
+            const wholeDay = Math.floor(daysAbsent);
+            const fraction = daysAbsent - wholeDay;
+            let wholeVal = 0.000;
+            if (wholeDay > 0) {
+                wholeVal = starlaDaily[wholeDay] || (wholeDay * 0.042);
+            }
+            const fractionVal = Math.round(fraction * 0.042 * 1000) / 1000;
+            absenceEquiv = Math.round((wholeVal + fractionVal) * 1000) / 1000;
+        }
+
+        const totalDeduction = Math.round((hoursEquiv + minsEquiv + absenceEquiv) * 1000) / 1000;
+
+        document.getElementById('calcHoursEquiv').textContent = hoursEquiv.toFixed(3) + ' days';
+        document.getElementById('calcMinsEquiv').textContent = minsEquiv.toFixed(3) + ' days';
+        document.getElementById('calcAbsenceEquiv').textContent = absenceEquiv.toFixed(3) + ' days';
+        document.getElementById('calcTotalDeduction').textContent = totalDeduction.toFixed(3) + ' days';
+    }
+
+    // Auto-select tab if provided via URL parameter
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const tabParam = params.get('tab');
+        if (tabParam) {
+            switchTableTab(tabParam);
+        }
+        const qParam = params.get('q');
+        if (qParam) {
+            const searchInput = document.getElementById('starlaTableSearch');
+            if (searchInput) {
+                searchInput.value = qParam;
+                filterStarlaRows(qParam);
+            }
+        }
+    });
+</script>
+
+<style>
+    @media print {
+        header, footer, nav, #tableTabsContainer, #starlaTableSearch, button, a {
+            display: none !important;
+        }
+        body {
+            background-color: white !important;
+            color: black !important;
+        }
+        #tabContent_all {
+            display: block !important;
+        }
+        #tabContent_table_4, #tabContent_table_2, #tabContent_calculator, #tabContent_legal {
+            display: none !important;
+        }
+    }
+</style>
+            </main>
+
+            <!-- GovTech System Footer -->
+            <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-xs text-slate-500">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <img src="http://localhost:8080/images/basud-seal.svg" alt="Basud Seal" class="w-5 h-5 object-contain">
+                        <span>© 2026 <strong>Municipal Government of Basud, Camarines Norte</strong> — Human Resource Management Unit (HRMU)</span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-3 text-slate-400 text-[11px]">
+                        <span>CSC Form 6 (Rev. 2020)</span>
+                        <span>•</span>
+                        <span>Rule XVI 5-Day SLA</span>
+                        <span>•</span>
+                        <span>Starla Tables II, III, IV</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Side Panel Controller Script -->
+    <script>
+        function toggleSidePanel() {
+            const panel = document.getElementById('sidePanel');
+            const backdrop = document.getElementById('sidePanelBackdrop');
+            if (panel && backdrop) {
+                const isClosed = panel.classList.contains('-translate-x-full');
+                if (isClosed) {
+                    panel.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                    document.body.classList.add('overflow-hidden', 'md:overflow-auto');
+                } else {
+                    panel.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden', 'md:overflow-auto');
+                }
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const panel = document.getElementById('sidePanel');
+                const backdrop = document.getElementById('sidePanelBackdrop');
+                if (panel && backdrop && !panel.classList.contains('-translate-x-full')) {
+                    panel.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden', 'md:overflow-auto');
+                }
+            }
+        });
+    </script>
+
+    </body>
+</html>
+
+
