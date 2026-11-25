@@ -16,9 +16,16 @@ class SampleTransactionSeeder extends Seeder
         $now = Carbon::now();
 
         // Retrieve foreign key references
-        $seniorEmp = DB::table('employees')->where('employee_no', 'BASUD-EMP-101')->first();
-        $midEmp = DB::table('employees')->where('employee_no', 'BASUD-EMP-102')->first();
-        $criticalEmp = DB::table('employees')->where('employee_no', 'BASUD-EMP-103')->first();
+        $seniorEmp = DB::table('employees')->where('employee_no', '101')->orWhere('employee_no', 'BASUD-EMP-101')->first()
+            ?? DB::table('employees')->first();
+        $midEmp = DB::table('employees')->where('employee_no', '102')->orWhere('employee_no', 'BASUD-EMP-102')->first()
+            ?? $seniorEmp;
+        $criticalEmp = DB::table('employees')->where('employee_no', '103')->orWhere('employee_no', 'BASUD-EMP-103')->first()
+            ?? $seniorEmp;
+
+        $seniorEmpId = $seniorEmp->employee_id ?? $seniorEmp->id;
+        $midEmpId = $midEmp->employee_id ?? $midEmp->id;
+        $criticalEmpId = $criticalEmp->employee_id ?? $criticalEmp->id;
 
         $hrUser = DB::table('users')->where('username', 'hr_staff01')->first();
         $mayorClerkUser = DB::table('users')->where('username', 'clerk_mayor')->first();
@@ -40,7 +47,7 @@ class SampleTransactionSeeder extends Seeder
         $appAId = DB::table('leave_applications')->updateOrInsert(
             ['reference_code' => $appARef],
             [
-                'employee_id' => $seniorEmp->employee_id ?? $seniorEmp->id ?? 1,
+                'employee_id' => $seniorEmpId,
                 'leave_type_id' => $vlType->leave_type_id ?? $vlType->id ?? 1,
                 'date_from' => '2026-10-12',
                 'date_to' => '2026-10-14',
@@ -128,7 +135,7 @@ class SampleTransactionSeeder extends Seeder
 
         // Ledger Entry for Approved 3-Day Leave
         DB::table('leave_ledger_entries')->insertOrIgnore([
-            'employee_id' => $seniorEmp->employee_id ?? $seniorEmp->id ?? 1,
+            'employee_id' => $seniorEmpId,
             'leave_type_id' => $vlType->leave_type_id ?? $vlType->id ?? 1,
             'application_id' => $applicationAId,
             'deduction_id' => null,
@@ -147,7 +154,7 @@ class SampleTransactionSeeder extends Seeder
         DB::table('leave_applications')->updateOrInsert(
             ['reference_code' => $appBRef],
             [
-                'employee_id' => $midEmp->employee_id ?? $midEmp->id ?? 2,
+                'employee_id' => $midEmpId,
                 'leave_type_id' => $vlType->leave_type_id ?? $vlType->id ?? 1,
                 'date_from' => '2026-11-03',
                 'date_to' => '2026-11-05',
@@ -222,7 +229,7 @@ class SampleTransactionSeeder extends Seeder
         // Mid-level Employee incurred 45 minutes of aggregate tardiness in Oct 1-15
         // Starla Table IV: 45 minutes = 0.094 day
         $periodId = $firstOctPeriod->pay_period_id ?? $firstOctPeriod->id ?? 19;
-        $tardyEmpId = $midEmp->employee_id ?? $midEmp->id ?? 2;
+        $tardyEmpId = $midEmpId;
 
         DB::table('attendance_deductions')->updateOrInsert(
             [

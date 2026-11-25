@@ -187,28 +187,30 @@ class UserAndEmployeeSeeder extends Seeder
             );
 
             // C. Seed Certified Leave Balances (Year 2026)
-            $balanceMap = [
-                $vlType->leave_type_id ?? $vlType->id ?? 1 => $p['balances']['VL'],
-                $slType->leave_type_id ?? $slType->id ?? 2 => $p['balances']['SL'],
-                $flType->leave_type_id ?? $flType->id ?? 3 => $p['balances']['FL'],
-                $splType->leave_type_id ?? $splType->id ?? 4 => $p['balances']['SPL'],
-                $wlType->leave_type_id ?? $wlType->id ?? 5 => $p['balances']['WL'],
-            ];
+            if (!empty($p['balances'])) {
+                $balanceMap = [
+                    $vlType->leave_type_id ?? $vlType->id ?? 1 => $p['balances']['VL'] ?? 0.0,
+                    $slType->leave_type_id ?? $slType->id ?? 2 => $p['balances']['SL'] ?? 0.0,
+                    $flType->leave_type_id ?? $flType->id ?? 3 => $p['balances']['FL'] ?? 0.0,
+                    $splType->leave_type_id ?? $splType->id ?? 4 => $p['balances']['SPL'] ?? 0.0,
+                    $wlType->leave_type_id ?? $wlType->id ?? 5 => $p['balances']['WL'] ?? 0.0,
+                ];
 
-            foreach ($balanceMap as $typeId => $balValue) {
-                DB::table('leave_balances')->updateOrInsert(
-                    [
-                        'employee_id' => $empId,
-                        'leave_type_id' => $typeId,
-                        'year' => 2026,
-                    ],
-                    [
-                        'balance' => $balValue,
-                        'last_posted_at' => $now,
-                        'updated_at' => $now,
-                        'created_at' => $now,
-                    ]
-                );
+                foreach ($balanceMap as $typeId => $balValue) {
+                    DB::table('leave_balances')->updateOrInsert(
+                        [
+                            'employee_id' => $empId,
+                            'leave_type_id' => $typeId,
+                            'year' => 2026,
+                        ],
+                        [
+                            'balance' => $balValue,
+                            'last_posted_at' => $now,
+                            'updated_at' => $now,
+                            'created_at' => $now,
+                        ]
+                    );
+                }
             }
         }
 
