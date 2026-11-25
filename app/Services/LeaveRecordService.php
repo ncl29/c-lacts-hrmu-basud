@@ -913,7 +913,18 @@ class LeaveRecordService
             $currentDate = Carbon::now()->startOfDay();
 
             foreach ($employees as $emp) {
+                // If employee has a date_hired in this year, start month is hire month; if hired after this year, skip
+                $hireDate = $emp->date_hired ? Carbon::parse($emp->date_hired) : null;
                 $startMonth = 1;
+                if ($hireDate) {
+                    if ($hireDate->year > $year) {
+                        continue; // Not yet hired in this year
+                    }
+                    if ($hireDate->year === $year) {
+                        $startMonth = $hireDate->month;
+                    }
+                }
+
                 $empMaxMonth = $maxMonth;
 
                 for ($m = $startMonth; $m <= $empMaxMonth; $m++) {
@@ -939,16 +950,31 @@ class LeaveRecordService
                         ->exists();
 
                     if (!$earnedExists) {
+                        $isMidMonthHire = ($hireDate && $hireDate->year === $year && $m === $hireDate->month && $hireDate->day > 1);
+                        $creditAmount = '1.25';
+                        $particularText = 'Earned';
+                        $dateActionTaken = 'Monthly Accrual (CSC Table II - 30 days of service)';
+
+                        if ($isMidMonthHire) {
+                            $daysOfService = max(1, min(30, 30 - $hireDate->day + 1));
+                            $ref = StarlaReference::where('table_ref', 'Table II')
+                                ->where('input_value', "{$daysOfService} " . ($daysOfService === 1 ? 'day' : 'days'))
+                                ->value('day_equivalent');
+                            $creditAmount = $ref !== null ? (string)$ref : sprintf('%.3f', ($daysOfService / 30) * 1.250);
+                            $particularText = "Earned (Table II: {$daysOfService} days)";
+                            $dateActionTaken = "Appointment / Start Date: {$hireDate->format('M d, Y')} ({$daysOfService} days of service per CSC Table II)";
+                        }
+
                         LeaveRecord::create([
                             'employee_id' => $emp->employee_id,
                             'period' => $date->format('F Y'),
-                            'particular' => 'Earned',
+                            'particular' => $particularText,
                             'accrual_month' => $accrualMonth,
-                            'is_prorated' => false,
-                            'vl_earned' => '1.25',
-                            'sl_earned' => '1.25',
+                            'is_prorated' => $isMidMonthHire,
+                            'vl_earned' => $creditAmount,
+                            'sl_earned' => $creditAmount,
                             'row_order' => 999,
-                            'date_action_taken' => 'Monthly Accrual (CSC Table II - 30 days of service)',
+                            'date_action_taken' => $dateActionTaken,
                             'encoded_by' => $encodedBy ?? 1,
                         ]);
                         $results['records_created']++;

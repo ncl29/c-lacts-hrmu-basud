@@ -44,6 +44,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $hrmuOffice->office_id ?? 1,
                 'username' => 'admin_hrmu',
                 'role' => 'admin',
+                'date_hired' => '2012-03-01',
                 'balances' => ['VL' => 35.250, 'SL' => 28.125, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // HR Staff / Record Keeper (Job Order personnel per HRMU operational policy)
@@ -55,6 +56,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $hrmuOffice->office_id ?? 1,
                 'username' => 'hr_staff01',
                 'role' => 'hrmu_staff',
+                'date_hired' => '2023-01-16',
                 'balances' => [],
             ],
             // Routing Clerk - Mayor's Office
@@ -66,6 +68,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mayorOffice->office_id ?? 2,
                 'username' => 'clerk_mayor',
                 'role' => 'routing_clerk',
+                'date_hired' => '2020-07-01',
                 'balances' => ['VL' => 11.250, 'SL' => 9.375, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // Routing Clerk - MPDO
@@ -77,6 +80,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mpdoOffice->office_id ?? 4,
                 'username' => 'clerk_mpdo',
                 'role' => 'routing_clerk',
+                'date_hired' => '2021-02-15',
                 'balances' => ['VL' => 9.500, 'SL' => 7.000, 'FL' => 0.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // Edge Case 1: Senior Regular Employee (High balance >= 10 VL, FL Eligible)
@@ -88,6 +92,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $hrmuOffice->office_id ?? 1,
                 'username' => 'emp_senior',
                 'role' => 'employee',
+                'date_hired' => '2016-06-01',
                 'balances' => ['VL' => 24.500, 'SL' => 18.250, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // Edge Case 2: Mid-level Employee (< 10 VL, Ineligible for Forced Leave)
@@ -99,6 +104,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $gsoOffice->office_id ?? 11,
                 'username' => 'emp_mid',
                 'role' => 'employee',
+                'date_hired' => '2022-04-18',
                 'balances' => ['VL' => 8.125, 'SL' => 5.000, 'FL' => 0.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // Edge Case 3: Low-balance / Critical Employee (Tests LWOP conversion)
@@ -110,6 +116,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mtoOffice->office_id ?? 12,
                 'username' => 'emp_critical',
                 'role' => 'employee',
+                'date_hired' => '2024-08-01',
                 'balances' => ['VL' => 0.500, 'SL' => 0.000, 'FL' => 0.0, 'SPL' => 1.0, 'WL' => 2.0],
             ],
             // Edge Case 4: Municipal Mayor (Elected Approving Authority)
@@ -121,6 +128,7 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mayorOffice->office_id ?? 2,
                 'username' => 'emp_mayor',
                 'role' => 'employee', // Mayor files leaves and has employee record, approvals are tracked via clerks
+                'date_hired' => '2022-06-30',
                 'balances' => ['VL' => 30.000, 'SL' => 30.000, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
             // Edge Case 5: Department Head (Recommending Officer)
@@ -132,9 +140,10 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mpdoOffice->office_id ?? 4,
                 'username' => 'emp_depthead',
                 'role' => 'employee',
+                'date_hired' => '2015-01-05',
                 'balances' => ['VL' => 21.375, 'SL' => 16.500, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
-            // MPDO Regular Employee (View & Track Level)
+            // MPDO Regular Employee - Hired in 2026 to test mid-month Table II prorating & hire date realism!
             [
                 'employee_no' => 'MPDO-0003',
                 'full_name' => 'Johann Chavez',
@@ -143,7 +152,8 @@ class UserAndEmployeeSeeder extends Seeder
                 'office_id' => $mpdoOffice->office_id ?? 4,
                 'username' => 'johann_chavez',
                 'role' => 'employee',
-                'balances' => ['VL' => 14.500, 'SL' => 11.250, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
+                'date_hired' => '2026-03-16', // Hired March 16, 2026: 15 days of service in March = 0.625 Table II credit!
+                'balances' => ['VL' => 10.625, 'SL' => 10.625, 'FL' => 5.0, 'SPL' => 3.0, 'WL' => 5.0],
             ],
         ];
 
@@ -164,6 +174,7 @@ class UserAndEmployeeSeeder extends Seeder
                     'position' => $p['position'],
                     'employment_type' => $p['employment_type'],
                     'office_id' => $p['office_id'],
+                    'date_hired' => $p['date_hired'] ?? '2020-01-01',
                     'status' => 'active',
                     'updated_at' => $now,
                     'created_at' => $now,

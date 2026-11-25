@@ -173,12 +173,20 @@ class MunicipalRosterSeeder extends Seeder
 
                 $deptCounters[$prefix]++;
                 $empNo = sprintf('%s-%04d', $prefix, $deptCounters[$prefix]);
+                
+                // Realistic municipal appointment dates between 2015 and 2024
+                $randomYearsAgo = (($deptCounters[$prefix] * 3) % 9) + 2; // 2 to 10 years ago
+                $randomMonth = (($deptCounters[$prefix] * 5) % 12) + 1;
+                $randomDay = (($deptCounters[$prefix] * 7) % 28) + 1;
+                $dateHired = sprintf('%04d-%02d-%02d', 2026 - $randomYearsAgo, $randomMonth, $randomDay);
+
                 DB::table('employees')->insert([
                     'employee_no' => $empNo,
                     'full_name' => $dummyName,
                     'position' => 'Regular Municipal Personnel',
                     'employment_type' => 'Permanent',
                     'office_id' => $officeId,
+                    'date_hired' => $dateHired,
                     'status' => 'active',
                     'created_at' => $now,
                     'updated_at' => $now,
