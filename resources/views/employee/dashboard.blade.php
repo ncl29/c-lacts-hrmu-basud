@@ -1239,10 +1239,10 @@
 <!-- ======================================================================= -->
 <!-- MODAL 4: CANCEL LEAVE APPLICATION (7-DAY STATUTORY WINDOW)              -->
 <!-- ======================================================================= -->
-<div id="cancelModal" onclick="if(event.target === this) closeCancelModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto">
-        <!-- Header -->
-        <div class="bg-rose-50 px-6 py-4 border-b border-rose-100 flex items-center justify-between">
+<div id="cancelModal" onclick="if(event.target === this) closeCancelModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
+        <!-- Header (Pinned) -->
+        <div class="bg-rose-50 px-5 sm:px-6 py-4 border-b border-rose-100 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5 text-rose-800">
                 <div class="w-9 h-9 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 shrink-0">
                     <i class="ph-bold ph-warning-octagon text-xl"></i>
@@ -1252,39 +1252,41 @@
                     <div class="text-xs font-bold text-rose-800" id="cancelModalSubtitle">7-Working-Day Cancellation Window</div>
                 </div>
             </div>
-            <button type="button" onclick="closeCancelModal()" class="text-slate-500 hover:text-slate-800 transition p-1.5 rounded-lg" aria-label="Close dialog">
+            <button type="button" onclick="closeCancelModal()" class="text-slate-500 hover:text-slate-800 transition p-1.5 rounded-lg cursor-pointer" aria-label="Close dialog">
                 <i class="ph ph-x text-xl"></i>
             </button>
         </div>
 
-        <!-- Form Body -->
-        <form id="cancelApplicationForm" method="POST" action="" class="p-6 space-y-4">
+        <!-- Form Body (Scrollable with pinned footer) -->
+        <form id="cancelApplicationForm" method="POST" action="" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
-            <div class="text-sm font-semibold text-slate-800 leading-relaxed">
-                Are you sure you want to cancel leave application <strong id="cancelModalRefCode" class="font-mono text-base font-black text-slate-950">LV-2026-XXXX</strong>?
-            </div>
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
+                <div class="text-sm font-semibold text-slate-800 leading-relaxed">
+                    Are you sure you want to cancel leave application <strong id="cancelModalRefCode" class="font-mono text-base font-black text-slate-950">LV-2026-XXXX</strong>?
+                </div>
 
-            <div class="p-3.5 bg-amber-50 rounded-xl border-2 border-amber-300 text-sm font-semibold text-amber-950 flex items-start gap-2.5">
-                <i class="ph ph-clock text-lg text-amber-800 shrink-0 mt-0.5"></i>
-                <div id="cancelModalNotice" class="leading-relaxed">
-                    Per municipal rules, employees have up to 7 working days from filing (excluding weekends and official holidays) to cancel. Once cancelled, this application is invalidated and cannot be revived.
+                <div class="p-3.5 bg-amber-50 rounded-xl border-2 border-amber-300 text-sm font-semibold text-amber-950 flex items-start gap-2.5">
+                    <i class="ph ph-clock text-lg text-amber-800 shrink-0 mt-0.5"></i>
+                    <div id="cancelModalNotice" class="leading-relaxed text-xs sm:text-sm">
+                        Per municipal rules, employees have up to 7 working days from filing (excluding weekends and official holidays) to cancel. Once cancelled, this application is invalidated and cannot be revived.
+                    </div>
+                </div>
+
+                <div>
+                    <label for="cancellation_reason" class="block text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                        Reason for Cancellation <span class="text-slate-500 font-normal normal-case">(Optional)</span>
+                    </label>
+                    <textarea id="cancellation_reason" name="cancellation_reason" rows="2" placeholder="e.g. Schedule changed, emergency resolved, personal reasons..." class="w-full border-2 border-slate-300 rounded-xl p-3 text-xs sm:text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-rose-500 bg-white"></textarea>
                 </div>
             </div>
 
-            <div>
-                <label for="cancellation_reason" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    Reason for Cancellation <span class="text-slate-500 font-normal normal-case">(Optional)</span>
-                </label>
-                <textarea id="cancellation_reason" name="cancellation_reason" rows="2" placeholder="e.g. Schedule changed, emergency resolved, personal reasons..." class="w-full border-2 border-slate-300 rounded-xl p-3 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-rose-500 bg-white"></textarea>
-            </div>
-
-            <!-- Modal Actions -->
-            <div class="pt-2 flex items-center justify-end gap-3">
-                <button type="button" onclick="closeCancelModal()" class="px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[44px]">
+            <!-- Modal Actions (Pinned) -->
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
+                <button type="button" onclick="closeCancelModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[44px]">
                     Keep Application
                 </button>
-                <button type="submit" class="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm sm:text-base font-bold shadow-xs transition flex items-center gap-2 cursor-pointer min-h-[44px]">
-                    <i class="ph-bold ph-trash text-lg"></i>
+                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer min-h-[44px]">
+                    <i class="ph-bold ph-trash text-base sm:text-lg"></i>
                     <span>Confirm Cancellation</span>
                 </button>
             </div>

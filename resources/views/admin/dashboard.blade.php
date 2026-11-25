@@ -612,7 +612,7 @@
 <!-- MODAL: RESET USER PASSWORD (ADMIN OVERRIDE)                             -->
 <!-- ======================================================================= -->
 <div id="resetPasswordModal" onclick="if(event.target === this) closeResetPasswordModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-key text-lg sm:text-xl text-amber-400"></i>
@@ -623,56 +623,57 @@
             </button>
         </div>
 
-        <form id="resetPasswordForm" method="POST" action="" class="p-4 sm:p-6 space-y-4">
+        <form id="resetPasswordForm" method="POST" action="" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
-
-            <!-- User Details -->
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-gov-700 text-white flex items-center justify-center font-bold text-xs shrink-0">
-                    <i class="ph ph-user text-base"></i>
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
+                <!-- User Details -->
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-gov-700 text-white flex items-center justify-center font-bold text-xs shrink-0">
+                        <i class="ph ph-user text-base"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-slate-900 text-sm" id="resetModalEmployeeName">—</div>
+                        <div class="text-xs font-mono text-slate-500" id="resetModalUsername">@username</div>
+                    </div>
                 </div>
+
                 <div>
-                    <div class="font-bold text-slate-900 text-sm" id="resetModalEmployeeName">—</div>
-                    <div class="text-xs font-mono text-slate-500" id="resetModalUsername">@username</div>
+                    <label for="admin_reset_new_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                        New Password <span class="text-rose-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="admin_reset_new_password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        value="password123"
+                        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
+                    >
+                    <p class="text-[11px] text-slate-500 mt-1 font-mono">Suggested default: password123</p>
+                </div>
+
+                <div>
+                    <label for="admin_reset_new_password_confirm" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                        Confirm New Password <span class="text-rose-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="admin_reset_new_password_confirm" 
+                        name="password_confirmation" 
+                        required 
+                        minlength="6"
+                        value="password123"
+                        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
+                    >
                 </div>
             </div>
 
-            <div>
-                <label for="admin_reset_new_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                    New Password <span class="text-rose-500">*</span>
-                </label>
-                <input 
-                    type="text" 
-                    id="admin_reset_new_password" 
-                    name="password" 
-                    required 
-                    minlength="6"
-                    value="password123"
-                    class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
-                >
-                <p class="text-[11px] text-slate-500 mt-1 font-mono">Suggested default: password123</p>
-            </div>
-
-            <div>
-                <label for="admin_reset_new_password_confirm" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                    Confirm New Password <span class="text-rose-500">*</span>
-                </label>
-                <input 
-                    type="text" 
-                    id="admin_reset_new_password_confirm" 
-                    name="password_confirmation" 
-                    required 
-                    minlength="6"
-                    value="password123"
-                    class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
-                >
-            </div>
-
-            <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
-                <button type="button" onclick="closeResetPasswordModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
+                <button type="button" onclick="closeResetPasswordModal()" class="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px]">
                     Cancel
                 </button>
-                <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[36px] flex items-center gap-1.5">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[40px] flex items-center justify-center gap-1.5">
                     <i class="ph-bold ph-key text-base"></i>
                     <span>Apply New Password</span>
                 </button>
@@ -685,8 +686,8 @@
 <!-- MODAL: DELETE USER ACCOUNT (CONFIRMATION ALERTDIALOG)                   -->
 <!-- ======================================================================= -->
 <div id="deleteUserModal" onclick="if(event.target === this) closeDeleteUserModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
-        <div class="bg-gov-navy text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
+        <div class="bg-gov-navy text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800 shrink-0">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-400/40 text-rose-400 flex items-center justify-center shrink-0">
                     <i class="ph-bold ph-warning text-xl"></i>
@@ -701,30 +702,32 @@
             </button>
         </div>
 
-        <form id="deleteUserForm" method="POST" action="" class="p-5 sm:p-6 space-y-4">
+        <form id="deleteUserForm" method="POST" action="" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
             @method('DELETE')
 
-            <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl space-y-2 text-xs text-rose-900">
-                <div class="flex items-start gap-2.5">
-                    <i class="ph-bold ph-shield-warning text-lg text-rose-600 shrink-0 mt-0.5"></i>
-                    <div>
-                        <p class="font-bold">Are you sure you want to permanently delete this user account?</p>
-                        <p class="text-rose-700 mt-1">This will revoke terminal login access for:</p>
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
+                <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl space-y-2 text-xs text-rose-900">
+                    <div class="flex items-start gap-2.5">
+                        <i class="ph-bold ph-shield-warning text-lg text-rose-600 shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="font-bold">Are you sure you want to permanently delete this user account?</p>
+                            <p class="text-rose-700 mt-1">This will revoke terminal login access for:</p>
+                        </div>
                     </div>
+                    <div class="p-2.5 bg-white rounded-lg border border-rose-200 font-mono text-xs text-slate-800 space-y-1 mt-2">
+                        <div>Personnel: <strong id="deleteModalEmployeeName" class="text-slate-900">—</strong></div>
+                        <div>Username: <strong id="deleteModalUsername" class="text-rose-700">@username</strong></div>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1">Historical attendance records, submitted leave applications, and audit entries will be safely preserved with unassigned author references.</p>
                 </div>
-                <div class="p-2.5 bg-white rounded-lg border border-rose-200 font-mono text-xs text-slate-800 space-y-1 mt-2">
-                    <div>Personnel: <strong id="deleteModalEmployeeName" class="text-slate-900">—</strong></div>
-                    <div>Username: <strong id="deleteModalUsername" class="text-rose-700">@username</strong></div>
-                </div>
-                <p class="text-[11px] text-slate-500 mt-1">Historical attendance records, submitted leave applications, and audit entries will be safely preserved with unassigned author references.</p>
             </div>
 
-            <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
-                <button type="button" onclick="closeDeleteUserModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[36px]">
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
+                <button type="button" onclick="closeDeleteUserModal()" class="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px]">
                     Cancel
                 </button>
-                <button type="submit" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[36px] flex items-center gap-1.5">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[40px] flex items-center justify-center gap-1.5">
                     <i class="ph-bold ph-trash text-base"></i>
                     <span>Delete User Account</span>
                 </button>
@@ -754,8 +757,9 @@
             </button>
         </div>
 
-        <form id="editRoleForm" method="POST" action="" class="p-5 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1">
+        <form id="editRoleForm" method="POST" action="" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
+            <div class="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 min-h-0">
 
             <!-- Section 1: User Account & Authentication -->
             <div class="space-y-3">
@@ -929,25 +933,26 @@
                         <span>Reset User Password</span>
                     </button>
                 </div>
+                </div>
             </div>
 
-            <!-- Modal Action Buttons -->
-            <div class="pt-4 border-t border-slate-200 flex items-center justify-between gap-3">
+            <!-- Modal Action Buttons (Pinned) -->
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shrink-0">
                 <button 
                     type="button" 
                     id="btnDeleteFromEditModal"
                     onclick="closeEditRoleModal(); openDeleteUserModal(currentEditUserId, currentEditUsername, currentEditEmployeeName);"
-                    class="px-3.5 py-2 border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer min-h-[38px]"
+                    class="w-full sm:w-auto px-3.5 py-2.5 border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer min-h-[40px]"
                 >
                     <i class="ph-bold ph-trash text-sm"></i>
                     <span>Delete User</span>
                 </button>
 
-                <div class="flex items-center gap-2">
-                    <button type="button" onclick="closeEditRoleModal()" class="px-4 py-2 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[38px]">
+                <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                    <button type="button" onclick="closeEditRoleModal()" class="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px]">
                         Cancel
                     </button>
-                    <button type="submit" class="px-5 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[38px] flex items-center gap-1.5">
+                    <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs font-bold shadow-xs transition cursor-pointer min-h-[40px] flex items-center justify-center gap-1.5">
                         <i class="ph-bold ph-check text-base"></i>
                         <span>Save Personnel & User Updates</span>
                     </button>
@@ -976,8 +981,9 @@
             </button>
         </div>
 
-        <form method="POST" action="{{ route('admin.users.store') }}" class="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1">
+        <form method="POST" action="{{ route('admin.users.store') }}" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
+            <div class="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 min-h-0">
 
             <!-- Section 1: Employee Biodata -->
             <div class="space-y-3">
@@ -1299,18 +1305,20 @@
                 </div>
             </div>
 
-            <!-- Footer Buttons -->
-            <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
+            </div>
+
+            <!-- Footer Buttons (Pinned) -->
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
                 <button 
                     type="button" 
                     onclick="closeCreateUserModal()" 
-                    class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                    class="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px]"
                 >
                     Cancel
                 </button>
                 <button 
                     type="submit" 
-                    class="px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600"
+                    class="w-full sm:w-auto px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px]"
                 >
                     <i class="ph ph-user-plus text-sm"></i>
                     <span>Register Personnel & User</span>
@@ -1324,7 +1332,7 @@
 <!-- MODAL: CREATE ON-DEMAND SYSTEM BACKUP                                    -->
 <!-- ======================================================================= -->
 <div id="createBackupModal" onclick="if(event.target === this) closeCreateBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-archive text-lg sm:text-xl text-amber-400"></i>
@@ -1335,55 +1343,56 @@
             </button>
         </div>
 
-        <form id="createBackupForm" method="POST" action="{{ route('admin.backups.create') }}" class="p-4 sm:p-6 space-y-4">
+        <form id="createBackupForm" method="POST" action="{{ route('admin.backups.create') }}" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Select the backup category to generate. Archives are created with a timestamped filename and SHA-256 integrity hash.
+                </p>
 
-            <p class="text-xs text-slate-600 leading-relaxed">
-                Select the backup category to generate. Archives are created with a timestamped filename and SHA-256 integrity hash.
-            </p>
-
-            <div class="space-y-3">
-                <!-- Option 1: Database Only -->
-                <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
-                    <input type="radio" name="type" value="db" checked class="mt-0.5 text-gov-700 focus:ring-gov-600">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 text-xs">Database Dump (.sql.gz)</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Recommended</span>
+                <div class="space-y-3">
+                    <!-- Option 1: Database Only -->
+                    <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
+                        <input type="radio" name="type" value="db" checked class="mt-0.5 text-gov-700 focus:ring-gov-600">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-900 text-xs">Database Dump (.sql.gz)</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Recommended</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                                Complete SQL dump of all ~158 employee leave ledgers, certified balances, physical routing logs, Starla conversion tables, and audit logs. Fast (1-3 seconds).
+                            </p>
                         </div>
-                        <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                            Complete SQL dump of all ~158 employee leave ledgers, certified balances, physical routing logs, Starla conversion tables, and audit logs. Fast (1-3 seconds).
-                        </p>
-                    </div>
-                </label>
+                    </label>
 
-                <!-- Option 2: Full System Archive -->
-                <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
-                    <input type="radio" name="type" value="full" class="mt-0.5 text-gov-700 focus:ring-gov-600">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold text-slate-900 text-xs">Full System Snapshot (.zip)</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Complete Disaster Recovery</span>
+                    <!-- Option 2: Full System Archive -->
+                    <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
+                        <input type="radio" name="type" value="full" class="mt-0.5 text-gov-700 focus:ring-gov-600">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-900 text-xs">Full System Snapshot (.zip)</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Complete Disaster Recovery</span>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
+                                Bundles the complete database dump AND all uploaded document attachments (medical certificates, clearances) + system manifest. Complete recovery archive.
+                            </p>
                         </div>
-                        <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                            Bundles the complete database dump AND all uploaded document attachments (medical certificates, clearances) + system manifest. Complete recovery archive.
-                        </p>
-                    </div>
-                </label>
+                    </label>
+                </div>
             </div>
 
-            <div class="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
                 <button 
                     type="button" 
                     onclick="closeCreateBackupModal()" 
-                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer"
+                    class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer min-h-[40px]"
                 >
                     Cancel
                 </button>
                 <button 
                     type="submit" 
                     id="createBackupSubmitBtn"
-                    class="px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600"
+                    class="w-full sm:w-auto px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px]"
                 >
                     <i class="ph ph-archive text-base"></i>
                     <span>Generate & Save Archive</span>
@@ -1397,7 +1406,7 @@
 <!-- MODAL: DELETE BACKUP ARCHIVE CONFIRMATION                               -->
 <!-- ======================================================================= -->
 <div id="deleteBackupModal" onclick="if(event.target === this) closeDeleteBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-rose-900 text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-rose-950 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">
                 <i class="ph-bold ph-warning text-lg sm:text-xl text-amber-300"></i>
@@ -1408,36 +1417,42 @@
             </button>
         </div>
 
-        <form id="deleteBackupForm" method="POST" action="" class="p-4 sm:p-6 space-y-4">
+        <form id="deleteBackupForm" method="POST" action="" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
             @method('DELETE')
 
-            <p class="text-xs text-slate-600 leading-relaxed">
-                Are you sure you want to permanently delete this backup archive? This action is permanent and cannot be undone.
-            </p>
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Are you sure you want to permanently delete this backup archive? This action is permanent and cannot be undone.
+                </p>
 
-            <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl">
-                <div class="text-[10px] uppercase font-bold text-rose-800 font-mono tracking-wider">Archive to Delete:</div>
-                <div id="deleteBackupFilenameDisplay" class="font-mono font-bold text-slate-900 text-xs mt-0.5 break-all">
-                    clacts_backup.sql.gz
+                <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl">
+                    <div class="text-[10px] uppercase font-bold text-rose-800 font-mono tracking-wider">Archive to Delete:</div>
+                    <div id="deleteBackupFilenameDisplay" class="font-mono font-bold text-slate-900 text-xs mt-0.5 break-all">
+                        clacts_backup.sql.gz
+                    </div>
                 </div>
             </div>
 
-            <div class="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+            <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
                 <button 
                     type="button" 
                     onclick="closeDeleteBackupModal()" 
-                    class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer"
+                    class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer min-h-[40px]"
                 >
                     Cancel
                 </button>
                 <button 
                     type="submit" 
-                    class="px-5 py-2.5 bg-rose-700 hover:bg-rose-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-600"
+                    class="w-full sm:w-auto px-5 py-2.5 bg-rose-700 hover:bg-rose-800 text-white rounded-xl text-xs font-semibold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-600 min-h-[40px]"
                 >
                     <i class="ph ph-trash text-base"></i>
                     <span>Delete Archive</span>
                 </button>
+            </div>
+        </form>
+    </div>
+</div>
             </div>
         </form>
     </div>

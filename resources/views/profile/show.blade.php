@@ -16,9 +16,9 @@
             class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300"
             onclick="if(event.target === this) closePasswordSuccessModal()"
         >
-            <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
+            <div class="bg-white rounded-3xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
                 <!-- Header with Close Button -->
-                <div class="bg-slate-50 px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
+                <div class="shrink-0 bg-slate-50 px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                     <button 
                         type="button" 
                         onclick="closePasswordSuccessModal()" 
@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="p-6 sm:p-7 space-y-4">
+                <div class="overflow-y-auto flex-1 min-h-0 p-6 sm:p-7 space-y-4">
                     <div class="text-center space-y-3">
                         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 border-4 border-emerald-200/80 shadow-md">
                             <i class="ph-bold ph-check text-3xl"></i>
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Action Footer -->
-                <div class="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-end">
+                <div class="shrink-0 px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
                     <button 
                         type="button" 
                         onclick="closePasswordSuccessModal()" 

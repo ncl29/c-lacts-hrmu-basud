@@ -175,7 +175,7 @@
                 id="accessibilityDropdownPanel" 
                 role="dialog"
                 aria-label="Accessibility & Display Settings"
-                class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
+                class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
             >
                 <!-- Panel Header -->
                 <div class="flex items-center justify-between pb-2 border-b border-slate-100">

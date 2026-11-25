@@ -679,11 +679,11 @@ echo method_field('DELETE');
                 <input type="text" name="date_action_taken" id="add_date_action_taken" class="w-full text-xs border border-slate-300 rounded-lg px-3 py-2" placeholder="e.g. Approved by Mayor on Aug 18, 2026; Ref: LV-2026-0012">
             </div>
 
-            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
-                <button type="button" onclick="closeModal('addRowModal')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-200 shrink-0">
+                <button type="button" onclick="closeModal('addRowModal')" class="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer min-h-[40px]">
                     Cancel
                 </button>
-                <button type="submit" class="px-5 py-2 text-xs font-bold rounded-lg bg-amber-500 hover:bg-amber-600 text-white transition shadow-sm cursor-pointer min-h-[36px]">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-lg bg-amber-500 hover:bg-amber-600 text-white transition shadow-sm cursor-pointer min-h-[40px]">
                     Post to Leave Record
                 </button>
             </div>
@@ -777,11 +777,11 @@ echo method_field('PUT');
                 <input type="text" name="date_action_taken" id="edit_date_action_taken" class="w-full text-xs border border-slate-300 rounded-lg px-3 py-2">
             </div>
 
-            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
-                <button type="button" onclick="closeModal('editRowModal')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+            <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-200 shrink-0">
+                <button type="button" onclick="closeModal('editRowModal')" class="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer min-h-[40px]">
                     Cancel
                 </button>
-                <button type="submit" class="px-5 py-2 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition shadow-sm cursor-pointer min-h-[36px]">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition shadow-sm cursor-pointer min-h-[40px]">
                     Update Row & Recalculate
                 </button>
             </div>
@@ -961,11 +961,11 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
                 <span class="text-[10px] text-slate-400 mt-0.5 block">Marks month as accrued to protect against automated duplicate crediting.</span>
             </div>
 
-            <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
-                <button type="button" onclick="closeModal('proratedModal')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+            <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-200 shrink-0">
+                <button type="button" onclick="closeModal('proratedModal')" class="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer min-h-[40px]">
                     Cancel
                 </button>
-                <button type="submit" class="px-5 py-2.5 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-700 text-white transition flex items-center gap-1.5 shadow-sm">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-lg bg-sky-600 hover:bg-sky-700 text-white transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer min-h-[40px]">
                     <i class="ph-bold ph-plus-circle text-sm"></i>
                     <span>Post Table II Prorated Credits</span>
                 </button>
@@ -983,19 +983,19 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
 
 
 <!-- ========================================================================= -->
-<div id="tableIVModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full p-6 space-y-4 my-8">
-        <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+<div id="tableIVModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div>
                 <h3 class="text-base font-bold text-slate-900">Table IV: Working Hours / Minutes Conversion</h3>
                 <p class="text-xs text-slate-500">Official Civil Service Conversion into Fractions of a Day (8-Hour Workday)</p>
             </div>
-            <button type="button" onclick="closeModal('tableIVModal')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <button type="button" onclick="closeModal('tableIVModal')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
                 <i class="ph ph-x text-lg"></i>
             </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-y-auto">
             <!-- Hours -->
             <div class="border border-slate-200 rounded-xl overflow-hidden">
                 <div class="bg-amber-50 px-3 py-2 text-xs font-bold text-amber-900 border-b border-amber-200">
@@ -1033,8 +1033,8 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
             </div>
         </div>
 
-        <div class="text-right">
-            <button type="button" onclick="closeModal('tableIVModal')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700">
+        <div class="text-right shrink-0 pt-2">
+            <button type="button" onclick="closeModal('tableIVModal')" class="w-full sm:w-auto px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer min-h-[40px]">
                 Close
             </button>
         </div>

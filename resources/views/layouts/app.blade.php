@@ -335,7 +335,7 @@
                             id="accessibilityDropdownPanel" 
                             role="dialog"
                             aria-label="Accessibility & Display Settings"
-                            class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
+                            class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
                         >
                             <!-- Panel Header -->
                             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
@@ -626,12 +626,12 @@
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="cancellationModalTitle"
-                    class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 animate-in fade-in"
+                    class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300 animate-in fade-in"
                     onclick="if(event.target === this) closeCancellationModal()"
                 >
-                    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border-t-4 border-t-rose-500 border-x border-b border-slate-200 overflow-hidden transform animate-in zoom-in-95 duration-200 my-auto">
+                    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-rose-500 border-x border-b border-slate-200 overflow-hidden transform animate-in zoom-in-95 duration-200 my-auto">
                         <!-- Top Header with Basud Municipal Branding -->
-                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
+                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
                                 <span class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">Civil Service Form Cancellation</span>
@@ -647,7 +647,7 @@
                         </div>
 
                         <!-- Modal Body -->
-                        <div class="p-6 sm:p-8 space-y-6">
+                        <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-8 space-y-6">
                             <!-- Large Cancellation Icon & Title -->
                             <div class="text-center space-y-3">
                                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-rose-100 text-rose-600 border-4 border-rose-200/80 shadow-md">
@@ -696,7 +696,7 @@
                         </div>
 
                         <!-- Modal Action Footer -->
-                        <div class="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-end gap-3">
+                        <div class="shrink-0 px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
                             <button 
                                 type="button" 
                                 onclick="closeCancellationModal()" 
@@ -717,14 +717,15 @@
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="successModalTitle"
-                    class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300"
+                    class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300"
                     onclick="if(event.target === this) closeLoginSuccessModal()"
                 >
-                    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200">
+                    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto">
                         <!-- Top Header with Basud Municipal Branding -->
-                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
+                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">Authentication Verified</span>
                             </div>
                             <button 
                                 type="button" 
@@ -737,7 +738,7 @@
                         </div>
 
                         <!-- Modal Body -->
-                        <div class="p-6 sm:p-8 space-y-6">
+                        <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-8 space-y-6">
                             <!-- Large Checkmark Medallion & Title -->
                             <div class="text-center space-y-3">
                                 <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 border-4 border-emerald-200/80 shadow-md">
@@ -792,7 +793,7 @@
                         </div>
 
                         <!-- Modal Action Footer -->
-                        <div class="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-end">
+                        <div class="shrink-0 px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
                             <button 
                                 type="button" 
                                 onclick="closeLoginSuccessModal()" 
@@ -1343,11 +1344,11 @@
             aria-describedby="logoutModalDesc"
             aria-modal="true"
             onclick="if(event.target === this) closeLogoutModal()" 
-            class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+            class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
         >
-            <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto">
+            <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto">
                 <!-- Modal Header -->
-                <div class="p-6 pb-0 flex items-start justify-between gap-4">
+                <div class="shrink-0 p-5 sm:p-6 pb-0 flex items-start justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center shrink-0">
                             <i class="ph-bold ph-sign-out text-2xl"></i>
@@ -1372,7 +1373,7 @@
                 </div>
 
                 <!-- Modal Body -->
-                <div class="p-6 py-4 space-y-3">
+                <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-6 py-4 space-y-3">
                     <p id="logoutModalDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
                         Are you sure you want to end your current session in <strong>C-LACTS</strong>? Any unsaved edits or pending entries will be closed.
                     </p>
@@ -1383,7 +1384,7 @@
                 </div>
 
                 <!-- Modal Actions -->
-                <div class="p-6 pt-0 bg-slate-50/50 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-slate-100">
+                <div class="shrink-0 p-4 sm:p-6 bg-slate-50 border-t border-slate-100 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
                     <button 
                         type="button" 
                         id="btnCancelLogout"
@@ -1418,9 +1419,9 @@
             class="{{ session('password_modal_open') || (isset($errors) && ($errors->has('current_password') || $errors->has('new_password'))) ? '' : 'hidden' }} fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
             onclick="if(event.target === this) closeChangePasswordModal()"
         >
-            <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
+            <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
                 <!-- Header -->
-                <div class="bg-gov-navy text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800">
+                <div class="shrink-0 bg-gov-navy text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-300 flex items-center justify-center shrink-0">
                             <i class="ph-bold ph-key text-xl"></i>
@@ -1441,103 +1442,105 @@
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('password.change') }}" class="p-5 sm:p-6 space-y-4">
+                <form method="POST" action="{{ route('password.change') }}" class="flex flex-col flex-1 min-h-0 overflow-hidden">
                     @csrf
 
-                    <div>
-                        <label for="current_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                            Current Password <span class="text-rose-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <input 
-                                type="password" 
-                                id="current_password" 
-                                name="current_password" 
-                                required
-                                autocomplete="current-password"
-                                placeholder="Enter your current password"
-                                class="w-full border @error('current_password') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                            >
-                            <button 
-                                type="button" 
-                                onclick="toggleInputType('current_password', this)" 
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
-                                title="Show/hide password"
-                            >
-                                <i class="ph ph-eye text-base"></i>
-                            </button>
+                    <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-6 space-y-4">
+                        <div>
+                            <label for="current_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                                Current Password <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="current_password" 
+                                    name="current_password" 
+                                    required
+                                    autocomplete="current-password"
+                                    placeholder="Enter your current password"
+                                    class="w-full border @error('current_password') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
+                                >
+                                <button 
+                                    type="button" 
+                                    onclick="toggleInputType('current_password', this)" 
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
+                                    title="Show/hide password"
+                                >
+                                    <i class="ph ph-eye text-base"></i>
+                                </button>
+                            </div>
+                            @error('current_password')
+                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
+                            @enderror
                         </div>
-                        @error('current_password')
-                            <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                        @enderror
+
+                        <div>
+                            <label for="new_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                                New Password <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="new_password" 
+                                    name="new_password" 
+                                    required
+                                    minlength="6"
+                                    autocomplete="new-password"
+                                    placeholder="Minimum 6 characters"
+                                    class="w-full border @error('new_password') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
+                                >
+                                <button 
+                                    type="button" 
+                                    onclick="toggleInputType('new_password', this)" 
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
+                                    title="Show/hide password"
+                                >
+                                    <i class="ph ph-eye text-base"></i>
+                                </button>
+                            </div>
+                            @error('new_password')
+                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="new_password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                                Confirm New Password <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="password" 
+                                    id="new_password_confirmation" 
+                                    name="new_password_confirmation" 
+                                    required
+                                    minlength="6"
+                                    autocomplete="new-password"
+                                    placeholder="Re-enter new password"
+                                    class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
+                                >
+                                <button 
+                                    type="button" 
+                                    onclick="toggleInputType('new_password_confirmation', this)" 
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
+                                    title="Show/hide password"
+                                >
+                                    <i class="ph ph-eye text-base"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="new_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                            New Password <span class="text-rose-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <input 
-                                type="password" 
-                                id="new_password" 
-                                name="new_password" 
-                                required
-                                minlength="6"
-                                autocomplete="new-password"
-                                placeholder="Minimum 6 characters"
-                                class="w-full border @error('new_password') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                            >
-                            <button 
-                                type="button" 
-                                onclick="toggleInputType('new_password', this)" 
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
-                                title="Show/hide password"
-                            >
-                                <i class="ph ph-eye text-base"></i>
-                            </button>
-                        </div>
-                        @error('new_password')
-                            <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="new_password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                            Confirm New Password <span class="text-rose-500">*</span>
-                        </label>
-                        <div class="relative">
-                            <input 
-                                type="password" 
-                                id="new_password_confirmation" 
-                                name="new_password_confirmation" 
-                                required
-                                minlength="6"
-                                autocomplete="new-password"
-                                placeholder="Re-enter new password"
-                                class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                            >
-                            <button 
-                                type="button" 
-                                onclick="toggleInputType('new_password_confirmation', this)" 
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 focus:outline-none"
-                                title="Show/hide password"
-                            >
-                                <i class="ph ph-eye text-base"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
+                    <div class="shrink-0 border-t border-slate-200 bg-slate-50 px-5 sm:px-6 py-3.5 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
                         <button 
                             type="button" 
                             onclick="closeChangePasswordModal()" 
-                            class="px-4 py-2 border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[38px]"
+                            class="w-full sm:w-auto px-4 py-2 border border-slate-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px] flex items-center justify-center"
                         >
                             Cancel
                         </button>
                         <button 
                             type="submit" 
-                            class="px-5 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer min-h-[38px] flex items-center gap-1.5"
+                            class="w-full sm:w-auto px-5 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer min-h-[40px] flex items-center justify-center gap-1.5"
                         >
                             <i class="ph-bold ph-check text-base"></i>
                             <span>Update Password</span>
@@ -1621,12 +1624,12 @@
         role="dialog"
         aria-modal="true"
         aria-labelledby="refreshCompletedTitle"
-        class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300"
+        class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300"
         onclick="if(event.target === this) closeRefreshCompletedModal()"
     >
-        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
+        <div class="bg-white rounded-3xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
             <!-- Top Header with Basud Municipal Branding -->
-            <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
+            <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span class="text-xs font-bold text-slate-700 font-mono tracking-wider uppercase">Page Refreshed</span>
@@ -1642,7 +1645,7 @@
             </div>
 
             <!-- Modal Body -->
-            <div class="p-6 sm:p-7 space-y-4">
+            <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-7 space-y-4">
                 <div class="text-center space-y-3">
                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 border-4 border-emerald-200/80 shadow-md">
                         <i class="ph-bold ph-check text-3xl"></i>
@@ -1656,7 +1659,7 @@
             </div>
 
             <!-- Modal Action Footer -->
-            <div class="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-end">
+            <div class="shrink-0 px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-end">
                 <button 
                     type="button" 
                     onclick="closeRefreshCompletedModal()" 
