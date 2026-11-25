@@ -275,8 +275,9 @@
                             required 
                             class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-gov-600 focus:border-gov-600 bg-white"
                         >
+                            <option value="" disabled selected>-- Select Routing Action to Execute --</option>
                             @foreach($allowedActions as $actKey => $actLabel)
-                                <option value="{{ $actKey }}" {{ $loop->first ? 'selected' : '' }}>
+                                <option value="{{ $actKey }}">
                                     {{ $actLabel }}
                                 </option>
                             @endforeach
@@ -1046,7 +1047,7 @@
 
             // Populate allowed actions
             if (actionSelect && app.allowed_actions) {
-                actionSelect.innerHTML = '';
+                actionSelect.innerHTML = '<option value="" disabled selected>-- Select Routing Action to Execute --</option>';
                 for (const [key, label] of Object.entries(app.allowed_actions)) {
                     const opt = document.createElement('option');
                     opt.value = key;
@@ -1054,10 +1055,8 @@
                     actionSelect.appendChild(opt);
                 }
 
-                // Pre-select recommended action in dropdown (still requires receiver to click Update Routing Log)
+                // Show recommended action hint and badge without auto-selecting it in dropdown
                 if (app.suggested_action) {
-                    actionSelect.value = app.suggested_action;
-
                     if (badge) {
                         badge.classList.remove('hidden');
                         badge.classList.add('inline-flex');
@@ -1132,7 +1131,9 @@
         const appId = resolvedId;
 
         if (!action) {
-            showToast('No routing action available for this document.', 'warning');
+            showToast('Please select a routing action from the dropdown before updating the log.', 'warning');
+            const actionSelect = document.getElementById('action_select');
+            if (actionSelect) actionSelect.focus();
             return;
         }
 
