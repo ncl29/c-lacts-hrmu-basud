@@ -68,10 +68,6 @@
                 </form>
             @endif
 
-            <a href="{{ route('profile.show') }}" class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto" title="View and edit your personal information and change password">
-                <i class="ph ph-user-gear text-base sm:text-lg text-slate-700"></i>
-                <span>My Profile</span>
-            </a>
 
             <button type="button" onclick="openLimitsModal()" class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto">
                 <i class="ph ph-scales text-base sm:text-lg text-slate-700"></i>
