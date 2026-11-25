@@ -277,6 +277,10 @@
                     <!-- User Profile Badge (Name & Position) -->
                     @auth
                         <div class="flex items-center gap-2 sm:gap-3 pr-1.5 sm:pr-3 border-r border-slate-700/80">
+                            <!-- Mobile simplified avatar / badge -->
+                            <a href="{{ route('profile.show') }}" class="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs" title="My Profile ({{ Auth::user()->username }})">
+                                {{ strtoupper(substr(Auth::user()->employee->first_name ?? Auth::user()->username, 0, 1)) }}
+                            </a>
                             <a href="{{ route('profile.show') }}" class="text-right hidden sm:block group hover:opacity-90 transition rounded-lg p-1 -m-1 focus:outline-none focus:ring-1 focus:ring-amber-400" title="View & Edit My Profile">
                                 <div class="text-sm font-bold text-white flex items-center justify-end gap-2 group-hover:text-amber-300 transition">
                                     <span>{{ Auth::user()->employee->first_name ?? Auth::user()->username }} {{ Auth::user()->employee->last_name ?? '' }}</span>
@@ -466,7 +470,7 @@
                 </div>
 
                 <!-- Navigation Items -->
-                <nav class="p-3 pt-4 sm:pt-5 space-y-1 sm:space-y-1.5 flex-1 overflow-hidden flex flex-col justify-start">
+                <nav class="p-3 pt-4 sm:pt-5 space-y-1 sm:space-y-1.5 flex-1 overflow-y-auto flex flex-col justify-start">
                     <!-- Section Label: Employee Portal (Hidden for pure Routing Clerks and HRMU Staff) -->
                     @if(!in_array(Auth::user()->role, ['hrmu_staff', 'routing_clerk']))
                         <div class="px-2.5 pt-1 pb-1">

@@ -9,30 +9,30 @@
     <div id="scannerToastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
     <!-- Station Location Header -->
-    <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-        <div class="flex items-start sm:items-center gap-4 min-w-0 flex-1">
-            <div class="w-12 h-12 rounded-xl bg-gov-50 text-gov-700 border border-gov-200 flex items-center justify-center text-2xl shrink-0">
+    <div class="bg-white rounded-xl p-3.5 sm:p-6 border border-slate-200 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-3 sm:gap-4">
+        <div class="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0 flex-1">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gov-50 text-gov-700 border border-gov-200 flex items-center justify-center text-xl sm:text-2xl shrink-0">
                 <i class="ph ph-barcode"></i>
             </div>
             <div class="min-w-0 flex-1">
-                <div class="flex flex-wrap items-center gap-2">
-                    <h1 class="text-lg sm:text-xl font-bold text-slate-900">Document Physical Custody Terminal</h1>
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <h1 class="text-base sm:text-xl font-bold text-slate-900 leading-tight">Document Physical Custody Terminal</h1>
                     @if($isMayorOffice)
-                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                            <i class="ph ph-seal-check text-base"></i>
-                            <span>Appointing Authority (Sole Approving Station)</span>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                            <i class="ph ph-seal-check text-sm sm:text-base"></i>
+                            <span>Appointing Authority</span>
                         </span>
                     @else
-                        <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                            <i class="ph ph-pencil-simple-line text-base"></i>
-                            <span>Endorsement Station (Recommend & Forward Only)</span>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                            <i class="ph ph-pencil-simple-line text-sm sm:text-base"></i>
+                            <span>Endorsement Station</span>
                         </span>
                     @endif
                 </div>
-                <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <div class="text-[11px] sm:text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span>Station: <strong class="text-slate-800">{{ $currentOffice->office_name }}</strong></span>
-                    <span>•</span>
-                    <span>Physical Wet Signature Tracking</span>
+                    <span class="hidden min-[360px]:inline">•</span>
+                    <span>Wet Signature Tracking</span>
                 </div>
             </div>
         </div>

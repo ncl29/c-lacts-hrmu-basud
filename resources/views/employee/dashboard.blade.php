@@ -630,8 +630,8 @@
 <!-- ======================================================================= -->
 <!-- MODAL 1: FILE NEW LEAVE APPLICATION FORM                                -->
 <!-- ======================================================================= -->
-<div id="filingModal" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
+<div id="filingModal" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[94vh] sm:max-h-[90vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Modal Header -->
         <div class="bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
@@ -857,11 +857,11 @@
             </div>
 
             <!-- Modal Footer -->
-            <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
-                <button type="button" onclick="closeFilingModal()" class="px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-[44px]">
+            <div class="pt-4 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
+                <button type="button" onclick="closeFilingModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-[44px] cursor-pointer">
                     Cancel
                 </button>
-                <button type="submit" class="px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center gap-2 min-h-[44px] cursor-pointer">
+                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center justify-center gap-2 min-h-[44px] cursor-pointer">
                     <i class="ph-bold ph-paper-plane-tilt text-lg"></i>
                     <span>Generate CS Form 6 & QR</span>
                 </button>

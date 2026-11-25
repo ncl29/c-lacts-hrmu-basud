@@ -100,22 +100,22 @@
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
         
         <!-- Tab Bar -->
-        <div class="bg-slate-50 border-b border-slate-200 px-4 sm:px-6 pt-3 sm:pt-4 flex flex-wrap gap-2 text-xs sm:text-sm font-semibold">
-            <button type="button" onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-gov-700 text-gov-700 bg-white font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer">
+        <div class="bg-slate-50 border-b border-slate-200 px-3 sm:px-6 pt-3 sm:pt-4 flex flex-nowrap overflow-x-auto gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold scrollbar-none">
+            <button type="button" onclick="switchAdminTab('users')" id="tabBtnUsers" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-gov-700 text-gov-700 bg-white font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0">
                 <i class="ph ph-users-three text-base sm:text-lg"></i>
-                <span>User Accounts & RBAC ({{ $totalUsers }})</span>
+                <span>Users & RBAC ({{ $totalUsers }})</span>
             </button>
-            <button type="button" onclick="switchAdminTab('starla')" id="tabBtnStarla" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer">
+            <button type="button" onclick="switchAdminTab('starla')" id="tabBtnStarla" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0">
                 <i class="ph ph-calculator text-base sm:text-lg"></i>
-                <span>Starla Conversion Matrices ({{ $starlaTotal }})</span>
+                <span>Starla Matrices ({{ $starlaTotal }})</span>
             </button>
-            <button type="button" onclick="switchAdminTab('audit')" id="tabBtnAudit" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer">
+            <button type="button" onclick="switchAdminTab('audit')" id="tabBtnAudit" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0">
                 <i class="ph ph-shield-check text-base sm:text-lg"></i>
                 <span>Audit Trail</span>
             </button>
-            <button type="button" onclick="switchAdminTab('backups')" id="tabBtnBackups" class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer">
+            <button type="button" onclick="switchAdminTab('backups')" id="tabBtnBackups" class="px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0">
                 <i class="ph ph-archive text-base sm:text-lg"></i>
-                <span>Backups & Recovery ({{ count($backups) }})</span>
+                <span>Backups ({{ count($backups) }})</span>
             </button>
         </div>
 
