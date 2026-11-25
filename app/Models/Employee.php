@@ -38,6 +38,64 @@ class Employee extends Model
     ];
 
     /**
+     * Get department code abbreviation from office name or id.
+     */
+    public static function getOfficePrefix(string|int $office): string
+    {
+        $name = is_numeric($office) 
+            ? (\App\Models\Office::find((int) $office)?->office_name ?? '') 
+            : (string) $office;
+
+        $name = strtolower($name);
+
+        if (str_contains($name, 'human resource') || str_contains($name, 'hrmu') || str_contains($name, 'hrmo')) return 'HRMU';
+        if (str_contains($name, 'mayor')) return 'MAYOR';
+        if (str_contains($name, 'planning') || str_contains($name, 'mpdo')) return 'MPDO';
+        if (str_contains($name, 'treasur') || str_contains($name, 'mto')) return 'MTO';
+        if (str_contains($name, 'general service') || str_contains($name, 'gso')) return 'GSO';
+        if (str_contains($name, 'health') || str_contains($name, 'mho')) return 'MHO';
+        if (str_contains($name, 'engineer') || str_contains($name, 'meo')) return 'MEO';
+        if (str_contains($name, 'social welfare') || str_contains($name, 'mswdo')) return 'MSWDO';
+        if (str_contains($name, 'civil registrar') || str_contains($name, 'mcr')) return 'MCR';
+        if (str_contains($name, 'agricultur') || str_contains($name, 'mao')) return 'MAO';
+        if (str_contains($name, 'accounting')) return 'ACCT';
+        if (str_contains($name, 'assessor')) return 'ASSR';
+        if (str_contains($name, 'budget')) return 'MBO';
+        if (str_contains($name, 'disaster') || str_contains($name, 'mdrro')) return 'MDRRO';
+        if (str_contains($name, 'employment') || str_contains($name, 'peso')) return 'PESO';
+        if (str_contains($name, 'disability') || str_contains($name, 'pdao')) return 'PDAO';
+        if (str_contains($name, 'environment') || str_contains($name, 'menro')) return 'MENRO';
+        if (str_contains($name, 'legal')) return 'LEGAL';
+        if (str_contains($name, 'permit') || str_contains($name, 'bplo')) return 'BPLO';
+        if (str_contains($name, 'library')) return 'LIB';
+        if (str_contains($name, 'youth') || str_contains($name, 'lydo')) return 'LYDO';
+        if (str_contains($name, 'cooperative') || str_contains($name, 'mcdo')) return 'MCDO';
+        if (str_contains($name, 'vice mayor') || str_contains($name, 'sangguniang')) return 'SB';
+        
+        return 'LGU';
+    }
+
+    /**
+     * Generate the next official formatted Employee ID (e.g. HRMU-0001).
+     */
+    public static function generateNextEmployeeNo(int $officeId): string
+    {
+        $prefix = self::getOfficePrefix($officeId);
+        $highest = self::where('employee_no', 'like', "{$prefix}-%")
+            ->pluck('employee_no')
+            ->map(function ($no) use ($prefix) {
+                if (preg_match("/^{$prefix}-(\\d+)$/", $no, $m)) {
+                    return (int) $m[1];
+                }
+                return 0;
+            })
+            ->max();
+
+        $nextNum = ($highest ?? 0) + 1;
+        return sprintf('%s-%04d', $prefix, $nextNum);
+    }
+
+    /**
      * Scope query to active employees (case-insensitive for SQLite and MySQL compatibility).
      */
     public function scopeActive($query)

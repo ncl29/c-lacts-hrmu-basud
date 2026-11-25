@@ -156,22 +156,27 @@ class MunicipalRosterSeeder extends Seeder
             ],
         ];
 
-        $counter = 500;
+        $deptCounters = [];
         foreach ($additionalDummyStaff as $deptName => $staffList) {
             $officeId = $officeMap[$deptName] ?? null;
             if (!$officeId) continue;
+
+            $prefix = \App\Models\Employee::getOfficePrefix($deptName);
+            if (!isset($deptCounters[$prefix])) {
+                $deptCounters[$prefix] = 0;
+            }
 
             foreach ($staffList as $dummyName) {
                 // Check if already exists
                 $exists = DB::table('employees')->where('full_name', $dummyName)->exists();
                 if ($exists) continue;
 
-                $counter++;
-                $empNo = sprintf('%04d', $counter);
+                $deptCounters[$prefix]++;
+                $empNo = sprintf('%s-%04d', $prefix, $deptCounters[$prefix]);
                 DB::table('employees')->insert([
                     'employee_no' => $empNo,
                     'full_name' => $dummyName,
-                    'position' => 'Regular Municipal Personnel (Dummy)',
+                    'position' => 'Regular Municipal Personnel',
                     'employment_type' => 'Permanent',
                     'office_id' => $officeId,
                     'status' => 'active',

@@ -1016,6 +1016,7 @@
                             required 
                             placeholder="e.g. HRMU-0001"
                             value="{{ old('employee_no') }}"
+                            oninput="this.value = this.value.toUpperCase()"
                             class="w-full border @error('employee_no') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white uppercase"
                         >
                         @error('employee_no')
@@ -1030,7 +1031,7 @@
                         <label for="create_office_id" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                             Municipal Office <span class="text-rose-500">*</span>
                         </label>
-                        <select id="create_office_id" name="office_id" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white cursor-pointer">
+                        <select id="create_office_id" name="office_id" required onchange="onOfficeChangeSuggestId(this, 'create_employee_no')" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white cursor-pointer">
                             <option value="" disabled selected>— Select Office —</option>
                             @foreach($offices as $off)
                                 <option value="{{ $off->office_id }}">{{ $off->office_name }}</option>
@@ -1591,6 +1592,52 @@
 
     function closeCreateUserModal() {
         document.getElementById('createUserModal').classList.add('hidden');
+    }
+
+    const officePrefixMap = {
+        'human resource': 'HRMU',
+        'mayor': 'MAYOR',
+        'planning': 'MPDO',
+        'treasur': 'MTO',
+        'general service': 'GSO',
+        'health': 'MHO',
+        'engineer': 'MEO',
+        'social welfare': 'MSWDO',
+        'civil registrar': 'MCR',
+        'agricultur': 'MAO',
+        'accounting': 'ACCT',
+        'assessor': 'ASSR',
+        'budget': 'MBO',
+        'disaster': 'MDRRO',
+        'employment': 'PESO',
+        'disability': 'PDAO',
+        'environment': 'MENRO',
+        'legal': 'LEGAL',
+        'permit': 'BPLO',
+        'library': 'LIB',
+        'youth': 'LYDO',
+        'cooperative': 'MCDO',
+        'vice mayor': 'SB',
+        'sangguniang': 'SB'
+    };
+
+    function onOfficeChangeSuggestId(selectEl, inputId) {
+        const text = selectEl.options[selectEl.selectedIndex]?.text.toLowerCase() || '';
+        let prefix = 'LGU';
+        for (const [key, pfx] of Object.entries(officePrefixMap)) {
+            if (text.includes(key)) {
+                prefix = pfx;
+                break;
+            }
+        }
+        const empInput = document.getElementById(inputId);
+        if (empInput) {
+            empInput.placeholder = `e.g. ${prefix}-0001`;
+            if (!empInput.value || /^[A-Z]+-?$/i.test(empInput.value.trim()) || /^\d+$/.test(empInput.value.trim())) {
+                empInput.value = `${prefix}-`;
+                empInput.focus();
+            }
+        }
     }
 
     // Official CSC Table II lookup table for daily leave credit accruals

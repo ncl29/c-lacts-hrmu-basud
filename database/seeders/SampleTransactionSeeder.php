@@ -16,11 +16,11 @@ class SampleTransactionSeeder extends Seeder
         $now = Carbon::now();
 
         // Retrieve foreign key references
-        $seniorEmp = DB::table('employees')->where('employee_no', '101')->orWhere('employee_no', 'BASUD-EMP-101')->first()
+        $seniorEmp = DB::table('employees')->where('employee_no', 'HRMU-0003')->orWhere('employee_no', '101')->orWhere('employee_no', 'BASUD-EMP-101')->first()
             ?? DB::table('employees')->first();
-        $midEmp = DB::table('employees')->where('employee_no', '102')->orWhere('employee_no', 'BASUD-EMP-102')->first()
+        $midEmp = DB::table('employees')->where('employee_no', 'GSO-0001')->orWhere('employee_no', '102')->orWhere('employee_no', 'BASUD-EMP-102')->first()
             ?? $seniorEmp;
-        $criticalEmp = DB::table('employees')->where('employee_no', '103')->orWhere('employee_no', 'BASUD-EMP-103')->first()
+        $criticalEmp = DB::table('employees')->where('employee_no', 'MTO-0001')->orWhere('employee_no', '103')->orWhere('employee_no', 'BASUD-EMP-103')->first()
             ?? $seniorEmp;
 
         $seniorEmpId = $seniorEmp->employee_id ?? $seniorEmp->id;

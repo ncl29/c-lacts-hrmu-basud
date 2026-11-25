@@ -37,7 +37,7 @@ class UserAndEmployeeSeeder extends Seeder
         $personnelData = [
             // Admin / HR Head
             [
-                'employee_no' => '001',
+                'employee_no' => 'HRMU-0001',
                 'full_name' => 'Vicky C. Alvaro',
                 'position' => 'Administrative Officer IV - HRMU II',
                 'employment_type' => 'Permanent',
@@ -48,7 +48,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // HR Staff / Record Keeper (Job Order personnel per HRMU operational policy)
             [
-                'employee_no' => '002',
+                'employee_no' => 'HRMU-0002',
                 'full_name' => 'Camille Faurillo',
                 'position' => 'Administrative Assistant II (Job Order)',
                 'employment_type' => 'Job Order',
@@ -59,7 +59,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Routing Clerk - Mayor's Office
             [
-                'employee_no' => '003',
+                'employee_no' => 'MAYOR-0002',
                 'full_name' => 'Mikylla Nanez',
                 'position' => 'Administrative Aide VI - Mayor\'s Receiving',
                 'employment_type' => 'Permanent',
@@ -70,7 +70,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Routing Clerk - MPDO
             [
-                'employee_no' => '004',
+                'employee_no' => 'MPDO-0002',
                 'full_name' => 'Divine Ponciano',
                 'position' => 'Administrative Aide IV - MPDO Receiving',
                 'employment_type' => 'Permanent',
@@ -81,7 +81,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Edge Case 1: Senior Regular Employee (High balance >= 10 VL, FL Eligible)
             [
-                'employee_no' => '101',
+                'employee_no' => 'HRMU-0003',
                 'full_name' => 'Grace Bolos',
                 'position' => 'Senior Administrative Assistant I',
                 'employment_type' => 'Permanent',
@@ -92,7 +92,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Edge Case 2: Mid-level Employee (< 10 VL, Ineligible for Forced Leave)
             [
-                'employee_no' => '102',
+                'employee_no' => 'GSO-0001',
                 'full_name' => 'ShalieMar De Vera',
                 'position' => 'General Services Assistant II',
                 'employment_type' => 'Permanent',
@@ -103,7 +103,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Edge Case 3: Low-balance / Critical Employee (Tests LWOP conversion)
             [
-                'employee_no' => '103',
+                'employee_no' => 'MTO-0001',
                 'full_name' => 'Craton Z. Genorga',
                 'position' => 'Administrative Aide I',
                 'employment_type' => 'Casual',
@@ -114,7 +114,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Edge Case 4: Municipal Mayor (Elected Approving Authority)
             [
-                'employee_no' => '008',
+                'employee_no' => 'MAYOR-0001',
                 'full_name' => 'Hon. Shunn Frederick S. Davoco',
                 'position' => 'Municipal Mayor',
                 'employment_type' => 'Elected',
@@ -125,7 +125,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // Edge Case 5: Department Head (Recommending Officer)
             [
-                'employee_no' => '009',
+                'employee_no' => 'MPDO-0001',
                 'full_name' => 'Marjory A. Santillan',
                 'position' => 'Municipal Planning & Development Coordinator',
                 'employment_type' => 'Permanent',
@@ -136,7 +136,7 @@ class UserAndEmployeeSeeder extends Seeder
             ],
             // MPDO Regular Employee (View & Track Level)
             [
-                'employee_no' => '105',
+                'employee_no' => 'MPDO-0003',
                 'full_name' => 'Johann Chavez',
                 'position' => 'Planning Assistant',
                 'employment_type' => 'Permanent',
@@ -215,7 +215,7 @@ class UserAndEmployeeSeeder extends Seeder
         }
 
         // Link optional username alias camille_faurillo to HR Staff employee record
-        $camilleEmp = DB::table('employees')->where('employee_no', 'BASUD-HR-002')->first();
+        $camilleEmp = DB::table('employees')->where('employee_no', 'HRMU-0002')->orWhere('employee_no', '002')->first();
         if ($camilleEmp) {
             DB::table('users')->updateOrInsert(
                 ['username' => 'camille_faurillo'],
@@ -230,7 +230,7 @@ class UserAndEmployeeSeeder extends Seeder
             );
         }
         // Link optional username alias emp_mpdo to Johann Chavez
-        $johannEmp = DB::table('employees')->where('employee_no', 'BASUD-EMP-105')->first();
+        $johannEmp = DB::table('employees')->where('employee_no', 'MPDO-0003')->orWhere('employee_no', '105')->first();
         if ($johannEmp) {
             DB::table('users')->updateOrInsert(
                 ['username' => 'emp_mpdo'],
