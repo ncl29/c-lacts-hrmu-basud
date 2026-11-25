@@ -107,72 +107,98 @@
     <div id="simplifiedLedgerView" class="space-y-6">
 
         <!-- 1. Balances at a Glance (Plain Language) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
             
             <!-- Vacation Leave Card -->
-            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 sm:p-6 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block">Vacation Leave</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">VL</span>
-                </div>
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-gov-700 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                    <div class="text-xs text-slate-500 font-medium">Your Available Balance</div>
-                    <div class="flex items-baseline gap-2 mt-0.5">
-                        <span class="text-2xl sm:text-3xl font-black font-mono text-slate-950 tabular-nums">
-                            {{ number_format((float) $latestVlBalance, 3) }}
-                        </span>
-                        <span class="text-xs font-bold text-slate-500">days</span>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider block font-mono truncate">Vacation Leave</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-gov-50 text-gov-700 border border-gov-200 font-mono shrink-0">VL</span>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-medium">Available Balance</div>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-slate-950 tabular-nums">
+                                {{ number_format((float) $latestVlBalance, 3) }}
+                            </span>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-500">days</span>
+                        </div>
                     </div>
                 </div>
-                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                    <span class="text-emerald-700 font-bold" title="Total earned credits">Added: +{{ number_format((float) ($totalVlEarned ?? 0), 3) }}</span>
-                    <span class="text-rose-700 font-bold" title="Total used credits">Used: -{{ number_format((float) ($totalVlUsed ?? 0), 3) }}</span>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] min-[400px]:text-xs font-mono">
+                    <span class="text-emerald-700 font-bold" title="Total earned credits">+{{ number_format((float) ($totalVlEarned ?? 0), 3) }}</span>
+                    <span class="text-rose-700 font-bold" title="Total used credits">-{{ number_format((float) ($totalVlUsed ?? 0), 3) }}</span>
                 </div>
             </div>
 
             <!-- Sick Leave Card -->
-            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 sm:p-6 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider block">Sick Leave</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">SL</span>
-                </div>
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-emerald-600 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                    <div class="text-xs text-slate-500 font-medium">Your Available Balance</div>
-                    <div class="flex items-baseline gap-2 mt-0.5">
-                        <span class="text-2xl sm:text-3xl font-black font-mono text-emerald-800 tabular-nums">
-                            {{ number_format((float) $latestSlBalance, 3) }}
-                        </span>
-                        <span class="text-xs font-bold text-slate-500">days</span>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[10px] sm:text-xs font-bold text-emerald-800 uppercase tracking-wider block font-mono truncate">Sick Leave</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono shrink-0">SL</span>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-medium">Available Balance</div>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-emerald-800 tabular-nums">
+                                {{ number_format((float) $latestSlBalance, 3) }}
+                            </span>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-500">days</span>
+                        </div>
                     </div>
                 </div>
-                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                    <span class="text-emerald-700 font-bold" title="Total earned credits">Added: +{{ number_format((float) ($totalSlEarned ?? 0), 3) }}</span>
-                    <span class="text-rose-700 font-bold" title="Total used credits">Used: -{{ number_format((float) ($totalSlUsed ?? 0), 3) }}</span>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] min-[400px]:text-xs font-mono">
+                    <span class="text-emerald-700 font-bold" title="Total earned credits">+{{ number_format((float) ($totalSlEarned ?? 0), 3) }}</span>
+                    <span class="text-rose-700 font-bold" title="Total used credits">-{{ number_format((float) ($totalSlUsed ?? 0), 3) }}</span>
                 </div>
             </div>
 
             <!-- Total Available Balance Card -->
-            <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 sm:p-6 space-y-2">
-                <div class="flex items-center justify-between">
-                    <span class="text-xs font-bold text-gov-800 uppercase tracking-wider block">Total Paid Leave Days</span>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gov-50 text-gov-800 border border-gov-200 font-mono">VL + SL</span>
-                </div>
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-indigo-600 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
                 <div>
-                    <div class="text-xs text-slate-500 font-medium">Combined Days Available</div>
-                    <div class="flex items-baseline gap-2 mt-0.5">
-                        <span class="text-2xl sm:text-3xl font-black font-mono text-gov-900 tabular-nums">
-                            {{ number_format((float) ($totalAvailableBalance ?? 0), 3) }}
-                        </span>
-                        <span class="text-xs font-bold text-slate-500">total days</span>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[10px] sm:text-xs font-bold text-indigo-900 uppercase tracking-wider block font-mono truncate">Total Paid Leave</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200 font-mono shrink-0">VL + SL</span>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-medium">Combined Balance</div>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-indigo-950 tabular-nums">
+                                {{ number_format((float) ($totalAvailableBalance ?? 0), 3) }}
+                            </span>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-500">days</span>
+                        </div>
                     </div>
                 </div>
-                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
-                    <span class="text-emerald-700 font-bold">Added: +{{ number_format((float) ($totalVlEarned + $totalSlEarned), 3) }}</span>
-                    <span class="text-rose-700 font-bold">Used: -{{ number_format((float) ($totalVlUsed + $totalSlUsed), 3) }}</span>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] min-[400px]:text-xs font-mono">
+                    <span class="text-emerald-700 font-bold">+{{ number_format((float) (($totalVlEarned ?? 0) + ($totalSlEarned ?? 0)), 3) }}</span>
+                    <span class="text-rose-700 font-bold">-{{ number_format((float) (($totalVlUsed ?? 0) + ($totalSlUsed ?? 0)), 3) }}</span>
                 </div>
-                <p class="text-[11px] text-slate-500 leading-snug">
-                    All your paid vacation and sick leave days combined, ready for use.
-                </p>
+            </div>
+
+            <!-- Total Used Credits Card -->
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-rose-600 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
+                <div>
+                    <div class="flex items-center justify-between gap-1">
+                        <span class="text-[10px] sm:text-xs font-bold text-rose-900 uppercase tracking-wider block font-mono truncate">Leave Utilized</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-rose-50 text-rose-800 border border-rose-200 font-mono shrink-0">USED</span>
+                    </div>
+                    <div class="mt-1">
+                        <div class="text-[10px] sm:text-xs text-slate-500 font-medium">Days Taken (YTD)</div>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-rose-900 tabular-nums">
+                                {{ number_format((float) (($totalVlUsed ?? 0) + ($totalSlUsed ?? 0)), 3) }}
+                            </span>
+                            <span class="text-[10px] sm:text-xs font-bold text-slate-500">days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] min-[400px]:text-xs font-mono">
+                    <span class="text-slate-600 font-medium">VL: -{{ number_format((float) ($totalVlUsed ?? 0), 3) }}</span>
+                    <span class="text-slate-600 font-medium">SL: -{{ number_format((float) ($totalSlUsed ?? 0), 3) }}</span>
+                </div>
             </div>
 
         </div>

@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    <!-- Executive KPI Metrics Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Executive KPI Metrics Grid (2x2 Cardstock Appearance) -->
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
         <!-- Metric 1: Municipal Personnel -->
         <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>

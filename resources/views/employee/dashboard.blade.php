@@ -54,11 +54,11 @@
         </div>
 
         <!-- Employee Switcher & Quick Actions -->
-        <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto">
+        <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto min-w-0">
             @if(Auth::user() && in_array(Auth::user()->role, ['admin', 'hrmu_staff']))
-                <form method="GET" action="{{ route('employee.dashboard') }}" class="flex items-center gap-2 w-full sm:w-auto">
-                    <label for="emp_switch" class="text-xs sm:text-sm text-slate-700 font-bold whitespace-nowrap">Review Ledger:</label>
-                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border-2 border-slate-300 rounded-lg px-3 py-2 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 flex-1 sm:flex-none">
+                <form method="GET" action="{{ route('employee.dashboard') }}" class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 w-full sm:w-auto min-w-0">
+                    <label for="emp_switch" class="text-xs font-bold text-slate-700 whitespace-nowrap shrink-0">Review Ledger:</label>
+                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border-2 border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 w-full sm:w-64 md:w-72 truncate min-w-0 max-w-full">
                         @foreach($allEmployees as $emp)
                             <option value="{{ $emp->employee_id }}" {{ $emp->employee_id == $employee->employee_id ? 'selected' : '' }}>
                                 {{ $emp->full_name }} ({{ $emp->office->office_name ?? 'LGU' }})
@@ -248,79 +248,95 @@
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
             <!-- Vacation Leave Card (Primary) -->
-            <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs flex flex-col justify-between hover:shadow-md transition">
                 <div>
                     <div class="flex items-center justify-between gap-1 mb-1">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">Vacation Leave</span>
-                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-gov-50 text-gov-700 border border-gov-200">VL</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider font-mono truncate">Vacation Leave</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-gov-50 text-gov-700 border border-gov-200 shrink-0">VL</span>
                     </div>
-                    <div class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
+                    <div class="text-xl min-[400px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
                         {{ number_format($balances->get('VL')?->balance ?? 0.000, 3) }}
                     </div>
                 </div>
-                <div class="text-xs text-slate-500 mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                    <span class="font-medium">Cumulative w/ Pay</span>
-                    <span class="text-gov-700 font-bold font-mono">+1.250/mo</span>
+                <div class="text-[10px] min-[400px]:text-xs text-slate-500 mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                    <span class="font-medium truncate">Cumulative w/ Pay</span>
+                    <span class="text-gov-700 font-bold font-mono shrink-0">+1.250/mo</span>
                 </div>
             </div>
 
             <!-- Sick Leave Card (Primary) -->
-            <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-emerald-600 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-emerald-600 shadow-xs flex flex-col justify-between hover:shadow-md transition">
                 <div>
                     <div class="flex items-center justify-between gap-1 mb-1">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">Sick Leave</span>
-                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">SL</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider font-mono truncate">Sick Leave</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">SL</span>
                     </div>
-                    <div class="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
+                    <div class="text-xl min-[400px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
                         {{ number_format($balances->get('SL')?->balance ?? 0.000, 3) }}
                     </div>
                 </div>
-                <div class="text-xs text-slate-500 mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                    <span class="font-medium">Medical / Illness</span>
-                    <span class="text-emerald-700 font-bold font-mono">+1.250/mo</span>
+                <div class="text-[10px] min-[400px]:text-xs text-slate-500 mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                    <span class="font-medium truncate">Medical / Illness</span>
+                    <span class="text-emerald-700 font-bold font-mono shrink-0">+1.250/mo</span>
+                </div>
+            </div>
+
+            <!-- Total Paid Leave Credits Card (VL + SL Combined) -->
+            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-indigo-600 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+                <div>
+                    <div class="flex items-center justify-between gap-1 mb-1">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider font-mono truncate">Total Paid Leave</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">VL + SL</span>
+                    </div>
+                    <div class="text-xl min-[400px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
+                        {{ number_format($monetizationInfo['combined_total'] ?? ((float)($balances->get('VL')?->balance ?? 0) + (float)($balances->get('SL')?->balance ?? 0)), 3) }}
+                    </div>
+                </div>
+                <div class="text-[10px] min-[400px]:text-xs text-slate-500 mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                    <span class="font-medium truncate">Combined Balance</span>
+                    <span class="text-indigo-700 font-bold font-mono shrink-0">+2.500/mo</span>
                 </div>
             </div>
 
             <!-- Dedicated Monetization Limit Card (CSC Rule: Min 15 VL Days, Retain 5 VL Days) -->
-            <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 {{ $monetizationInfo['is_eligible'] ? 'border-t-amber-500' : 'border-t-slate-400' }} shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 {{ $monetizationInfo['is_eligible'] ? 'border-t-amber-500' : 'border-t-slate-400' }} shadow-xs flex flex-col justify-between hover:shadow-md transition">
                 <div>
                     <div class="flex items-center justify-between gap-1 mb-1">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">Monetization Limit</span>
-                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded {{ $monetizationInfo['is_eligible'] ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-slate-100 text-slate-600 border border-slate-200' }}">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider font-mono truncate">Monetization Limit</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded {{ $monetizationInfo['is_eligible'] ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-slate-100 text-slate-600 border border-slate-200' }} shrink-0">
                             {{ $monetizationInfo['is_eligible'] ? 'ELIGIBLE' : 'NOT ELIGIBLE' }}
                         </span>
                     </div>
 
-                    <div class="text-3xl sm:text-4xl font-extrabold {{ $monetizationInfo['is_eligible'] ? 'text-amber-600' : 'text-slate-400' }} font-mono tracking-tight tabular-nums mt-1">
+                    <div class="text-xl min-[400px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold {{ $monetizationInfo['is_eligible'] ? 'text-amber-600' : 'text-slate-400' }} font-mono tracking-tight tabular-nums mt-1">
                         {{ number_format($monetizationInfo['max_monetizable'], 3) }}
-                        <span class="text-xs font-semibold text-slate-500 font-sans tracking-normal">days</span>
+                        <span class="text-[10px] sm:text-xs font-semibold text-slate-500 font-sans tracking-normal">days</span>
                     </div>
 
-                    <div class="mt-2 text-xs leading-relaxed">
+                    <div class="mt-1 text-[10px] min-[400px]:text-[11px] sm:text-xs leading-snug">
                         @if($monetizationInfo['is_eligible'])
-                            <p class="text-slate-600 font-medium">
-                                Max allowable cash conversion: <strong class="text-slate-900 font-mono">{{ number_format($monetizationInfo['max_monetizable'], 3) }}</strong> days (VL balance minus 5.000 retained days, capped at 30 days).
+                            <p class="text-slate-600 font-medium truncate">
+                                Max allowable conversion (retains 5d buffer).
                             </p>
                         @else
-                            <p class="text-rose-700 font-medium flex items-center gap-1">
-                                <i class="ph-bold ph-info text-sm shrink-0"></i>
-                                <span>Need <strong class="font-mono text-rose-900 font-bold">{{ number_format($monetizationInfo['remaining_needed'] ?? $monetizationInfo['regular']['remaining_needed'] ?? 0.000, 3) }}</strong> more VL days for CSC 15-day minimum requirement.</span>
+                            <p class="text-rose-700 font-medium truncate">
+                                Need <strong class="font-mono text-rose-900 font-bold">{{ number_format($monetizationInfo['remaining_needed'] ?? $monetizationInfo['regular']['remaining_needed'] ?? 0.000, 3) }}</strong> more VL days.
                             </p>
                         @endif
                     </div>
                 </div>
 
-                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                    <span class="text-[11px] font-medium text-slate-400 font-mono">CS Form 41 Synced</span>
+                <div class="mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-[10px] min-[400px]:text-[11px] font-medium text-slate-400 font-mono truncate">CS Form 41</span>
                     @if($monetizationInfo['is_eligible'])
-                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-lg font-mono">
+                        <span class="inline-flex items-center gap-1 text-[10px] min-[400px]:text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded font-mono shrink-0">
                             <i class="ph-bold ph-coins text-xs text-amber-600"></i>
-                            <span>Max 30d / Year</span>
+                            <span>Max 30d/Yr</span>
                         </span>
                     @else
-                        <span class="text-[11px] font-bold text-slate-400 italic">15.000 VL Req.</span>
+                        <span class="text-[10px] min-[400px]:text-[11px] font-bold text-slate-400 italic shrink-0">15.000 VL Req.</span>
                     @endif
                 </div>
             </div>
