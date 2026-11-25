@@ -13,7 +13,7 @@
                     <i class="ph ph-printer"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
                         <span class="text-xs uppercase tracking-wider font-semibold text-slate-300">Application Filed Successfully</span>
                         <span class="text-xs px-2 py-0.5 rounded bg-white/10 font-mono font-bold">{{ session('new_reference_code') }}</span>
                     </div>
@@ -21,8 +21,8 @@
                     <p class="text-xs text-slate-300 mt-0.5">Your official printable form with scannable QR code is pre-filled. Print and submit for physical signatures.</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2 shrink-0">
-                <a href="{{ route('forms.form6.print', session('new_application_id')) }}" target="_blank" class="px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-sm font-semibold shadow-xs flex items-center gap-2 transition">
+            <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                <a href="{{ route('forms.form6.print', session('new_application_id')) }}" target="_blank" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-sm font-semibold shadow-xs flex items-center gap-2 transition min-h-[42px]">
                     <i class="ph ph-printer text-base"></i>
                     <span>Open & Print CS Form 6</span>
                 </a>
@@ -317,11 +317,11 @@
 
                     <div class="mt-1 text-[10px] min-[400px]:text-[11px] sm:text-xs leading-snug">
                         @if($monetizationInfo['is_eligible'])
-                            <p class="text-slate-600 font-medium truncate">
+                            <p class="text-slate-600 font-medium line-clamp-2 sm:line-clamp-none">
                                 Max allowable conversion (retains 5d buffer).
                             </p>
                         @else
-                            <p class="text-rose-700 font-medium truncate">
+                            <p class="text-rose-700 font-medium line-clamp-2 sm:line-clamp-none">
                                 Need <strong class="font-mono text-rose-900 font-bold">{{ number_format($monetizationInfo['remaining_needed'] ?? $monetizationInfo['regular']['remaining_needed'] ?? 0.000, 3) }}</strong> more VL days.
                             </p>
                         @endif

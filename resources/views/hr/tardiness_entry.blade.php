@@ -8,14 +8,14 @@
     <!-- Header Banner -->
     <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
                     <i class="ph ph-sparkle text-slate-600"></i>
                     <span>Starla Engine Matrix</span>
                 </span>
                 <span class="text-xs text-slate-500 font-mono">CSC MC No. 41, s. 1998 • Rule XVI</span>
             </div>
-            <h1 class="text-xl font-bold text-slate-900 mt-1">Semi-Monthly Attendance & Tardiness Encoding</h1>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">Semi-Monthly Attendance & Tardiness Encoding</h1>
             <p class="text-xs text-slate-500 mt-0.5">
                 Encodes HR-verified aggregate tardiness and absences from physical DTRs. Zero raw biometric ingestion (Guardrail #1).
             </p>
@@ -154,7 +154,7 @@
                     @endif
 
                     <!-- Selected Employee Confirmation Card -->
-                    <div id="selectedEmployeeCard" class="hidden mt-2 p-2.5 bg-gov-50/90 border border-gov-200 rounded-xl flex items-center justify-between gap-3 text-xs shadow-xs transition">
+                    <div id="selectedEmployeeCard" class="hidden mt-2 p-2.5 bg-gov-50/90 border border-gov-200 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 text-xs shadow-xs transition">
                         <div class="flex items-center gap-2.5 min-w-0">
                             <div id="cardAvatar" class="w-7 h-7 rounded-full bg-gov-700 text-white font-bold flex items-center justify-center text-[11px] shrink-0 font-mono">
                                 --

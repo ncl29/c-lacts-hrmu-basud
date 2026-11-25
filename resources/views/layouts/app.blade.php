@@ -234,7 +234,7 @@
         })();
     </script>
 </head>
-<body class="min-h-screen flex flex-col text-slate-800 antialiased selection:bg-amber-500 selection:text-white bg-slate-100/60">
+<body class="min-h-screen flex flex-col text-slate-800 antialiased selection:bg-amber-500 selection:text-white bg-slate-100/60 overflow-x-clip">
 
     <!-- Top GovTech Official Header (Sticky) -->
     <header class="sticky top-0 z-40 bg-gov-navy text-white border-b border-slate-800/90 shadow-md">

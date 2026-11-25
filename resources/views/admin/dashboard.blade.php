@@ -6,20 +6,20 @@
 <div class="space-y-6">
 
     <!-- Top Executive Banner -->
-    <div class="bg-gov-navy rounded-xl p-6 text-white shadow-xs border border-slate-800">
+    <div class="bg-gov-navy rounded-xl p-4 sm:p-6 text-white shadow-xs border border-slate-800">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white text-2xl shrink-0">
+            <div class="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white text-xl sm:text-2xl shrink-0">
                     <i class="ph ph-shield-star"></i>
                 </div>
-                <div>
-                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold flex items-center gap-2">
+                <div class="min-w-0 flex-1">
+                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold flex flex-wrap items-center gap-2">
                         <span>Level 4: System Administrator / HR Head</span>
                         <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
                             Configuration & Oversight
                         </span>
                     </div>
-                    <h1 class="text-xl sm:text-2xl font-bold text-white mt-0.5">
+                    <h1 class="text-lg sm:text-2xl font-bold text-white mt-0.5 leading-tight">
                         Governance & Security Control Center
                     </h1>
                     <div class="text-xs text-slate-400 mt-1">
@@ -28,8 +28,8 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap items-center gap-2 text-xs">
-                <div class="bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-right">
+            <div class="flex flex-wrap items-center gap-2 text-xs shrink-0">
+                <div class="bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-left sm:text-right w-full sm:w-auto">
                     <div class="text-[10px] text-slate-400 font-mono">Calendar Year</div>
                     <div class="text-xs font-mono font-bold text-white">{{ $currentYear }} Active</div>
                 </div>
@@ -38,58 +38,58 @@
     </div>
 
     <!-- Executive KPI Metrics Grid (2x2 Cardstock Appearance) -->
-    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+    <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
         <!-- Metric 1: Municipal Personnel -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1">Personnel Baseline</div>
-                <div class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1 truncate">Personnel Baseline</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
                     {{ $totalEmployees }}
                 </div>
             </div>
-            <div class="text-[11px] text-emerald-700 mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div class="text-[10px] sm:text-[11px] text-emerald-700 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
                 <span class="font-semibold">{{ $activeEmployees }} Active Regulars</span>
                 <span class="text-slate-400 font-mono text-[10px]">~158 Baseline</span>
             </div>
         </div>
 
         <!-- Metric 2: Municipal Offices -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-emerald-600 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-emerald-600 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1">Routing Stations</div>
-                <div class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1 truncate">Routing Stations</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
                     {{ $totalOffices }}
                 </div>
             </div>
-            <div class="text-[11px] text-gov-700 mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div class="text-[10px] sm:text-[11px] text-gov-700 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
                 <span class="font-semibold">14 Offices</span>
                 <span class="text-slate-400 font-mono text-[10px]">LGU Basud</span>
             </div>
         </div>
 
         <!-- Metric 3: Leave Pipeline -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-amber-500 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-amber-500 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1">Applications Processed</div>
-                <div class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1 truncate">Applications Processed</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
                     {{ $totalApplications }}
                 </div>
             </div>
-            <div class="text-[11px] text-slate-600 mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div class="text-[10px] sm:text-[11px] text-slate-600 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
                 <span class="text-amber-700 font-semibold font-mono">{{ $pendingApplications }} In Transit</span>
                 <span class="text-emerald-700 font-semibold font-mono">{{ $approvedApplications }} Approved</span>
             </div>
         </div>
 
         <!-- Metric 4: System User Accounts -->
-        <div class="bg-white rounded-xl p-4 border border-slate-200 border-t-4 border-t-purple-600 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-purple-600 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>
-                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1">RBAC User Accounts</div>
-                <div class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
+                <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1 truncate">RBAC User Accounts</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
                     {{ $totalUsers }}
                 </div>
             </div>
-            <div class="text-[11px] text-slate-600 mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <div class="text-[10px] sm:text-[11px] text-slate-600 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
                 <span class="text-purple-700 font-semibold font-mono">{{ $usersByRole['admin'] ?? 0 }} Admin • {{ $usersByRole['hrmu_staff'] ?? 0 }} HR</span>
                 <span class="text-slate-400 font-mono text-[10px]">{{ $usersByRole['routing_clerk'] ?? 0 }} Clerks</span>
             </div>
