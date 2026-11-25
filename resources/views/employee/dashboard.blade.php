@@ -637,16 +637,23 @@
 <div id="filingModal" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Modal Header -->
-        <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
-            <div class="flex items-center gap-2">
-                <i class="ph ph-note-pencil text-xl text-slate-300"></i>
+        <div class="bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gov-700 text-white flex items-center justify-center font-bold shadow-2xs shrink-0">
+                    <i class="ph-bold ph-note-pencil text-xl"></i>
+                </div>
                 <div>
-                    <h3 class="text-sm sm:text-base font-bold">Application for Leave (CS Form No. 6)</h3>
-                    <div class="text-[10px] sm:text-[11px] text-slate-300">Digitally pre-fills official form with embedded scannable QR Code</div>
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug">
+                        Application for Leave <span class="text-xs sm:text-sm font-semibold text-slate-500 font-mono">(CS Form No. 6)</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5">
+                        <i class="ph ph-qr-code text-gov-700 text-sm"></i>
+                        <span>Digitally pre-fills official form with embedded scannable QR Code</span>
+                    </p>
                 </div>
             </div>
-            <button type="button" onclick="closeFilingModal()" class="text-slate-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-gov-600 rounded-lg p-1" aria-label="Close filing modal">
-                <i class="ph ph-x text-xl"></i>
+            <button type="button" onclick="closeFilingModal()" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-200 transition cursor-pointer" aria-label="Close filing modal">
+                <i class="ph ph-x text-lg"></i>
             </button>
         </div>
 
@@ -688,15 +695,9 @@
 
             <!-- Leave Type Dropdown (Box 6.A) -->
             <div>
-                <div class="flex items-center justify-between mb-1.5">
-                    <label for="leave_type_id" class="block text-sm font-bold text-slate-800 uppercase tracking-wider">
-                        Type of Leave to be Availed (Box 6.A) <span class="text-rose-500">*</span>
-                    </label>
-                    <span id="leave_type_lock_badge" class="hidden text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full items-center gap-1 shadow-2xs">
-                        <i class="ph-bold ph-lock-simple text-xs text-amber-700"></i>
-                        <span>Fixed for Monetization</span>
-                    </span>
-                </div>
+                <label for="leave_type_id" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                    Type of Leave to be Availed (Box 6.A) <span class="text-rose-500">*</span>
+                </label>
                 <select id="leave_type_id" name="leave_type_id" required onchange="handleLeaveTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                     <option value="" disabled selected>— Select Civil Service Leave Category —</option>
                     @foreach($leaveTypes as $type)
@@ -766,15 +767,9 @@
                 </div>
 
                 <div>
-                    <div class="flex items-center justify-between mb-1.5">
-                        <label for="details_type" class="block text-sm font-bold text-slate-800">
-                            Select Specification Category:
-                        </label>
-                        <span id="details_type_lock_badge" class="hidden text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full items-center gap-1 shadow-2xs">
-                            <i class="ph-bold ph-lock-simple text-xs text-amber-700"></i>
-                            <span id="details_type_lock_label">Fixed for Monetization</span>
-                        </span>
-                    </div>
+                    <label for="details_type" class="block text-sm font-bold text-slate-800 mb-1.5">
+                        Select Specification Category:
+                    </label>
                     <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                         <optgroup label="In case of Vacation / Special Privilege Leave:">
                             <option value="within_ph" selected>Within the Philippines (Specify Location)</option>
@@ -1366,31 +1361,18 @@
         }
     }
 
-    function setSelectLocked(selectEl, isLocked, badgeId = null, badgeText = null) {
+    function setSelectLocked(selectEl, isLocked) {
         if (!selectEl) return;
-        const badge = badgeId ? document.getElementById(badgeId) : null;
         if (isLocked) {
             selectEl.classList.add('pointer-events-none', 'bg-slate-100', 'text-slate-700', 'cursor-not-allowed', 'border-slate-300', 'select-none');
             selectEl.setAttribute('tabindex', '-1');
             selectEl.setAttribute('aria-readonly', 'true');
             selectEl.dataset.locked = 'true';
-            if (badge) {
-                badge.classList.remove('hidden');
-                badge.classList.add('inline-flex');
-                if (badgeText) {
-                    const labelSpan = badge.querySelector('#details_type_lock_label') || badge.querySelector('span:last-child');
-                    if (labelSpan) labelSpan.textContent = badgeText;
-                }
-            }
         } else {
             selectEl.classList.remove('pointer-events-none', 'bg-slate-100', 'text-slate-700', 'cursor-not-allowed', 'border-slate-300', 'select-none');
             selectEl.removeAttribute('tabindex');
             selectEl.removeAttribute('aria-readonly');
             delete selectEl.dataset.locked;
-            if (badge) {
-                badge.classList.add('hidden');
-                badge.classList.remove('inline-flex');
-            }
         }
     }
 
@@ -1400,8 +1382,8 @@
         // Unlock Box 6.A and Box 6.B so they are fully interactive for normal leave filing
         const leaveTypeSelect = document.getElementById('leave_type_id');
         const detailsSelect = document.getElementById('details_type');
-        if (leaveTypeSelect) setSelectLocked(leaveTypeSelect, false, 'leave_type_lock_badge');
-        if (detailsSelect) setSelectLocked(detailsSelect, false, 'details_type_lock_badge');
+        if (leaveTypeSelect) setSelectLocked(leaveTypeSelect, false);
+        if (detailsSelect) setSelectLocked(detailsSelect, false);
 
         // Restore normal leave filing view
         const datesContainer = document.getElementById('inclusive_dates_container');
@@ -1509,7 +1491,7 @@
             }
             handleLeaveTypeChange();
             // Lock Box 6.A dropdown so it cannot be clicked
-            setSelectLocked(leaveTypeSelect, true, 'leave_type_lock_badge');
+            setSelectLocked(leaveTypeSelect, true);
         }
 
         // Set Specification Category in 6.B and lock so it cannot be clicked
@@ -1519,8 +1501,7 @@
             detailsSelect.value = isSpecial ? 'monetization_special' : 'monetization';
             handleDetailsTypeChange();
             // Lock Box 6.B dropdown so it cannot be clicked
-            const badgeText = isSpecial ? 'Fixed: Special Monetization (50%+)' : 'Fixed: Regular Monetization';
-            setSelectLocked(detailsSelect, true, 'details_type_lock_badge', badgeText);
+            setSelectLocked(detailsSelect, true);
         }
 
         // Configure Number of Working Days Applied For input and contextual helper text
