@@ -128,9 +128,6 @@
                     <span class="text-emerald-700 font-bold" title="Total earned credits">Added: +{{ number_format((float) ($totalVlEarned ?? 0), 3) }}</span>
                     <span class="text-rose-700 font-bold" title="Total used credits">Used: -{{ number_format((float) ($totalVlUsed ?? 0), 3) }}</span>
                 </div>
-                <p class="text-[11px] text-slate-500 leading-snug">
-                    For vacations, personal family time, and late arrival deductions.
-                </p>
             </div>
 
             <!-- Sick Leave Card -->
@@ -152,9 +149,6 @@
                     <span class="text-emerald-700 font-bold" title="Total earned credits">Added: +{{ number_format((float) ($totalSlEarned ?? 0), 3) }}</span>
                     <span class="text-rose-700 font-bold" title="Total used credits">Used: -{{ number_format((float) ($totalSlUsed ?? 0), 3) }}</span>
                 </div>
-                <p class="text-[11px] text-slate-500 leading-snug">
-                    For illness, medical checkups, and doctor-prescribed recovery.
-                </p>
             </div>
 
             <!-- Total Available Balance Card -->

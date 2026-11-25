@@ -293,9 +293,9 @@
                         </div>
 
                         @if(!$isMayorOffice)
-                            <div class="mt-2 text-xs text-slate-500 flex items-center gap-2">
+                            <div class="mt-2 text-xs text-slate-500 flex items-center gap-1.5">
                                 <i class="ph ph-shield-check text-base shrink-0"></i>
-                                <span>Premature approval guard active: Final approval (Box 7.C) is restricted exclusively to the Office of the Municipal Mayor.</span>
+                                <span>Final approval (Box 7.C) is restricted to the Office of the Municipal Mayor.</span>
                             </div>
                         @endif
                     </div>

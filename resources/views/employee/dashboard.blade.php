@@ -676,7 +676,6 @@
                     Date of Filing (Box 3) <span class="text-rose-500">*</span>
                 </label>
                 <input type="date" id="date_of_filing" name="date_of_filing" value="{{ date('Y-m-d') }}" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                <span class="text-xs font-medium text-slate-600 mt-1 block">Official date of filing for CS Form 6 (defaults to today, editable).</span>
             </div>
 
             <!-- Salary (Box 5) -->
@@ -684,8 +683,7 @@
                 <label for="declared_salary" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                     Monthly Salary (Box 5)
                 </label>
-                <input type="number" id="declared_salary" name="declared_salary" value="{{ old('declared_salary') }}" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 25000.00" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold font-mono text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                <span class="text-xs font-medium text-slate-600 mt-1 block">Optional. Printed on CS Form 6 only; not used in any computation.</span>
+                <input type="number" id="declared_salary" name="declared_salary" value="{{ old('declared_salary') }}" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 25000.00 (Optional)" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold font-mono text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
                 @error('declared_salary')<span class="text-xs font-bold text-rose-600 mt-1 block">{{ $message }}</span>@enderror
             </div>
 
@@ -714,8 +712,7 @@
                     <label for="other_leave_type" class="block text-xs sm:text-sm font-bold text-amber-950 uppercase tracking-wider mb-1.5">
                         Specify Other Type of Leave (Box 6.A "Others:") <span class="text-rose-500">*</span>
                     </label>
-                    <input type="text" id="other_leave_type" name="other_leave_type" placeholder="e.g. Wellness Leave (CSC MC No. 01, s. 2026), Quarantine Leave, etc." class="w-full border-2 border-amber-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                    <span class="text-xs font-semibold text-amber-800 mt-1 block">This exact title will be printed on the "Others: ____________________" line in Box 6.A of CS Form 6.</span>
+                    <input type="text" id="other_leave_type" name="other_leave_type" placeholder="e.g. Wellness Leave, Quarantine Leave" class="w-full border-2 border-amber-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
                 </div>
             </div>
 
@@ -736,12 +733,9 @@
             </div>
 
             <!-- Contextual Monetization Notice (Revealed when monetization is selected) -->
-            <div id="monetization_dates_notice" class="hidden p-3.5 bg-amber-50 rounded-xl border-2 border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
-                <i class="ph-bold ph-coins text-lg text-amber-700 shrink-0 mt-0.5"></i>
-                <div class="leading-relaxed">
-                    <strong class="font-bold text-amber-950 block text-xs sm:text-sm">Cash Conversion of Leave Credits:</strong>
-                    <span>Date From and Date To fields are hidden because monetization converts accumulated leave credits into cash without requiring an absence from physical service.</span>
-                </div>
+            <div id="monetization_dates_notice" class="hidden p-3 bg-amber-50 rounded-xl border border-amber-300 text-xs text-amber-950 flex items-center gap-2">
+                <i class="ph-bold ph-coins text-base text-amber-700 shrink-0"></i>
+                <span>Monetization converts credits into cash without requiring dates of absence.</span>
             </div>
 
             <!-- Number of Days (Discrete with 3 decimal precision) -->
@@ -750,7 +744,6 @@
                     Number of Working Days Applied For <span class="text-rose-500">*</span>
                 </label>
                 <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                <span id="days_requested_help" class="text-xs font-semibold text-slate-600 mt-1 block">Full days (1.000) or half-days (0.500). Starla fractional tables apply for tardiness/LWOP.</span>
             </div>
 
             <!-- 6.B Details of Leave Selector (Exact Match to CSC Form 6) -->
@@ -759,12 +752,11 @@
                     <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
                         6.B Details of Leave <span class="text-rose-500">*</span>
                     </label>
-                    <span class="text-[10px] text-slate-500 italic">Transferred directly to official printed Form 6</span>
                 </div>
 
                 <div>
                     <label for="details_type" class="block text-sm font-bold text-slate-800 mb-1.5">
-                        Select Specification Category:
+                        Specification Category:
                     </label>
                     <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                         <optgroup label="In case of Vacation / Special Privilege Leave:">
@@ -792,10 +784,9 @@
 
                 <div id="details_specify_container">
                     <label for="details_specify" id="details_specify_label" class="block text-sm font-bold text-slate-800 mb-1.5">
-                        Specify Location / Hospital / Illness Note:
+                        Location / Hospital / Remarks:
                     </label>
                     <input type="text" id="details_specify" name="details_specify" value="Basud, Camarines Norte" placeholder="e.g. Basud, Camarines Norte" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
-                    <span class="text-xs font-medium text-slate-600 mt-1 block" id="details_specify_help">Your text will be printed on the corresponding line in Box 6.B of CS Form 6.</span>
                 </div>
             </div>
 
@@ -852,7 +843,7 @@
             <div class="flex items-start gap-2.5 pt-1.5">
                 <input type="checkbox" id="commutation_requested" name="commutation_requested" value="1" class="mt-0.5 w-5 h-5 rounded border-2 border-slate-400 text-gov-700 focus:ring-gov-600 cursor-pointer">
                 <label for="commutation_requested" class="text-sm text-slate-800 leading-snug cursor-pointer">
-                    <strong>Request Commutation of Leave Credits</strong> (Requires clearance from Municipal Budget & Treasury)
+                    <strong>Request Commutation</strong> (Box 6.D)
                 </label>
             </div>
 
