@@ -518,11 +518,11 @@
 <!-- MODAL 0: APPLICATION TYPE SELECTION (LEAVE VS MONETIZATION)            -->
 <!-- ======================================================================= -->
 <div id="filingOptionModal" onclick="if(event.target === this) closeFilingOptionModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 flex flex-col my-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 flex flex-col my-auto">
         <!-- Header -->
-        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
+        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-xl bg-gov-700 text-white flex items-center justify-center font-bold">
+                <div class="w-8 h-8 rounded-xl bg-gov-700 text-white flex items-center justify-center font-bold shrink-0">
                     <i class="ph-bold ph-files text-lg"></i>
                 </div>
                 <div>
@@ -535,8 +535,8 @@
             </button>
         </div>
 
-        <!-- Options Body -->
-        <div class="p-6 space-y-4">
+        <!-- Options Body (Scrollable within viewport) -->
+        <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
             <!-- Option 1: Apply for Leave -->
             <button 
                 type="button" 
@@ -635,7 +635,7 @@
             </div>
         </div>
 
-        <div class="px-6 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center justify-end">
+        <div class="px-6 py-3 bg-slate-50/80 border-t border-slate-100 flex items-center justify-end shrink-0">
             <button type="button" onclick="closeFilingOptionModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-200 transition cursor-pointer">
                 Cancel
             </button>
@@ -647,8 +647,8 @@
 <!-- MODAL 1: FILE NEW LEAVE APPLICATION FORM                                -->
 <!-- ======================================================================= -->
 <div id="filingModal" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[94vh] sm:max-h-[90vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
-        <!-- Modal Header -->
+    <div class="bg-white rounded-2xl max-w-xl sm:max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
+        <!-- Modal Header (Pinned) -->
         <div class="bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-gov-700 text-white flex items-center justify-center font-bold shadow-2xs shrink-0">
@@ -669,10 +669,13 @@
             </button>
         </div>
 
-        <!-- Modal Form (Scrollable within viewport) -->
-        <form method="POST" action="{{ route('employee.leave.store') }}" enctype="multipart/form-data" class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
+        <!-- Modal Form (Flex Column with scrollable body and pinned footer) -->
+        <form method="POST" action="{{ route('employee.leave.store') }}" enctype="multipart/form-data" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
             <input type="hidden" name="employee_id" value="{{ $employee->employee_id }}">
+
+            <!-- Scrollable Form Body -->
+            <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
 
             <!-- Applicant Snapshot (Read-only) -->
             <div class="bg-slate-50 p-3.5 rounded-xl border-2 border-slate-200 text-sm flex justify-between">
@@ -809,22 +812,22 @@
             <!-- =============================================================== -->
             <!-- CONDITIONAL SUPPORTING DOCUMENT UPLOAD SECTION (CSC Form No. 6) -->
             <!-- =============================================================== -->
-            <div id="supporting_documents_section" class="hidden p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 space-y-3">
+            <div id="supporting_documents_section" class="hidden p-3.5 sm:p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 space-y-3">
                 <div class="flex items-start justify-between gap-2">
-                    <div>
+                    <div class="min-w-0 flex-1">
                         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-200 text-amber-950 border border-amber-400">
-                            <i class="ph-bold ph-paperclip text-sm"></i>
+                            <i class="ph-bold ph-paperclip text-sm shrink-0"></i>
                             <span>Supporting Documents Required (CSC Form No. 6)</span>
                         </div>
-                        <h4 class="text-sm sm:text-base font-extrabold text-slate-900 mt-1" id="req_docs_title">Required Attachments</h4>
-                        <p class="text-xs sm:text-sm font-semibold text-slate-700 mt-0.5" id="req_docs_reason"></p>
+                        <h4 class="text-sm sm:text-base font-extrabold text-slate-900 mt-1.5" id="req_docs_title">Required Attachments</h4>
+                        <p class="text-xs sm:text-sm font-semibold text-slate-700 mt-0.5 leading-relaxed" id="req_docs_reason"></p>
                     </div>
                 </div>
 
                 <!-- Specific Required Documents List -->
                 <div class="bg-white p-3.5 rounded-xl border border-amber-200 shadow-2xs">
                     <span class="text-xs font-extrabold uppercase tracking-wider text-slate-800 block mb-1.5">Mandatory Supporting Document(s):</span>
-                    <ul class="space-y-1.5 text-xs sm:text-sm font-bold text-slate-900 list-disc list-inside" id="req_docs_list">
+                    <ul class="space-y-1.5 text-xs sm:text-sm font-bold text-slate-900 list-disc ml-5 leading-relaxed" id="req_docs_list">
                     </ul>
                     <div class="text-[11px] font-mono font-bold text-slate-500 mt-2" id="req_docs_legal"></div>
                 </div>
@@ -841,10 +844,10 @@
                         multiple 
                         accept=".pdf,.jpg,.jpeg,.png"
                         onchange="handleFileSelection(event)"
-                        class="w-full text-xs sm:text-sm font-bold text-slate-800 border-2 border-amber-300 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gov-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-gov-700 file:text-white hover:file:bg-gov-800 file:cursor-pointer cursor-pointer"
+                        class="w-full max-w-full text-xs sm:text-sm font-bold text-slate-800 border-2 border-amber-300 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gov-600 file:mr-2 sm:file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-gov-700 file:text-white hover:file:bg-gov-800 file:cursor-pointer cursor-pointer"
                     >
                     <span class="text-xs font-semibold text-slate-600 mt-1 block">
-                        Accepted: <strong>PDF, JPG, PNG</strong> • Max: <strong>25MB</strong> (PDF), <strong>10MB</strong> (Images) • You may attach multiple files.
+                        Accepted: <strong>PDF, JPG, PNG</strong> • Max: <strong>25MB</strong> (PDF), <strong>10MB</strong> (Images) • Multiple files allowed.
                     </span>
                 </div>
 
@@ -862,30 +865,31 @@
                     <strong>Request Commutation</strong> (Box 6.D)
                 </label>
             </div>
+        </div>
 
-            <!-- Modal Footer -->
-            <div class="pt-4 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3">
-                <button type="button" onclick="closeFilingModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-[44px] cursor-pointer">
-                    Cancel
-                </button>
-                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center justify-center gap-2 min-h-[44px] cursor-pointer">
-                    <i class="ph-bold ph-paper-plane-tilt text-lg"></i>
-                    <span>Generate CS Form 6 & QR</span>
-                </button>
-            </div>
-        </form>
-    </div>
+        <!-- Pinned Modal Footer -->
+        <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
+            <button type="button" onclick="closeFilingModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-[44px] cursor-pointer">
+                Cancel
+            </button>
+            <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center justify-center gap-2 min-h-[44px] cursor-pointer">
+                <i class="ph-bold ph-paper-plane-tilt text-lg"></i>
+                <span>Generate CS Form 6 & QR</span>
+            </button>
+        </div>
+    </form>
+</div>
 </div>
 
 <!-- ======================================================================= -->
 <!-- MODAL 2: VISUAL ROUTING TIMELINE & SLA TRACKER                          -->
 <!-- ======================================================================= -->
-<div id="trackerModal" onclick="if(event.target === this) closeTrackerModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
-        <!-- Tracker Header -->
-        <div class="bg-slate-900 text-white px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+<div id="trackerModal" onclick="if(event.target === this) closeTrackerModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
+        <!-- Tracker Header (Pinned) -->
+        <div class="bg-slate-900 text-white px-5 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-gov-700 flex items-center justify-center text-white font-bold text-lg">
+                <div class="w-9 h-9 rounded-lg bg-gov-700 flex items-center justify-center text-white font-bold text-lg shrink-0">
                     <i class="ph-bold ph-path"></i>
                 </div>
                 <div>
@@ -893,31 +897,32 @@
                     <h3 class="text-base font-bold text-white font-mono" id="modalRefCode">LV-2026-XXXX</h3>
                 </div>
             </div>
-            <button type="button" onclick="closeTrackerModal()" class="text-slate-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-gov-600 rounded-lg p-1" aria-label="Close tracking modal">
+            <button type="button" onclick="closeTrackerModal()" class="text-slate-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-gov-600 rounded-lg p-1 cursor-pointer" aria-label="Close tracking modal">
                 <i class="ph ph-x text-xl"></i>
             </button>
         </div>
 
-        <div class="p-6">
+        <!-- Tracker Body (Scrollable within viewport) -->
+        <div class="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
             <!-- Loading Indicator -->
             <div id="trackerLoading" class="py-12 text-center text-slate-500">
                 <i class="ph ph-spinner animate-spin text-3xl text-gov-700 mb-2"></i>
-                <div class="text-sm">Retrieving physical movement logs...</div>
+                <div class="text-sm font-semibold">Retrieving physical movement logs...</div>
             </div>
 
             <!-- Content Area -->
-            <div id="trackerContent" class="space-y-6 hidden">
+            <div id="trackerContent" class="space-y-5 sm:space-y-6 hidden">
                 <!-- Status & SLA Overview Banner -->
-                <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200">
                     <div>
-                        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Current Physical Office</div>
-                        <div class="text-base font-bold text-slate-900 mt-0.5 flex items-center gap-1.5" id="modalLocation">
+                        <div class="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider font-semibold">Current Physical Office</div>
+                        <div class="text-sm sm:text-base font-bold text-slate-900 mt-0.5 flex items-center gap-1.5" id="modalLocation">
                             <i class="ph-fill ph-map-pin text-amber-600"></i>
                             <span>Office Location</span>
                         </div>
                     </div>
                     <div>
-                        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Statutory SLA Compliance</div>
+                        <div class="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider font-semibold">Statutory SLA Compliance</div>
                         <div class="mt-0.5" id="modalSlaBadge">
                             <!-- Filled dynamically -->
                         </div>
@@ -925,8 +930,8 @@
                 </div>
 
                 <!-- Digital Supporting Documents Attachments -->
-                <div id="modalAttachmentsCard" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <div class="flex items-center justify-between mb-2 pb-2 border-b border-slate-200">
+                <div id="modalAttachmentsCard" class="hidden bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200">
+                    <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
                             <i class="ph-bold ph-paperclip text-base text-gov-700"></i>
                             <span>Attached Supporting Documents</span>
@@ -946,10 +951,10 @@
             </div>
         </div>
 
-        <!-- Tracker Footer -->
-        <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-between items-center text-xs text-slate-500">
+        <!-- Tracker Footer (Pinned) -->
+        <div class="bg-slate-50 px-5 sm:px-6 py-3 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500 shrink-0">
             <span>RA 10173 Compliant: Payload carries strictly reference ID</span>
-            <button type="button" onclick="closeTrackerModal()" class="px-4 py-1.5 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 font-medium text-slate-700 transition">
+            <button type="button" onclick="closeTrackerModal()" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 font-bold text-slate-700 transition cursor-pointer">
                 Close Tracker
             </button>
         </div>
@@ -2032,7 +2037,7 @@
                 (isOver || isEmpty ? 'bg-rose-50 border-rose-300 text-rose-900' : 'bg-slate-50 border-slate-200 text-slate-800');
 
             item.innerHTML = `
-                <div class="flex items-center gap-2 truncate">
+                <div class="flex items-center gap-2 min-w-0 flex-1 truncate">
                     <i class="${isPdf ? 'ph-bold ph-file-pdf text-rose-600 text-base' : 'ph-bold ph-file-image text-blue-600 text-base'} shrink-0"></i>
                     <span class="truncate font-bold">${file.name}</span>
                     <span class="text-[11px] text-slate-500 font-mono shrink-0">(${sizeFormatted})</span>
@@ -2109,12 +2114,12 @@
             attList.innerHTML = info.attachments.map(att => {
                 return `
                     <div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                        <div class="min-w-0">
+                        <div class="min-w-0 flex-1">
                             <span class="text-xs font-black uppercase tracking-wider text-slate-800">${att.document_label}</span>
                             <div class="text-xs text-slate-600 truncate mt-1 flex items-center gap-1.5">
-                                <i class="${att.is_pdf ? 'ph-bold ph-file-pdf text-rose-600' : 'ph-bold ph-file-image text-blue-600'} text-base"></i>
+                                <i class="${att.is_pdf ? 'ph-bold ph-file-pdf text-rose-600' : 'ph-bold ph-file-image text-blue-600'} text-base shrink-0"></i>
                                 <span class="font-bold text-slate-900 truncate">${att.original_filename}</span>
-                                <span class="text-slate-400 font-mono">(${att.size_formatted})</span>
+                                <span class="text-slate-400 font-mono shrink-0">(${att.size_formatted})</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-1.5 shrink-0">
