@@ -319,15 +319,10 @@
                 <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
                     <span class="text-[11px] font-medium text-slate-400 font-mono">CS Form 41 Synced</span>
                     @if($monetizationInfo['is_eligible'])
-                        <button 
-                            type="button" 
-                            onclick="openMonetizationFilingModal('regular')"
-                            class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-lg transition cursor-pointer shadow-2xs"
-                            title="File for cash conversion of leave credits"
-                        >
-                            <i class="ph-bold ph-coins text-sm text-amber-700"></i>
-                            <span>+ Monetize</span>
-                        </button>
+                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-lg font-mono">
+                            <i class="ph-bold ph-coins text-xs text-amber-600"></i>
+                            <span>Max 30d / Year</span>
+                        </span>
                     @else
                         <span class="text-[11px] font-bold text-slate-400 italic">15.000 VL Req.</span>
                     @endif
@@ -693,10 +688,16 @@
 
             <!-- Leave Type Dropdown (Box 6.A) -->
             <div>
-                <label for="leave_type_id" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
-                    Type of Leave to be Availed (Box 6.A) <span class="text-rose-500">*</span>
-                </label>
-                <select id="leave_type_id" name="leave_type_id" required onchange="handleLeaveTypeChange()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                <div class="flex items-center justify-between mb-1.5">
+                    <label for="leave_type_id" class="block text-sm font-bold text-slate-800 uppercase tracking-wider">
+                        Type of Leave to be Availed (Box 6.A) <span class="text-rose-500">*</span>
+                    </label>
+                    <span id="leave_type_lock_badge" class="hidden text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full items-center gap-1 shadow-2xs">
+                        <i class="ph-bold ph-lock-simple text-xs text-amber-700"></i>
+                        <span>Fixed for Monetization</span>
+                    </span>
+                </div>
+                <select id="leave_type_id" name="leave_type_id" required onchange="handleLeaveTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                     <option value="" disabled selected>— Select Civil Service Leave Category —</option>
                     @foreach($leaveTypes as $type)
                         <option value="{{ $type->leave_type_id }}" data-code="{{ $type->code }}">
@@ -765,10 +766,16 @@
                 </div>
 
                 <div>
-                    <label for="details_type" class="block text-sm font-bold text-slate-800 mb-1.5">
-                        Select Specification Category:
-                    </label>
-                    <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="details_type" class="block text-sm font-bold text-slate-800">
+                            Select Specification Category:
+                        </label>
+                        <span id="details_type_lock_badge" class="hidden text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full items-center gap-1 shadow-2xs">
+                            <i class="ph-bold ph-lock-simple text-xs text-amber-700"></i>
+                            <span id="details_type_lock_label">Fixed for Monetization</span>
+                        </span>
+                    </div>
+                    <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                         <optgroup label="In case of Vacation / Special Privilege Leave:">
                             <option value="within_ph" selected>Within the Philippines (Specify Location)</option>
                             <option value="abroad">Abroad (Specify Country/Destination)</option>
@@ -1359,8 +1366,42 @@
         }
     }
 
+    function setSelectLocked(selectEl, isLocked, badgeId = null, badgeText = null) {
+        if (!selectEl) return;
+        const badge = badgeId ? document.getElementById(badgeId) : null;
+        if (isLocked) {
+            selectEl.classList.add('pointer-events-none', 'bg-slate-100', 'text-slate-700', 'cursor-not-allowed', 'border-slate-300', 'select-none');
+            selectEl.setAttribute('tabindex', '-1');
+            selectEl.setAttribute('aria-readonly', 'true');
+            selectEl.dataset.locked = 'true';
+            if (badge) {
+                badge.classList.remove('hidden');
+                badge.classList.add('inline-flex');
+                if (badgeText) {
+                    const labelSpan = badge.querySelector('#details_type_lock_label') || badge.querySelector('span:last-child');
+                    if (labelSpan) labelSpan.textContent = badgeText;
+                }
+            }
+        } else {
+            selectEl.classList.remove('pointer-events-none', 'bg-slate-100', 'text-slate-700', 'cursor-not-allowed', 'border-slate-300', 'select-none');
+            selectEl.removeAttribute('tabindex');
+            selectEl.removeAttribute('aria-readonly');
+            delete selectEl.dataset.locked;
+            if (badge) {
+                badge.classList.add('hidden');
+                badge.classList.remove('inline-flex');
+            }
+        }
+    }
+
     function openFilingModal() {
         document.getElementById('filingModal').classList.remove('hidden');
+
+        // Unlock Box 6.A and Box 6.B so they are fully interactive for normal leave filing
+        const leaveTypeSelect = document.getElementById('leave_type_id');
+        const detailsSelect = document.getElementById('details_type');
+        if (leaveTypeSelect) setSelectLocked(leaveTypeSelect, false, 'leave_type_lock_badge');
+        if (detailsSelect) setSelectLocked(detailsSelect, false, 'details_type_lock_badge');
 
         // Restore normal leave filing view
         const datesContainer = document.getElementById('inclusive_dates_container');
@@ -1444,12 +1485,14 @@
             commutationCheckbox.checked = true;
         }
 
-        // Select leave type: VL (or MONETIZATION if exists)
+        // Select leave type: MONETIZATION and lock Box 6.A so it cannot be clicked
         const leaveTypeSelect = document.getElementById('leave_type_id');
         if (leaveTypeSelect) {
             let monetizationOption = null;
             for (let i = 0; i < leaveTypeSelect.options.length; i++) {
-                if (leaveTypeSelect.options[i].getAttribute('data-code') === 'MONETIZATION') {
+                const optCode = (leaveTypeSelect.options[i].getAttribute('data-code') || '').toUpperCase();
+                const optText = (leaveTypeSelect.options[i].text || '').toUpperCase();
+                if (optCode === 'MONETIZATION' || optText.includes('MONETIZATION')) {
                     monetizationOption = leaveTypeSelect.options[i];
                     break;
                 }
@@ -1465,13 +1508,19 @@
                 }
             }
             handleLeaveTypeChange();
+            // Lock Box 6.A dropdown so it cannot be clicked
+            setSelectLocked(leaveTypeSelect, true, 'leave_type_lock_badge');
         }
 
-        // Set Specification Category in 6.B
+        // Set Specification Category in 6.B and lock so it cannot be clicked
         const detailsSelect = document.getElementById('details_type');
         if (detailsSelect) {
-            detailsSelect.value = (subType === 'special') ? 'monetization_special' : 'monetization';
+            const isSpecial = (subType === 'special');
+            detailsSelect.value = isSpecial ? 'monetization_special' : 'monetization';
             handleDetailsTypeChange();
+            // Lock Box 6.B dropdown so it cannot be clicked
+            const badgeText = isSpecial ? 'Fixed: Special Monetization (50%+)' : 'Fixed: Regular Monetization';
+            setSelectLocked(detailsSelect, true, 'details_type_lock_badge', badgeText);
         }
 
         // Configure Number of Working Days Applied For input and contextual helper text
@@ -1558,7 +1607,9 @@
         }
 
         if (code === 'MONETIZATION') {
-            detailsSelect.value = 'monetization';
+            if (detailsSelect.value !== 'monetization_special') {
+                detailsSelect.value = 'monetization';
+            }
         } else if (code === 'TERMINAL') {
             detailsSelect.value = 'terminal';
         } else if (code === 'SLBW') {
