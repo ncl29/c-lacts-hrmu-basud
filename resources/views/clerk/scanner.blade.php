@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Receiving Clerk QR Scanner & Reception Desk')
+@section('title', 'Receiver QR Scanner & Reception Desk')
 
 @section('content')
 <div class="space-y-6">
@@ -22,17 +22,10 @@
                             <i class="ph ph-seal-check text-sm sm:text-base"></i>
                             <span>Appointing Authority</span>
                         </span>
-                    @else
-                        <span class="inline-flex items-center gap-1 px-2 py-0.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                            <i class="ph ph-pencil-simple-line text-sm sm:text-base"></i>
-                            <span>Endorsement Station</span>
-                        </span>
                     @endif
                 </div>
                 <div class="text-[11px] sm:text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span>Station: <strong class="text-slate-800">{{ $currentOffice->office_name }}</strong></span>
-                    <span class="hidden min-[360px]:inline">•</span>
-                    <span>Wet Signature Tracking</span>
                 </div>
             </div>
         </div>
@@ -132,12 +125,6 @@
                             <i class="ph ph-magnifying-glass text-sm sm:text-base"></i>
                             <span>Lookup</span>
                         </button>
-                    </div>
-                    <div class="mt-2 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-2">
-                        <span class="flex items-center gap-1">
-                            <i class="ph ph-info text-base"></i>
-                            <span>Scanning or clicking a code only previews the file. Click <strong>Update Routing Log</strong> after verifying.</span>
-                        </span>
                     </div>
                 </div>
 
@@ -291,13 +278,6 @@
                                 <div id="suggestedActionText" class="text-gov-800 mt-1"></div>
                             </div>
                         </div>
-
-                        @if(!$isMayorOffice)
-                            <div class="mt-2 text-xs text-slate-500 flex items-center gap-1.5">
-                                <i class="ph ph-shield-check text-base shrink-0"></i>
-                                <span>Final approval (Box 7.C) is restricted to the Office of the Municipal Mayor.</span>
-                            </div>
-                        @endif
                     </div>
 
                     <!-- 3. Optional Remarks / Routing Notes -->
@@ -310,7 +290,7 @@
                             id="remarks" 
                             name="remarks" 
                             onkeydown="if(event.key === 'Enter'){ event.preventDefault(); }"
-                            placeholder="e.g. Endorsed for Mayor's signature, or Box 7 signed."
+                            placeholder="Enter notes or remarks"
                             class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-gov-600"
                         >
                     </div>
@@ -337,7 +317,6 @@
                     <i class="ph ph-clock-counter-clockwise text-base"></i>
                     <span>Recent Scans at this Terminal</span>
                 </h3>
-                <span class="text-xs text-slate-400 font-mono">Live Activity</span>
             </div>
             <div class="divide-y divide-slate-100 text-xs text-slate-700" id="recentScansList">
                 @forelse($recentLogs as $log)
@@ -352,7 +331,7 @@
                                 <span class="font-semibold text-slate-900 truncate">{{ $log->leaveApplication->employee->full_name ?? 'Employee' }}</span>
                             </div>
                             <div class="text-xs text-slate-400 truncate mt-1">
-                                {{ $log->office->office_name ?? 'Office' }} • {{ $log->scanner->username ?? 'Clerk' }}
+                                {{ $log->office->office_name ?? 'Office' }} • {{ $log->scanner->username ?? 'Receiver' }}
                             </div>
                         </div>
                         <div class="text-right shrink-0">

@@ -179,223 +179,22 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Civil Service Compliance & Help Notice -->
-            <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 text-xs text-amber-900 space-y-2">
-                <div class="flex items-center gap-2 font-bold text-amber-950">
-                    <i class="ph-bold ph-shield-check text-base text-amber-700"></i>
-                    <span>Personnel Record Policy</span>
-                </div>
-                <p class="text-[11px] leading-relaxed text-amber-900/90">
-                    Any updates to your personal details will be reflected immediately across your leave applications, pre-filled Form 6 documents, and digital service records.
-                </p>
-            </div>
         </div>
 
-        <!-- Column 2 & 3: Editable Information & Password Change -->
+        <!-- Column 2 & 3: Change Password -->
         <div class="lg:col-span-2 space-y-6">
 
-            <!-- Card 1: Editable Personal & Employment Information -->
-            <div class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
-                <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-gov-100 text-gov-800 flex items-center justify-center font-bold">
-                            <i class="ph-bold ph-pencil-simple-line text-base"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Edit Personnel Information</h2>
-                            <p class="text-xs text-slate-500">Update your name, contact email, position, and office assignment</p>
-                        </div>
-                    </div>
-                </div>
-
-                <form method="POST" action="{{ route('profile.update') }}" class="p-6 space-y-5">
-                    @csrf
-                    @method('PUT')
-
-                    <!-- Name Breakdown: First, Middle, Last -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label for="first_name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                First Name <span class="text-rose-500">*</span>
-                            </label>
-                            <input 
-                                type="text" 
-                                id="first_name" 
-                                name="first_name" 
-                                value="{{ old('first_name', $employee->first_name ?? '') }}" 
-                                required 
-                                class="w-full border @error('first_name') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                placeholder="e.g. Juan"
-                            >
-                            @error('first_name')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="middle_name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Middle Name
-                            </label>
-                            <input 
-                                type="text" 
-                                id="middle_name" 
-                                name="middle_name" 
-                                value="{{ old('middle_name', $employee->middle_name ?? '') }}" 
-                                class="w-full border @error('middle_name') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                placeholder="e.g. Santos"
-                            >
-                            @error('middle_name')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="last_name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Last Name <span class="text-rose-500">*</span>
-                            </label>
-                            <input 
-                                type="text" 
-                                id="last_name" 
-                                name="last_name" 
-                                value="{{ old('last_name', $employee->last_name ?? '') }}" 
-                                required 
-                                class="w-full border @error('last_name') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                placeholder="e.g. Dela Cruz"
-                            >
-                            @error('last_name')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Email & Position -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Official Email Address <span class="text-rose-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="ph ph-envelope-simple text-base"></i>
-                                </span>
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    name="email" 
-                                    value="{{ old('email', $user->email ?? '') }}" 
-                                    required 
-                                    class="w-full pl-10 border @error('email') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                    placeholder="personnel@basud.gov.ph"
-                                >
-                            </div>
-                            @error('email')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="position" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Position / Title <span class="text-rose-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="ph ph-briefcase text-base"></i>
-                                </span>
-                                <input 
-                                    type="text" 
-                                    id="position" 
-                                    name="position" 
-                                    value="{{ old('position', $employee->position ?? '') }}" 
-                                    required 
-                                    class="w-full pl-10 border @error('position') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                    placeholder="e.g. Administrative Aide IV"
-                                >
-                            </div>
-                            @error('position')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Station / Office & Date Hired -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label for="office_id" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Office / Station
-                            </label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="ph ph-buildings text-base"></i>
-                                </span>
-                                <select 
-                                    id="office_id" 
-                                    name="office_id" 
-                                    class="w-full pl-10 border @error('office_id') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                >
-                                    @foreach($offices as $office)
-                                        <option value="{{ $office->office_id }}" {{ old('office_id', $employee->office_id) == $office->office_id ? 'selected' : '' }}>
-                                            {{ $office->office_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            @error('office_id')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label for="date_hired" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                                Date Hired / Assumption
-                            </label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                    <i class="ph ph-calendar text-base"></i>
-                                </span>
-                                <input 
-                                    type="date" 
-                                    id="date_hired" 
-                                    name="date_hired" 
-                                    value="{{ old('date_hired', $employee->date_hired ? \Carbon\Carbon::parse($employee->date_hired)->format('Y-m-d') : '') }}" 
-                                    class="w-full pl-10 border @error('date_hired') border-rose-500 ring-1 ring-rose-500 @else border-slate-300 @enderror rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-gov-600 bg-white"
-                                >
-                            </div>
-                            @error('date_hired')
-                                <p class="text-xs text-rose-600 mt-1 font-medium">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Save Action -->
-                    <div class="pt-3 border-t border-slate-100 flex items-center justify-end">
-                        <button 
-                            type="submit" 
-                            class="px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px]"
-                        >
-                            <i class="ph-bold ph-check text-base"></i>
-                            <span>Save Information</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Card 2: Change Password Section with Email Security Verification -->
+            <!-- Card: Change Password Section with Email Security Verification -->
             <div id="passwordChangeSection" class="bg-white rounded-2xl shadow-xs border border-slate-200 overflow-hidden">
-                <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                <div class="bg-slate-50 border-b border-slate-200 px-5 sm:px-6 py-4 flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-700 flex items-center justify-center font-bold">
+                        <div class="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-700 flex items-center justify-center font-bold shrink-0">
                             <i class="ph-bold ph-shield-check text-base"></i>
                         </div>
                         <div>
                             <h2 class="text-sm sm:text-base font-bold text-slate-900 leading-tight">Change Password</h2>
-                            <p class="text-xs text-slate-500">Enhanced Civil Service security: Verified through your registered email</p>
                         </div>
                     </div>
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-900 border border-amber-300 font-mono">
-                        <i class="ph-bold ph-lock-key text-xs"></i>
-                        <span>2FA Protected</span>
-                    </span>
                 </div>
 
                 <form id="passwordChangeForm" method="POST" action="{{ route('profile.password.update') }}" class="p-6 space-y-5" onsubmit="return handlePasswordFormSubmit(event)">
@@ -561,6 +360,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 @section('scripts')
 <script>
@@ -753,9 +553,4 @@
         }
     });
 </script>
-@endsection
-
-        </div>
-    </div>
-</div>
 @endsection

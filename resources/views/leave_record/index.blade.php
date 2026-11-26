@@ -18,7 +18,6 @@
                 <div class="min-w-0 flex-1">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Leave Record Management</span>
-                        <span class="text-[11px] text-slate-400 font-medium font-mono">CS Form No. 41</span>
                     </div>
                     <form id="employeeSelectForm" method="GET" action="{{ route('hr.leave-records.index') }}" class="flex flex-wrap items-center gap-2 mt-1">
                         <!-- Hidden input containing selected employee ID -->
@@ -435,11 +434,7 @@ echo method_field('DELETE');
     >
         <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 relative z-10" onclick="event.stopPropagation()">
             <!-- Header -->
-            <div class="bg-slate-50 px-5 py-3.5 border-b border-slate-200/90 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">Ledger Engine Verified</span>
-                </div>
+            <div class="bg-slate-50 px-5 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                 <button 
                     type="button" 
                     id="btnCloseRecalcDialogHeader"
@@ -464,27 +459,6 @@ echo method_field('DELETE');
                     <p class="text-xs text-slate-600 mt-1.5 font-medium leading-relaxed">
                         All leave ledger entries for <strong class="text-slate-900 font-bold">{{ $recalcInfo['employee_name'] ?? $employee->full_name }}</strong> were verified and re-computed in strict chronological order.
                     </p>
-                </div>
-
-                <!-- Balance Breakdown Card -->
-                <div class="rounded-2xl bg-slate-50 border border-slate-200/80 p-4 text-xs space-y-3 text-left">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 text-[11px] font-mono text-slate-500">
-                        <span>ENTRIES RE-EVALUATED</span>
-                        <span class="font-bold text-slate-800 bg-white px-2 py-0.5 rounded border border-slate-200">{{ $recalcInfo['count'] ?? $records->count() }} rows</span>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3 pt-1">
-                        <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">VL Balance</span>
-                            <span class="text-lg font-black font-mono text-amber-600 mt-0.5 block">{{ $recalcInfo['latest_vl_balance'] ?? $latestVlBalance }}</span>
-                            <span class="text-[10px] text-slate-400">days</span>
-                        </div>
-                        <div class="bg-white rounded-xl p-3 border border-slate-200 text-center">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">SL Balance</span>
-                            <span class="text-lg font-black font-mono text-emerald-600 mt-0.5 block">{{ $recalcInfo['latest_sl_balance'] ?? $latestSlBalance }}</span>
-                            <span class="text-[10px] text-slate-400">days</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -803,7 +777,6 @@ echo method_field('PUT');
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div>
                 <h3 class="text-base font-bold text-slate-900">Table II: Daily Leave Credits Earned</h3>
-                <p class="text-xs text-slate-500">Vacation and Sick Leave Credits Earned on a Daily Basis (1-30 days)</p>
             </div>
             <button type="button" onclick="closeModal('tableIIModal')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
                 <i class="ph ph-x text-lg"></i>
@@ -878,7 +851,6 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
                 </div>
                 <div>
                     <h3 class="text-base font-bold text-slate-900">Partial Month Earned Credits (Prorated)</h3>
-                    <p class="text-xs text-slate-500">For employees appointed mid-month or rendering partial service (CSC Table II)</p>
                 </div>
             </div>
             <button type="button" onclick="closeModal('proratedModal')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
@@ -890,18 +862,6 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
             @csrf
             <input type="hidden" name="employee_id" value="{{ $employee->employee_id }}">
             <input type="hidden" name="days_of_service" id="prorated_days_of_service" value="15">
-
-            <!-- Notice on Exact Decimals -->
-            <div class="p-3.5 bg-sky-50 border border-sky-200 rounded-xl text-xs text-sky-950 space-y-1">
-                <div class="font-bold flex items-center gap-1.5 text-sky-900">
-                    <i class="ph-bold ph-info text-sky-600 text-base"></i>
-                    <span>Table II Civil Service Exact Decimal Precision:</span>
-                </div>
-                <p class="text-slate-600 text-[11px] leading-relaxed">
-                    For employees who become regular partway through a month, or return from leave without pay, select days of service or input the exact fractional credit.
-                    <strong>The system records and computes exact values without rounding or truncating decimals.</strong>
-                </p>
-            </div>
 
             <!-- Employee & Period -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -958,7 +918,6 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Particular Label</label>
                 <input type="text" name="particular" id="prorated_particular" value="Earned (Table II: 15 days)" class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-lg px-3 py-2 bg-white">
-                <span class="text-[10px] text-slate-400 mt-0.5 block">Marks month as accrued to protect against automated duplicate crediting.</span>
             </div>
 
             <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-200 shrink-0">

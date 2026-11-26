@@ -12,6 +12,22 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                        mono: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                        serif: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                    },
+                    fontWeight: {
+                        thin: '300',
+                        extralight: '300',
+                        light: '300',
+                        normal: '400',
+                        medium: '500',
+                        semibold: '500',
+                        bold: '500',
+                        extrabold: '500',
+                        black: '500',
+                    },
                     colors: {
                         gov: {
                             50: '#f0f5fc',
@@ -40,33 +56,38 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
         
-        /* Baseline font scale */
+        /* Baseline font scale (14px standard enterprise system sizing) */
         html {
-            font-size: 16px;
+            font-size: 14px;
             transition: font-size 0.12s ease-in-out;
         }
         html.text-size-standard,
         html.text-size-normal {
-            font-size: 16px;
+            font-size: 14px;
         }
         html.text-size-large {
-            font-size: 18.5px;
+            font-size: 16px;
         }
         html.text-size-xl {
-            font-size: 21px;
+            font-size: 18px;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: 400;
             color: #1e293b;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
         }
 
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
+        strong, b, h1, h2, h3, h4, h5, h6, th {
+            font-weight: 500;
+        }
+
+        .font-mono, code, pre, kbd, samp {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-variant-numeric: tabular-nums;
         }
 
@@ -217,16 +238,6 @@
                 else if (size === 'large') document.documentElement.classList.add('text-size-large');
                 else document.documentElement.classList.add('text-size-standard');
 
-                const isHighContrast = localStorage.getItem('clacts_high_contrast') === 'true' || localStorage.getItem('clacts_senior_mode') === 'true';
-                if (isHighContrast) {
-                    document.documentElement.classList.add('high-contrast-mode');
-                }
-
-                const isSimplified = localStorage.getItem('clacts_simplified_layout') === 'true';
-                if (isSimplified) {
-                    document.documentElement.classList.add('simplified-layout-mode');
-                }
-
                 if (localStorage.getItem('clacts_sidebar_collapsed') === 'true') {
                     document.documentElement.classList.add('sidebar-collapsed');
                 }
@@ -241,13 +252,13 @@
         <!-- Republic Micro-Tricolor Line -->
         <div class="h-1 w-full bg-gradient-to-r from-blue-700 via-amber-400 to-rose-600"></div>
 
-        <div class="w-full max-w-7xl 2xl:max-w-[1600px] mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 py-2.5 sm:py-3">
-            <div class="flex items-center justify-between gap-2">
+        <div class="w-full max-w-7xl 2xl:max-w-[1600px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2.5 sm:py-3">
+            <div class="flex items-center justify-between gap-2 sm:gap-4">
                 <!-- Branding with Official Municipal Seal -->
-                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                     @auth
                         <!-- Mobile navigation side panel toggle -->
-                        <button type="button" onclick="toggleSidePanel()" class="md:hidden p-1.5 sm:p-2 min-h-[38px] min-w-[38px] sm:min-h-[40px] sm:min-w-[40px] flex items-center justify-center rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer shrink-0" aria-label="Toggle navigation side panel">
+                        <button type="button" onclick="toggleSidePanel()" class="md:hidden p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-slate-200 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer shrink-0" aria-label="Toggle navigation side panel">
                             <i class="ph ph-list text-xl"></i>
                         </button>
                         <!-- Desktop collapsible sidebar button to maximize table workspace -->
@@ -256,18 +267,17 @@
                         </button>
                     @endauth
 
-                    <a href="{{ Auth::check() && Auth::user()->role === 'hrmu_staff' ? route('hr.leave-records.index') : (Auth::check() && Auth::user()->role === 'admin' ? route('admin.dashboard') : (Auth::check() && Auth::user()->role === 'routing_clerk' ? route('clerk.scanner') : route('employee.dashboard'))) }}" class="flex items-center gap-2 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-lg min-w-0">
+                    <a href="{{ Auth::check() && Auth::user()->role === 'hrmu_staff' ? route('hr.leave-records.index') : (Auth::check() && Auth::user()->role === 'admin' ? route('admin.dashboard') : (Auth::check() && Auth::user()->role === 'routing_clerk' ? route('clerk.scanner') : route('employee.dashboard'))) }}" class="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded-lg min-w-0 flex-1">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white p-0.5 sm:p-1 ring-2 ring-amber-400/40 border border-amber-500/50 shadow-sm shrink-0 flex items-center justify-center overflow-hidden">
                             <img src="{{ asset('images/basud-logo.png') }}" alt="Seal of the Municipality of Basud" class="w-full h-full object-contain">
                         </div>
-                        <div class="min-w-0">
-                            <div class="text-[9px] min-[400px]:text-[10px] sm:text-[11px] uppercase tracking-wider text-amber-300/90 font-bold leading-tight font-mono truncate hidden min-[360px]:block">Republic of the Philippines • Region V</div>
-                            <div class="text-sm min-[400px]:text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1.5 sm:gap-2 truncate">
-                                <span class="truncate">Basud</span>
-                                <span class="hidden min-[360px]:inline">Municipality</span>
-                                <span class="text-amber-300 text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 shrink-0">HRMU</span>
+                        <div class="min-w-0 flex-1">
+                            <div class="text-[10px] sm:text-[11px] uppercase tracking-wider text-amber-300 font-bold leading-tight truncate hidden min-[400px]:block">Republic of the Philippines • Region V</div>
+                            <div class="text-sm sm:text-base md:text-lg font-black tracking-tight text-white flex items-center gap-1.5 sm:gap-2 min-w-0">
+                                <span class="truncate">Basud<span class="hidden min-[380px]:inline"> Municipality</span></span>
+                                <span class="text-amber-300 text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded bg-amber-400/15 border border-amber-400/30 shrink-0">HRMU</span>
                             </div>
-                            <div class="text-xs text-slate-300 hidden sm:block font-medium truncate">Centralized Leave Application & Credit Tracking System (C-LACTS)</div>
+                            <div class="text-xs text-slate-300 hidden lg:block font-medium truncate">Centralized Leave Application & Credit Tracking System (C-LACTS)</div>
                         </div>
                     </a>
                 </div>
@@ -276,31 +286,31 @@
                 <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     <!-- User Profile Badge (Name & Position) -->
                     @auth
-                        <div class="flex items-center gap-2 sm:gap-3 pr-1.5 sm:pr-3 border-r border-slate-700/80">
+                        <div class="flex items-center gap-2 sm:gap-3 pr-2 sm:pr-3 border-r border-slate-700/80">
                             <!-- Mobile simplified avatar / badge -->
-                            <a href="{{ route('profile.show') }}" class="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 border border-slate-700 text-amber-300 font-bold text-xs" title="My Profile ({{ Auth::user()->username }})">
+                            <a href="{{ route('profile.show') }}" class="sm:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-amber-300 font-bold text-sm hover:bg-slate-700 transition shrink-0" title="My Profile ({{ Auth::user()->username }})">
                                 {{ strtoupper(substr(Auth::user()->employee->first_name ?? Auth::user()->username, 0, 1)) }}
                             </a>
-                            <a href="{{ route('profile.show') }}" class="text-right hidden sm:block group hover:opacity-90 transition rounded-lg p-1 -m-1 focus:outline-none focus:ring-1 focus:ring-amber-400" title="View & Edit My Profile">
-                                <div class="text-sm font-bold text-white flex items-center justify-end gap-2 group-hover:text-amber-300 transition">
-                                    <span>{{ Auth::user()->employee->first_name ?? Auth::user()->username }} {{ Auth::user()->employee->last_name ?? '' }}</span>
+                            <a href="{{ route('profile.show') }}" class="text-right hidden sm:block group hover:opacity-90 transition rounded-lg p-1 -m-1 focus:outline-none focus:ring-1 focus:ring-amber-400 max-w-[200px] md:max-w-[240px] lg:max-w-xs" title="View & Edit My Profile">
+                                <div class="text-xs md:text-sm font-bold text-white flex items-center justify-end gap-1.5 md:gap-2 group-hover:text-amber-300 transition">
+                                    <span class="truncate">{{ Auth::user()->employee->first_name ?? Auth::user()->username }} {{ Auth::user()->employee->last_name ?? '' }}</span>
                                     @if(Auth::user()->role === 'admin')
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-400/40">ADMIN</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-400/40 shrink-0">ADMIN</span>
                                     @elseif(Auth::user()->role === 'hrmu_staff')
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-500/15 text-sky-300 border border-sky-400/40">HR STAFF</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/15 text-sky-300 border border-sky-400/40 shrink-0">HR STAFF</span>
                                     @elseif(Auth::user()->role === 'routing_clerk')
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/40">CLERK</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/40 shrink-0">RECEIVER</span>
                                     @else
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">EMPLOYEE</span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700 shrink-0">EMPLOYEE</span>
                                     @endif
-                                    <i class="ph ph-gear text-xs text-slate-400 group-hover:text-amber-300 transition"></i>
+                                    <i class="ph ph-gear text-xs text-slate-400 group-hover:text-amber-300 transition shrink-0"></i>
                                 </div>
-                                <div class="text-xs text-slate-300 font-medium whitespace-normal leading-snug">{{ Auth::user()->employee->office->office_name ?? 'Basud Municipal Office' }}</div>
+                                <div class="text-[11px] md:text-xs text-slate-300 font-medium truncate leading-snug">{{ Auth::user()->employee->office->office_name ?? 'Basud Municipal Office' }}</div>
                             </a>
                         </div>
                     @else
                         <div class="pr-2 sm:pr-3 border-r border-slate-700">
-                            <a href="{{ route('login') }}" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold bg-gov-700 hover:bg-gov-800 text-white transition flex items-center gap-1.5 sm:gap-2 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[38px]">
+                            <a href="{{ route('login') }}" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold bg-gov-700 hover:bg-gov-800 text-white transition flex items-center gap-1.5 sm:gap-2 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 min-h-[40px]">
                                 <i class="ph ph-sign-in text-base"></i>
                                 <span>Sign In</span>
                             </a>
@@ -315,17 +325,10 @@
                             onclick="toggleAccessibilityDropdown()" 
                             aria-expanded="false" 
                             aria-haspopup="true" 
-                            class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 shadow-xs text-xs font-semibold transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 min-h-[38px] sm:min-h-[40px]" 
+                            class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 shadow-xs text-xs font-semibold transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400 min-h-[40px]" 
                             title="Accessibility and Display Settings"
                         >
-                            <!-- Lucide Accessibility Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" aria-hidden="true">
-                                <circle cx="16" cy="4" r="1"/>
-                                <path d="m18 19 1-7-6 1"/>
-                                <path d="m5 8 3-3 5.5 3-2.36 3.5"/>
-                                <path d="M4.24 14.5a5 5 0 0 0 6.88 6"/>
-                                <path d="M13.76 17.5a5 5 0 0 0-6.88-6"/>
-                            </svg>
+                            <i class="ph-bold ph-sliders-horizontal text-base sm:text-lg text-amber-400 shrink-0" aria-hidden="true"></i>
                             <span class="hidden sm:inline font-sans font-medium text-xs">Accessibility</span>
                             <i class="ph ph-caret-down text-xs text-slate-400 transition-transform duration-150" id="accessibilityCaretIcon"></i>
                         </button>
@@ -335,14 +338,11 @@
                             id="accessibilityDropdownPanel" 
                             role="dialog"
                             aria-label="Accessibility & Display Settings"
-                            class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
+                            class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-3 focus:outline-none"
                         >
                             <!-- Panel Header -->
                             <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                                <div class="flex items-center gap-2">
-                                    <i class="ph-bold ph-sliders text-amber-600 text-base"></i>
-                                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Accessibility Settings</h3>
-                                </div>
+                                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Accessibility Settings</h3>
                                 <button 
                                     type="button" 
                                     onclick="closeAccessibilityDropdown()" 
@@ -353,96 +353,31 @@
                                 </button>
                             </div>
 
-                            <!-- 1. Text Size Segmented Selector -->
-                            <div class="space-y-1.5">
-                                <div class="flex items-center justify-between">
-                                    <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                                        <i class="ph ph-text-aa text-sm text-amber-600"></i>
-                                        <span>Text Size</span>
-                                    </label>
-                                    <span id="currentTextSizeLabel" class="text-[11px] font-mono font-semibold text-slate-500">Standard</span>
-                                </div>
-                                <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80" role="group" aria-label="Text Size Options">
-                                    <button 
-                                        type="button" 
-                                        onclick="setAccessibilityTextSize('standard')" 
-                                        id="optTextStandard" 
-                                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                                    >
-                                        Standard
-                                    </button>
-                                    <button 
-                                        type="button" 
-                                        onclick="setAccessibilityTextSize('large')" 
-                                        id="optTextLarge" 
-                                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                                    >
-                                        Large
-                                    </button>
-                                    <button 
-                                        type="button" 
-                                        onclick="setAccessibilityTextSize('xl')" 
-                                        id="optTextXl" 
-                                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                                    >
-                                        Extra Large
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 2. High Contrast Option -->
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                                <div class="pr-2">
-                                    <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                                        <i class="ph-bold ph-circle-half text-sm text-amber-600"></i>
-                                        <span>High Contrast</span>
-                                    </div>
-                                    <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Deep black text, reinforced borders & sharp focus</div>
-                                </div>
+                            <!-- Text Size Segmented Selector -->
+                            <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80" role="group" aria-label="Text Size Options">
                                 <button 
                                     type="button" 
-                                    role="switch" 
-                                    aria-checked="false" 
-                                    id="toggleHighContrastBtn" 
-                                    onclick="toggleHighContrastSetting()" 
-                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                                    onclick="setAccessibilityTextSize('standard')" 
+                                    id="optTextStandard" 
+                                    class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                                 >
-                                    <span class="sr-only">Toggle high contrast</span>
-                                    <span id="toggleHighContrastIndicator" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                                    Standard
                                 </button>
-                            </div>
-
-                            <!-- 3. Simplified Layout Option -->
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                                <div class="pr-2">
-                                    <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                                        <i class="ph-bold ph-layout text-sm text-amber-600"></i>
-                                        <span>Simplified Layout</span>
-                                    </div>
-                                    <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Spacious table rows, flat borders & reduced clutter</div>
-                                </div>
                                 <button 
                                     type="button" 
-                                    role="switch" 
-                                    aria-checked="false" 
-                                    id="toggleSimplifiedLayoutBtn" 
-                                    onclick="toggleSimplifiedLayoutSetting()" 
-                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                                    onclick="setAccessibilityTextSize('large')" 
+                                    id="optTextLarge" 
+                                    class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                                 >
-                                    <span class="sr-only">Toggle simplified layout</span>
-                                    <span id="toggleSimplifiedLayoutIndicator" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                                    Large
                                 </button>
-                            </div>
-
-                            <!-- 4. Reset Display Settings -->
-                            <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
                                 <button 
                                     type="button" 
-                                    onclick="resetAccessibilitySettings()" 
-                                    class="w-full py-2 px-3 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition cursor-pointer flex items-center justify-center gap-2"
+                                    onclick="setAccessibilityTextSize('xl')" 
+                                    id="optTextXl" 
+                                    class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                                 >
-                                    <i class="ph ph-arrow-counter-clockwise text-sm"></i>
-                                    <span>Reset Display Settings</span>
+                                    Extra Large
                                 </button>
                             </div>
                         </div>
@@ -477,23 +412,21 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">Employee Services</span>
                         </div>
 
-                        <a href="{{ route('employee.dashboard') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('employee.dashboard') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                        <a href="{{ route('employee.dashboard') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('employee.dashboard') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('employee.dashboard') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-squares-four text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">Self-Service</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Dashboard & Leave Filing</div>
                             </div>
                         </a>
 
-                        <a href="{{ route('employee.leave-record') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('employee.leave-record*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                        <a href="{{ route('employee.leave-record') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('employee.leave-record*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('employee.leave-record*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-notebook text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">My Leave Record</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Ledger Card & Balance</div>
                             </div>
                         </a>
                     @endif
@@ -504,13 +437,12 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">Document Routing</span>
                         </div>
 
-                        <a href="{{ route('clerk.scanner') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('clerk.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}" title="Unified QR barcode scanning and document custody terminal">
+                        <a href="{{ route('clerk.scanner') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('clerk.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}" title="Unified QR barcode scanning and document custody terminal">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('clerk.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-qr-code text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">QR Document Scanner</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Receipt & Dispatch Desk</div>
                             </div>
                         </a>
                     @endif
@@ -521,33 +453,30 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">HR Administration</span>
                         </div>
 
-                        <a href="{{ route('hr.leave-records.index') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.leave-records.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                        <a href="{{ route('hr.leave-records.index') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.leave-records.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('hr.leave-records.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-identification-badge text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">Leave Records</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Personnel Balances & Ledgers</div>
                             </div>
                         </a>
 
-                        <a href="{{ route('hr.tardiness.create') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.tardiness.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                        <a href="{{ route('hr.tardiness.create') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.tardiness.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('hr.tardiness.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-calculator text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">HR Starla Engine</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Deduction & Accrual Calculator</div>
                             </div>
                         </a>
 
-                        <a href="{{ route('hr.starla.tables') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.starla.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                        <a href="{{ route('hr.starla.tables') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('hr.starla.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
                             <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('hr.starla.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-table text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">Starla Tables</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">CSC Tables II, III & IV Matrix</div>
                             </div>
                         </a>
                     @endif
@@ -558,23 +487,12 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">System Oversight</span>
                         </div>
 
-                        <a href="{{ route('admin.dashboard') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('admin.*') && request()->query('tab') !== 'backups' ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('admin.*') && request()->query('tab') !== 'backups' ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
+                        <a href="{{ route('admin.dashboard') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('admin.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('admin.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                                 <i class="ph-bold ph-shield-star text-base"></i>
                             </div>
                             <div class="min-w-0 flex-1 leading-tight">
                                 <div class="truncate">Admin Control</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Audit Logs & User Accounts</div>
-                            </div>
-                        </a>
-
-                        <a href="{{ route('admin.dashboard', ['tab' => 'backups']) }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->query('tab') === 'backups' ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->query('tab') === 'backups' ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
-                                <i class="ph-bold ph-archive text-base"></i>
-                            </div>
-                            <div class="min-w-0 flex-1 leading-tight">
-                                <div class="truncate">Backups & Recovery</div>
-                                <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Database & Document Archives</div>
                             </div>
                         </a>
                     @endif
@@ -584,13 +502,12 @@
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">Account & Settings</span>
                     </div>
 
-                    <a href="{{ route('profile.show') }}" class="px-3 py-2 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('profile.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}" title="View and edit personal details and change password">
+                    <a href="{{ route('profile.show') }}" class="px-3 py-2.5 rounded-xl flex items-center gap-2.5 text-xs sm:text-sm transition {{ request()->routeIs('profile.*') ? 'bg-slate-800 text-white font-bold border-l-4 border-amber-400 shadow-xs' : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-semibold' }}" title="View and edit personal details and change password">
                         <div class="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 {{ request()->routeIs('profile.*') ? 'bg-amber-400/20 text-amber-300' : 'bg-slate-800 text-slate-400' }}">
                             <i class="ph-bold ph-user-gear text-base"></i>
                         </div>
                         <div class="min-w-0 flex-1 leading-tight">
                             <div class="truncate">My Profile & Settings</div>
-                            <div class="text-[10px] font-mono text-slate-400 font-normal truncate">Personnel Info & Password</div>
                         </div>
                     </a>
                 </nav>
@@ -721,12 +638,8 @@
                     onclick="if(event.target === this) closeLoginSuccessModal()"
                 >
                     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto">
-                        <!-- Top Header with Basud Municipal Branding -->
-                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">Authentication Verified</span>
-                            </div>
+                        <!-- Top Header with Close Button -->
+                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                             <button 
                                 type="button" 
                                 onclick="closeLoginSuccessModal()" 
@@ -753,43 +666,6 @@
                                     </p>
                                 </div>
                             </div>
-
-                            <!-- Session Receipt Summary Card -->
-                            @auth
-                                <div class="rounded-2xl bg-slate-50 border border-slate-200/90 p-4 space-y-3 text-xs">
-                                    <div class="flex items-center justify-between pb-2.5 border-b border-slate-200 text-slate-500 font-mono text-[11px]">
-                                        <span class="uppercase tracking-wider">Session Receipt</span>
-                                        <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">VERIFIED ACTIVE</span>
-                                    </div>
-
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                                        <div>
-                                            <div class="text-[10px] uppercase font-mono text-slate-400 font-bold">Personnel</div>
-                                            <div class="text-xs font-bold text-slate-900 mt-0.5">
-                                                {{ Auth::user()->employee->first_name ?? Auth::user()->username }} {{ Auth::user()->employee->last_name ?? '' }}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="text-[10px] uppercase font-mono text-slate-400 font-bold">Station / Office</div>
-                                            <div class="text-xs font-bold text-slate-900 mt-0.5 leading-snug">
-                                                {{ Auth::user()->employee->office->office_name ?? 'Basud Municipal Office' }}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="text-[10px] uppercase font-mono text-slate-400 font-bold">Authorized Role</div>
-                                            <div class="text-xs font-bold text-slate-900 mt-0.5 uppercase font-mono">
-                                                {{ str_replace('_', ' ', Auth::user()->role) }}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="text-[10px] uppercase font-mono text-slate-400 font-bold">Login Timestamp</div>
-                                            <div class="text-xs font-bold text-slate-900 mt-0.5 font-mono">
-                                                {{ now()->format('M d, Y • h:i A') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endauth
                         </div>
 
                         <!-- Modal Action Footer -->
@@ -896,8 +772,8 @@
 
             <!-- GovTech System Footer -->
             <footer class="bg-white border-t border-slate-200 mt-auto py-3.5 sm:py-4 text-xs text-slate-500">
-                <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-                    <div class="flex items-center gap-2">
+                <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
+                    <div class="flex items-center justify-center gap-2">
                         <img src="{{ asset('images/basud-logo.png') }}" alt="Basud Seal" class="w-5 h-5 object-contain">
                         <span>© {{ date('Y') }} <strong>Municipal Government of Basud, Camarines Norte</strong> — Human Resource Management Unit (HRMU)</span>
                     </div>
@@ -1071,12 +947,12 @@
             if (isHigh) {
                 btn.classList.add('bg-amber-500');
                 btn.classList.remove('bg-slate-300');
-                indicator.classList.add('translate-x-5');
+                indicator.classList.add('translate-x-[20px]');
                 indicator.classList.remove('translate-x-0');
             } else {
                 btn.classList.remove('bg-amber-500');
                 btn.classList.add('bg-slate-300');
-                indicator.classList.remove('translate-x-5');
+                indicator.classList.remove('translate-x-[20px]');
                 indicator.classList.add('translate-x-0');
             }
         }
@@ -1099,12 +975,12 @@
             if (isSimplified) {
                 btn.classList.add('bg-amber-500');
                 btn.classList.remove('bg-slate-300');
-                indicator.classList.add('translate-x-5');
+                indicator.classList.add('translate-x-[20px]');
                 indicator.classList.remove('translate-x-0');
             } else {
                 btn.classList.remove('bg-amber-500');
                 btn.classList.add('bg-slate-300');
-                indicator.classList.remove('translate-x-5');
+                indicator.classList.remove('translate-x-[20px]');
                 indicator.classList.add('translate-x-0');
             }
         }
@@ -1594,15 +1470,12 @@
         class="hidden fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
     >
         <div class="bg-gov-navy border border-slate-700/80 rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-amber-400/30 transform animate-in fade-in zoom-in-95 duration-200">
-            <!-- Circular SVG Spinner with Center Municipal Seal -->
+            <!-- Circular SVG Spinner -->
             <div class="relative inline-flex items-center justify-center">
-                <svg class="animate-spin w-24 h-24 text-amber-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <svg class="animate-spin w-20 h-20 text-amber-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <circle cx="50" cy="50" r="42" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
                     <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="6" stroke-dasharray="264" stroke-dashoffset="198" stroke-linecap="round"/>
                 </svg>
-                <div class="absolute w-14 h-14 bg-slate-900 rounded-full p-2 flex items-center justify-center border border-slate-700/80 shadow-md">
-                    <img src="{{ asset('images/basud-logo.png') }}" alt="Basud LGU Seal" class="w-full h-full object-contain">
-                </div>
             </div>
 
             <!-- Modal Status Text -->
@@ -1628,12 +1501,8 @@
         onclick="if(event.target === this) closeRefreshCompletedModal()"
     >
         <div class="bg-white rounded-3xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
-            <!-- Top Header with Basud Municipal Branding -->
-            <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span class="text-xs font-bold text-slate-700 font-mono tracking-wider uppercase">Page Refreshed</span>
-                </div>
+            <!-- Top Header -->
+            <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                 <button 
                     type="button" 
                     onclick="closeRefreshCompletedModal()" 

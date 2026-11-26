@@ -69,7 +69,7 @@
             </div>
             <h1 class="text-xl sm:text-2xl font-black text-slate-950 mt-1 truncate">{{ $employee->full_name }}</h1>
             <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
-                {{ $employee->position ?? 'Municipal Personnel' }} • {{ $employee->office->office_name ?? 'HRMU Basud' }} • <span class="font-mono">Control No. {{ $employee->control_no }}</span>
+                {{ $employee->position ?? 'Municipal Personnel' }} • {{ $employee->office->office_name ?? 'HRMU Basud' }}
             </p>
         </div>
 
@@ -214,7 +214,6 @@
                     </div>
                     <div>
                         <h3 class="text-sm font-bold text-slate-900">Monthly Leave Summary Table</h3>
-                        <p class="text-xs text-slate-500">Each row shows one month: what was added, what was taken, and your remaining balance.</p>
                     </div>
                 </div>
 
@@ -464,43 +463,14 @@
 
         </div>
 
-        <!-- Plain Language Help Note -->
-        <div class="p-4 bg-slate-100 border border-slate-200 rounded-xl text-xs text-slate-700 flex items-start gap-3">
-            <i class="ph ph-lightbulb text-lg text-amber-600 shrink-0 mt-0.5"></i>
-            <div class="space-y-1">
-                <span class="font-bold text-slate-900 block">How your leave credits work:</span>
-                <p class="leading-relaxed text-slate-600">
-                    Every full month you render service, you automatically receive <strong>1.25 Vacation days</strong> and <strong>1.25 Sick days</strong> (2.5 days total each month). When you file and take a leave, it is deducted from your balance. If you arrive late or leave early, the minutes are deducted from Vacation Leave. If you have any questions, HRMU Basud is ready to assist!
-                </p>
-            </div>
-        </div>
-
     </div>
 
     <!-- ======================================================================= -->
-    <!-- VIEW OPTION 2: ORIGINAL OFFICIAL FORMAT (CS FORM NO. 41 / 48 LEDGER)   -->
+    <!-- VIEW OPTION 2: ORIGINAL OFFICIAL FORMAT                                  -->
     <!-- ======================================================================= -->
     <div id="originalLedgerView" class="hidden space-y-4">
 
-        <!-- Institutional Transparency & Verification Banner -->
-        <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 sm:p-5 flex items-start gap-3 shadow-2xs">
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold shrink-0 mt-0.5">
-                <i class="ph-bold ph-shield-check text-2xl"></i>
-            </div>
-            <div>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <h4 class="text-sm sm:text-base font-bold text-amber-950">Civil Service Form No. 41 • Official Individual Leave Ledger</h4>
-                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-200/80 text-amber-950 border border-amber-300">
-                        OFFICIAL CARDSTOCK FORMAT
-                    </span>
-                </div>
-                <p class="text-xs text-amber-900 mt-1 leading-relaxed">
-                    This is the unedited 11-column statutory accounting ledger maintained by the Human Resource Management Unit (HRMU) of Basud for statutory civil service compliance, CSC Rule XVI audits, and legal credit certifications.
-                </p>
-            </div>
-        </div>
-
-        <!-- Official 11-Column Tabular Ledger Container (Civil Service Form 41) -->
+        <!-- Official 11-Column Tabular Ledger Container -->
         <div class="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
             
             <div class="p-3 bg-slate-900 text-white text-xs font-bold font-mono flex items-center justify-between border-b border-slate-800">
@@ -508,7 +478,6 @@
                     <i class="ph ph-buildings text-amber-400"></i>
                     <span>HRMU Basud • Control No. {{ $employee->control_no }}</span>
                 </div>
-                <span class="text-slate-400 text-[11px]">CS Form 41 (Revised)</span>
             </div>
 
             <div class="overflow-x-auto">
@@ -692,7 +661,7 @@
             originalView.classList.remove('hidden');
 
             if (badge) {
-                badge.textContent = 'OFFICIAL LEAVE LEDGER (CS FORM NO. 41 / 48)';
+                badge.textContent = 'OFFICIAL LEAVE LEDGER';
                 badge.className = 'inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300';
             }
             if (label) label.textContent = 'View Simple Format';

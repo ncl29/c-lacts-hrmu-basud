@@ -6,7 +6,7 @@
     <title>Monthly Leave Summary Table - {{ $employee->full_name }} (Control No. {{ $employee->control_no }})</title>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
         * {
             box-sizing: border-box;
@@ -24,7 +24,7 @@
         }
 
         .font-mono {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-variant-numeric: tabular-nums;
         }
 

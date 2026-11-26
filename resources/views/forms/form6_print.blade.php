@@ -1126,7 +1126,7 @@
                         </ul>
                     </div>
                     <div>
-                        <strong>4. Municipal Clerk Check-in:</strong> Station clerks at Department Offices, HRMU, and Mayor's Office will scan the stapled QR code (or enter the reference code) to update transit location without writing on the official form.
+                        <strong>4. Municipal Receiver Check-in:</strong> Station receivers at Department Offices, HRMU, and Mayor's Office will scan the stapled QR code (or enter the reference code) to update transit location without writing on the official form.
                     </div>
                 </div>
             </div>

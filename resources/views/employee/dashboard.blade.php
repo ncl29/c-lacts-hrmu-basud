@@ -351,7 +351,6 @@
                     <i class="ph-bold ph-clock-counter-clockwise text-gov-700 text-xl"></i>
                     <span>Leave Applications & Physical Paper Movement</span>
                 </h3>
-                <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-0.5">Click any application row to view the physical paper tracking timeline and SLA status.</p>
             </div>
             <div class="text-xs sm:text-sm font-bold text-slate-700 font-mono bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
                 Showing {{ $applications->total() }} record/s
@@ -656,12 +655,8 @@
                 </div>
                 <div>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug">
-                        Application for Leave <span class="text-xs sm:text-sm font-semibold text-slate-500 font-mono">(CS Form No. 6)</span>
+                        Application for Leave
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-1.5">
-                        <i class="ph ph-qr-code text-gov-700 text-sm"></i>
-                        <span>Digitally pre-fills official form with embedded scannable QR Code</span>
-                    </p>
                 </div>
             </div>
             <button type="button" onclick="closeFilingModal()" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-200 transition cursor-pointer" aria-label="Close filing modal">
@@ -875,7 +870,7 @@
             <div class="flex items-start gap-2.5 pt-1.5">
                 <input type="checkbox" id="commutation_requested" name="commutation_requested" value="1" class="mt-0.5 w-5 h-5 rounded border-2 border-slate-400 text-gov-700 focus:ring-gov-600 cursor-pointer">
                 <label for="commutation_requested" class="text-sm text-slate-800 leading-snug cursor-pointer">
-                    <strong>Request Commutation</strong> (Box 6.D)
+                    <strong>Request Commutation</strong>
                 </label>
             </div>
         </div>
@@ -985,7 +980,6 @@
                 <i class="ph ph-scales text-xl text-slate-300"></i>
                 <div>
                     <h3 class="text-base font-bold">Civil Service Leave Entitlements & Remaining Limits</h3>
-                    <div class="text-[11px] text-slate-300">Statutory caps, annual allowances, and certified available days</div>
                 </div>
             </div>
             <button type="button" onclick="closeLimitsModal()" class="text-slate-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-gov-600 rounded-lg p-1" aria-label="Close limits modal">
@@ -995,10 +989,6 @@
 
         <!-- Modal Body (Scrollable, fits within viewport) -->
         <div class="p-5 overflow-y-auto flex-1 space-y-4">
-            <div class="text-xs text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-200 flex items-center gap-2">
-                <i class="ph ph-info text-base text-gov-700 shrink-0"></i>
-                <span>Summary of statutory limits per Civil Service Form No. 6. Annual leaves reset every calendar year; per-event leaves apply per occurrence (e.g., per delivery, per surgery, or per event).</span>
-            </div>
 
             <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-64 overflow-y-auto">
                 <table class="w-full text-left text-sm text-slate-800">
@@ -1073,7 +1063,6 @@
                         <i class="ph-bold ph-coins text-base text-amber-600"></i>
                         <span>Leave Monetization Limits (Civil Service Commission Rule XVI)</span>
                     </h4>
-                    <span class="text-[11px] text-slate-500 font-sans">Synced with CS Form 41 Ledger</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1120,15 +1109,14 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                            <span class="text-slate-400">Rule XVI, Sec. 22</span>
-                            @if($monetizationInfo['regular']['is_eligible'])
+                        @if($monetizationInfo['regular']['is_eligible'])
+                            <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-end text-[11px]">
                                 <button type="button" onclick="closeLimitsModal(); openMonetizationFilingModal('regular')" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-lg transition cursor-pointer">
                                     <i class="ph-bold ph-coins text-sm"></i>
                                     <span>Apply Regular</span>
                                 </button>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Special Monetization Card in Limits Modal -->
@@ -1174,15 +1162,14 @@
                             </div>
                         </div>
 
-                        <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                            <span class="text-slate-400">Rule XVI, Sec. 23</span>
-                            @if($monetizationInfo['special']['is_eligible'])
+                        @if($monetizationInfo['special']['is_eligible'])
+                            <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-end text-[11px]">
                                 <button type="button" onclick="closeLimitsModal(); openMonetizationFilingModal('special')" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-purple-900 bg-purple-100 hover:bg-purple-200 border border-purple-300 rounded-lg transition cursor-pointer">
                                     <i class="ph-bold ph-coins text-sm"></i>
                                     <span>Apply Special</span>
                                 </button>
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -1194,7 +1181,6 @@
                         <i class="ph-bold ph-calendar-check text-gov-700"></i>
                         <span>All Leaves Taken by {{ $employee->full_name }} ({{ count($takenItems) }} Records)</span>
                     </h4>
-                    <span class="text-[11px] text-slate-500 font-sans">CS Form 41 Ledger & Applications</span>
                 </div>
 
                 @if(count($takenItems) > 0)

@@ -9,11 +9,6 @@
     <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 w-full">
         <div>
             <div class="flex flex-wrap items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <i class="ph ph-sparkle text-slate-600"></i>
-                    <span>Starla Reference Matrix</span>
-                </span>
-                <span class="text-xs text-slate-500 font-mono">Civil Service Commission (CSC) Omnibus Rules on Leave</span>
                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                     <i class="ph ph-shield-check text-emerald-600"></i>
                     <span>159 Verified Lookups</span>
@@ -22,9 +17,6 @@
             <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
                 Civil Service "Starla" Fractional Conversion Tables
             </h1>
-            <p class="text-xs text-slate-500 mt-0.5 max-w-3xl">
-                Official digitized reference matrix from the physical binder filed at the Human Resource Management Unit (HRMU), Municipality of Basud. Used for discrete semi-monthly tardiness conversions and leave accrual computations.
-            </p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 shrink-0">
@@ -185,38 +177,6 @@
         <!-- TAB 1: TABLE IV - HOURS & MINUTES (Page 15)                       -->
         <!-- ================================================================= -->
         <div id="tabContent_table_4" class="p-4 sm:p-6 space-y-6">
-            <!-- Context Callout Banner -->
-            <div class="bg-gov-50 border-l-4 border-gov-700 p-4 rounded-r-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div>
-                    <h3 class="font-bold text-gov-900 text-sm flex items-center gap-2">
-                        <i class="ph-bold ph-info text-gov-700"></i>
-                        <span>Table IV: Conversion of Working Hours/Minutes into Fractions of a Day (Page 15)</span>
-                    </h3>
-                    <p class="text-slate-600 mt-0.5">
-                        Civil Service 8-Hour Workday conversion standard. Used by HRMU Basud to compute decimal deductions for tardiness and undertime.
-                    </p>
-                </div>
-                <div class="shrink-0 font-mono text-[11px] bg-white px-3 py-1.5 rounded-lg border border-gov-200 text-gov-800 font-bold">
-                    8 Hours = 1.000 Day • 1 Hour = 0.125 Day
-                </div>
-            </div>
-
-            <!-- Discrete CSC Rounding Highlight Banner -->
-            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900 space-y-1">
-                <div class="font-bold flex items-center gap-1.5">
-                    <i class="ph-bold ph-warning text-amber-600"></i>
-                    <span>CSC Discrete Rounding Parity Guarantee (Zero Decimal Discrepancies)</span>
-                </div>
-                <p class="text-amber-800 text-[11px] leading-relaxed">
-                    Notice specific discrete entries on Page 15 of the official physical binder: 
-                    <strong>30 min = .062</strong> (not .063), 
-                    <strong>18 min = .037</strong> (not .038), 
-                    <strong>42 min = .087</strong> (not .088), and 
-                    <strong>54 min = .112</strong> (not .113). 
-                    C-LACTS guarantees 100% exact parity with HRMU physical desk calculations by strictly querying these digitized discrete values.
-                </p>
-            </div>
-
             <!-- Working Hours (1 to 8 Hours) Grid -->
             <div>
                 <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center gap-1.5">
@@ -248,7 +208,6 @@
                         <i class="ph-bold ph-timer text-gov-700"></i>
                         <span>Part 2: Working Minutes (1 to 60 Minutes)</span>
                     </h4>
-                    <span class="text-[11px] text-slate-400 font-mono">Sorted 1–15, 16–30, 31–45, 46–60</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -295,22 +254,6 @@
         <!-- TAB 2: TABLE II - DAILY ACCRUAL (Page 13)                         -->
         <!-- ================================================================= -->
         <div id="tabContent_table_2" class="hidden p-4 sm:p-6 space-y-6">
-            <!-- Context Callout -->
-            <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-                <div>
-                    <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-2">
-                        <i class="ph-bold ph-calendar text-emerald-700"></i>
-                        <span>Table II: Vacation & Sick Leave Credits Earned on a Daily Basis (Page 13)</span>
-                    </h3>
-                    <p class="text-slate-600 mt-0.5">
-                        Computes partial monthly service earnings. Vacation Leave (VL) and Sick Leave (SL) accrue at identical rates up to 1.250 days per full month (30 days).
-                    </p>
-                </div>
-                <div class="shrink-0 font-mono text-[11px] bg-white px-3 py-1.5 rounded-lg border border-emerald-200 text-emerald-800 font-bold">
-                    15 Days = 0.625 Day • 30 Days = 1.250 Days
-                </div>
-            </div>
-
             <!-- Table II 2-Column Side-by-Side Presentation -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @php
@@ -322,7 +265,6 @@
                 <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
                     <div class="bg-slate-100 px-4 py-2.5 text-xs font-bold text-slate-800 border-b border-slate-200 flex items-center justify-between">
                         <span>Days of Service: 1 to 15 Days</span>
-                        <span class="text-[11px] text-slate-500 font-mono">VL & SL (Each)</span>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs">
@@ -367,7 +309,6 @@
                 <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-xs">
                     <div class="bg-slate-100 px-4 py-2.5 text-xs font-bold text-slate-800 border-b border-slate-200 flex items-center justify-between">
                         <span>Days of Service: 16 to 30 Days</span>
-                        <span class="text-[11px] text-slate-500 font-mono">VL & SL (Each)</span>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs">
@@ -419,12 +360,6 @@
                     <h3 class="text-base font-extrabold text-slate-900">
                         ⭐ STARLA ⭐ Master Civil Service Conversion Reference Sheet
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5">
-                        Civil Service Commission (CSC) Omnibus Rules on Leave (Rule XVI) • HRMU Municipality of Basud
-                    </p>
-                </div>
-                <div class="font-mono text-xs text-slate-400">
-                    Tables II & IV Complete Digitized Set
                 </div>
             </div>
 
@@ -485,16 +420,9 @@
         <div id="tabContent_calculator" class="hidden p-4 sm:p-6 space-y-6">
             <div class="max-w-2xl mx-auto space-y-5">
                 <div class="text-center">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
-                        <i class="ph-bold ph-calculator text-amber-600"></i>
-                        <span>Interactive Verification Tool</span>
-                    </span>
-                    <h3 class="text-lg font-bold text-slate-900 mt-2">
+                    <h3 class="text-lg font-bold text-slate-900">
                         HR Starla Instant Leave Deduction Calculator
                     </h3>
-                    <p class="text-xs text-slate-500 mt-1">
-                        Cross-check physical DTR numbers against the digitized CSC conversion tables with 100% mathematical transparency.
-                    </p>
                 </div>
 
                 <!-- Input Card -->
@@ -573,14 +501,6 @@
                         </div>
                     </div>
 
-                    <!-- Deduct Priority Reminder -->
-                    <div class="bg-gov-50 border border-gov-200 rounded-xl p-3 text-[11px] text-gov-900 flex items-start gap-2">
-                        <i class="ph-bold ph-shield-check text-gov-700 text-base shrink-0 mt-0.5"></i>
-                        <div>
-                            <strong>CSC Deduction Priority Rule:</strong> Tardiness & absences are debited first against <strong>Vacation Leave (VL)</strong>. If VL is exhausted, remaining is debited against <strong>Sick Leave (SL)</strong>. If both are exhausted, it converts to <strong>Leave Without Pay (LWOP)</strong>.
-                        </div>
-                    </div>
-
                     <!-- Action Button: Go to Encoding Form -->
                     <div class="text-center pt-2">
                         <a 
@@ -605,9 +525,6 @@
                         <i class="ph-bold ph-book-bookmark text-gov-700"></i>
                         <span>Legal Authority & Physical Artifact Verification</span>
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5">
-                        Historical and statutory codification of leave accruals and decimal conversions in the Philippine Civil Service.
-                    </p>
                 </div>
 
                 <!-- Legal Cards -->

@@ -8,27 +8,10 @@
     <!-- Header Banner -->
     <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <div class="flex flex-wrap items-center gap-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                    <i class="ph ph-sparkle text-slate-600"></i>
-                    <span>Starla Engine Matrix</span>
-                </span>
-                <span class="text-xs text-slate-500 font-mono">CSC MC No. 41, s. 1998 • Rule XVI</span>
-            </div>
-            <h1 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">Semi-Monthly Attendance & Tardiness Encoding</h1>
-            <p class="text-xs text-slate-500 mt-0.5">
-                Encodes HR-verified aggregate tardiness and absences from physical DTRs. Zero raw biometric ingestion (Guardrail #1).
-            </p>
+            <h1 class="text-lg sm:text-xl font-bold text-slate-900">Semi-Monthly Attendance & Tardiness Encoding</h1>
         </div>
 
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 w-full sm:w-auto">
-            <div class="text-right hidden sm:block">
-                <span class="text-xs text-slate-400 block font-mono">Year {{ $currentYear }} Processing</span>
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-gov-50 text-gov-800 border border-gov-200 mt-1">
-                    <i class="ph ph-shield-check text-gov-700"></i>
-                    <span>Double-Deduction Shield Active</span>
-                </span>
-            </div>
             <a 
                 href="{{ route('hr.starla.tables') }}" 
                 class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 shadow-2xs transition flex items-center justify-center gap-2 shrink-0 cursor-pointer min-h-[40px]"
@@ -50,7 +33,6 @@
                     <i class="ph-bold ph-calculator text-gov-700 text-base"></i>
                     <span>DTR Summary Input</span>
                 </h2>
-                <span class="text-[11px] text-slate-400 font-mono">Days / Hours / Mins</span>
             </div>
 
             <form method="POST" action="{{ route('hr.tardiness.store') }}" id="starlaForm" class="space-y-4">
@@ -63,9 +45,6 @@
                             <i class="ph-bold ph-buildings text-gov-700"></i>
                             <span>Municipal Office / Department</span>
                         </label>
-                        <span class="text-[11px] text-slate-400 font-medium" id="officeFilterCount">
-                            {{ $offices->count() }} Offices
-                        </span>
                     </div>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -84,10 +63,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <p class="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                        <i class="ph ph-funnel text-slate-400"></i>
-                        <span>Select an office first to unclutter employee selection, or view all.</span>
-                    </p>
                 </div>
 
                 <!-- Employee Selection Searchable Combobox -->
@@ -96,7 +71,6 @@
                         <label for="employee_search_input" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
                             Select Employee <span class="text-rose-500">*</span>
                         </label>
-                        <span id="employeeCounter" class="text-[11px] text-slate-400 font-medium">Type to search ({{ $employees->count() }})</span>
                     </div>
 
                     <!-- Hidden Input holding the submitted ID -->
@@ -256,7 +230,6 @@
                         placeholder="e.g. 0.00, 1.00, 2.50" 
                         class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono font-bold text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
                     >
-                    <span class="text-[11px] text-slate-400 mt-1 block">Cross-referenced against approved leave to prevent double deduction. 1 absent day = 1.000 leave credit deducted (1:1 ratio).</span>
                 </div>
 
                 <!-- Live Mathematical Preview Card (Instant Starla Lookup - Totaled Separately) -->
@@ -351,7 +324,6 @@
                 <div class="p-4 border-b border-slate-200 flex items-center justify-between">
                     <div>
                         <h3 class="text-sm font-bold text-slate-900">Recent Attendance Deductions</h3>
-                        <p class="text-xs text-slate-500">History of semi-monthly Starla ledger debits</p>
                     </div>
                     <span class="text-xs text-slate-400 font-mono">{{ $recentDeductions->total() }} recorded</span>
                 </div>

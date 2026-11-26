@@ -12,6 +12,22 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                        mono: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                        serif: ['Inter', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                    },
+                    fontWeight: {
+                        thin: '300',
+                        extralight: '300',
+                        light: '300',
+                        normal: '400',
+                        medium: '500',
+                        semibold: '500',
+                        bold: '500',
+                        extrabold: '500',
+                        black: '500',
+                    },
                     colors: {
                         gov: {
                             50: '#f0f5fc',
@@ -37,30 +53,34 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
         
         html {
-            font-size: 16px;
+            font-size: 14px;
             transition: font-size 0.12s ease-in-out;
         }
         html.text-size-standard,
         html.text-size-normal {
-            font-size: 16px;
+            font-size: 14px;
         }
         html.text-size-large {
-            font-size: 18.5px;
+            font-size: 16px;
         }
         html.text-size-xl {
-            font-size: 21px;
+            font-size: 18px;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: 400;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
         }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
+        strong, b, h1, h2, h3, h4, h5, h6, th {
+            font-weight: 500;
+        }
+        .font-mono, code, pre, kbd, samp {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-variant-numeric: tabular-nums;
         }
 
@@ -87,8 +107,8 @@
             color: #000000 !important;
             font-weight: 800 !important;
         }
-        html.high-contrast-mode button,
-        html.senior-vision-mode button {
+        html.high-contrast-mode button:not([role="switch"]),
+        html.senior-vision-mode button:not([role="switch"]) {
             font-weight: 800 !important;
             border-width: 1.5px !important;
         }
@@ -127,16 +147,6 @@
                 if (size === 'xl') document.documentElement.classList.add('text-size-xl');
                 else if (size === 'large') document.documentElement.classList.add('text-size-large');
                 else document.documentElement.classList.add('text-size-standard');
-
-                const isHighContrast = localStorage.getItem('clacts_high_contrast') === 'true' || localStorage.getItem('clacts_senior_mode') === 'true';
-                if (isHighContrast) {
-                    document.documentElement.classList.add('high-contrast-mode');
-                }
-
-                const isSimplified = localStorage.getItem('clacts_simplified_layout') === 'true';
-                if (isSimplified) {
-                    document.documentElement.classList.add('simplified-layout-mode');
-                }
             } catch (e) {}
         })();
     </script>
@@ -158,14 +168,7 @@
                 aria-expanded="false"
                 title="Accessibility & Display Settings"
             >
-                <!-- Lucide Accessibility Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" aria-hidden="true">
-                    <circle cx="16" cy="4" r="1"/>
-                    <path d="m18 19 1-7-6 1"/>
-                    <path d="m5 8 3-3 5.5 3-2.36 3.5"/>
-                    <path d="M4.24 14.5a5 5 0 0 0 6.88 6"/>
-                    <path d="M13.76 17.5a5 5 0 0 0-6.88-6"/>
-                </svg>
+                <i class="ph-bold ph-sliders-horizontal text-base sm:text-lg text-amber-400 shrink-0" aria-hidden="true"></i>
                 <span class="font-sans font-medium text-xs">Accessibility</span>
                 <i class="ph ph-caret-down text-xs text-slate-400 transition-transform duration-150" id="accessibilityCaretIcon"></i>
             </button>
@@ -175,14 +178,11 @@
                 id="accessibilityDropdownPanel" 
                 role="dialog"
                 aria-label="Accessibility & Display Settings"
-                class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-4 focus:outline-none"
+                class="hidden absolute right-0 top-full mt-2 w-72 sm:w-80 max-w-[calc(100vw-24px)] bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 z-50 p-4 space-y-3 focus:outline-none"
             >
                 <!-- Panel Header -->
                 <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <div class="flex items-center gap-2">
-                        <i class="ph-bold ph-sliders text-amber-600 text-base"></i>
-                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Accessibility Settings</h3>
-                    </div>
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Accessibility Settings</h3>
                     <button 
                         type="button" 
                         onclick="closeAccessibilityDropdown()" 
@@ -193,96 +193,31 @@
                     </button>
                 </div>
 
-                <!-- 1. Text Size Segmented Selector -->
-                <div class="space-y-1.5">
-                    <div class="flex items-center justify-between">
-                        <label class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                            <i class="ph ph-text-aa text-sm text-amber-600"></i>
-                            <span>Text Size</span>
-                        </label>
-                        <span id="currentTextSizeLabel" class="text-[11px] font-mono font-semibold text-slate-500">Standard</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80" role="group" aria-label="Text Size Options">
-                        <button 
-                            type="button" 
-                            onclick="setAccessibilityTextSize('standard')" 
-                            id="optTextStandard" 
-                            class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                        >
-                            Standard
-                        </button>
-                        <button 
-                            type="button" 
-                            onclick="setAccessibilityTextSize('large')" 
-                            id="optTextLarge" 
-                            class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                        >
-                            Large
-                        </button>
-                        <button 
-                            type="button" 
-                            onclick="setAccessibilityTextSize('xl')" 
-                            id="optTextXl" 
-                            class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
-                        >
-                            Extra Large
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 2. High Contrast Option -->
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <div class="pr-2">
-                        <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                            <i class="ph-bold ph-circle-half text-sm text-amber-600"></i>
-                            <span>High Contrast</span>
-                        </div>
-                        <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Deep black text, reinforced borders & sharp focus</div>
-                    </div>
+                <!-- Text Size Segmented Selector -->
+                <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 rounded-xl border border-slate-200/80" role="group" aria-label="Text Size Options">
                     <button 
                         type="button" 
-                        role="switch" 
-                        aria-checked="false" 
-                        id="toggleHighContrastBtn" 
-                        onclick="toggleHighContrastSetting()" 
-                        class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                        onclick="setAccessibilityTextSize('standard')" 
+                        id="optTextStandard" 
+                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                     >
-                        <span class="sr-only">Toggle high contrast</span>
-                        <span id="toggleHighContrastIndicator" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                        Standard
                     </button>
-                </div>
-
-                <!-- 3. Simplified Layout Option -->
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <div class="pr-2">
-                        <div class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                            <i class="ph-bold ph-layout text-sm text-amber-600"></i>
-                            <span>Simplified Layout</span>
-                        </div>
-                        <div class="text-[11px] text-slate-500 leading-tight mt-0.5">Spacious rows, flat borders & reduced clutter</div>
-                    </div>
                     <button 
                         type="button" 
-                        role="switch" 
-                        aria-checked="false" 
-                        id="toggleSimplifiedLayoutBtn" 
-                        onclick="toggleSimplifiedLayoutSetting()" 
-                        class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                        onclick="setAccessibilityTextSize('large')" 
+                        id="optTextLarge" 
+                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                     >
-                        <span class="sr-only">Toggle simplified layout</span>
-                        <span id="toggleSimplifiedLayoutIndicator" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+                        Large
                     </button>
-                </div>
-
-                <!-- 4. Reset Display Settings -->
-                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
                     <button 
                         type="button" 
-                        onclick="resetAccessibilitySettings()" 
-                        class="w-full py-2 px-3 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition cursor-pointer flex items-center justify-center gap-2"
+                        onclick="setAccessibilityTextSize('xl')" 
+                        id="optTextXl" 
+                        class="py-1.5 px-2 text-xs font-bold rounded-lg transition cursor-pointer text-center"
                     >
-                        <i class="ph ph-arrow-counter-clockwise text-sm"></i>
-                        <span>Reset Display Settings</span>
+                        Extra Large
                     </button>
                 </div>
             </div>
@@ -637,12 +572,12 @@
             if (isHigh) {
                 btn.classList.add('bg-amber-500');
                 btn.classList.remove('bg-slate-300');
-                indicator.classList.add('translate-x-5');
+                indicator.classList.add('translate-x-[20px]');
                 indicator.classList.remove('translate-x-0');
             } else {
                 btn.classList.remove('bg-amber-500');
                 btn.classList.add('bg-slate-300');
-                indicator.classList.remove('translate-x-5');
+                indicator.classList.remove('translate-x-[20px]');
                 indicator.classList.add('translate-x-0');
             }
         }
@@ -665,12 +600,12 @@
             if (isSimplified) {
                 btn.classList.add('bg-amber-500');
                 btn.classList.remove('bg-slate-300');
-                indicator.classList.add('translate-x-5');
+                indicator.classList.add('translate-x-[20px]');
                 indicator.classList.remove('translate-x-0');
             } else {
                 btn.classList.remove('bg-amber-500');
                 btn.classList.add('bg-slate-300');
-                indicator.classList.remove('translate-x-5');
+                indicator.classList.remove('translate-x-[20px]');
                 indicator.classList.add('translate-x-0');
             }
         }

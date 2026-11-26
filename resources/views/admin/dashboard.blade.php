@@ -91,7 +91,7 @@
             </div>
             <div class="text-[10px] sm:text-[11px] text-slate-600 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
                 <span class="text-purple-700 font-semibold font-mono">{{ $usersByRole['admin'] ?? 0 }} Admin • {{ $usersByRole['hrmu_staff'] ?? 0 }} HR</span>
-                <span class="text-slate-400 font-mono text-[10px]">{{ $usersByRole['routing_clerk'] ?? 0 }} Clerks</span>
+                <span class="text-slate-400 font-mono text-[10px]">{{ $usersByRole['routing_clerk'] ?? 0 }} Receivers</span>
             </div>
         </div>
     </div>
@@ -129,9 +129,6 @@
                         <i class="ph ph-users-three text-gov-700"></i>
                         <span>Municipal Personnel User Directory & RBAC Tiers</span>
                     </h3>
-                    <p class="text-xs text-slate-500">
-                        Configure municipal employee profiles, assign administrative roles, and initialize certified leave balances.
-                    </p>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                     <button 
@@ -203,7 +200,7 @@
                                         </span>
                                     @elseif($u->role === 'routing_clerk')
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
-                                            Clerk
+                                            Receiver
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
@@ -259,9 +256,6 @@
                         <i class="ph-bold ph-table text-gov-700"></i>
                         <span>Civil Service "Starla" Fractional Conversion Rules</span>
                     </h3>
-                    <p class="text-xs text-slate-500">
-                        Official conversion matrices codified under Civil Service Commission (CSC) Omnibus Leave Regulations.
-                    </p>
                 </div>
 
                 <!-- Table Switcher Buttons -->
@@ -277,15 +271,6 @@
                         <span>Full Starla Viewer</span>
                     </a>
                 </div>
-            </div>
-
-            <!-- Table Summary Description Callout -->
-            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 leading-relaxed">
-                @if($selectedTable === 'Table IV')
-                    <strong>CSC Table IV (Conversion of Working Hours/Minutes into Fractions of a Day):</strong> Used by the Starla Computation Service to calculate discrete semi-monthly tardiness and undertime deductions. (1 Hour = 0.125 day, 8 Hours = 1.000 day).
-                @else
-                    <strong>CSC Table II (Daily Accrual Equivalents):</strong> Standard earnings of 1.250 days/month pro-rated across 1 to 30 days of service (15 days of service = 0.625 day VL & SL).
-                @endif
             </div>
 
             <!-- Starla Table Records -->
@@ -341,14 +326,6 @@
                         <i class="ph ph-shield-check text-gov-700"></i>
                         <span>Audit Trail</span>
                     </h3>
-                    <p class="text-xs text-slate-500">
-                        System event logging for authentication, leave generation, routing custody transfers, and Starla deductions.
-                    </p>
-                </div>
-
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-300 text-xs text-slate-700 font-mono">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Live Audit Trail Active</span>
                 </div>
             </div>
 
@@ -439,9 +416,6 @@
                         <i class="ph ph-archive text-gov-700"></i>
                         <span>Disaster Recovery & System Archives</span>
                     </h3>
-                    <p class="text-xs text-slate-500">
-                        Generate on-demand database snapshots, full document archives, and manage weekly automated backups for Civil Service leave records.
-                    </p>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
                     <button 
@@ -588,19 +562,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-
-            <!-- Scheduled Maintenance Policy Info Banner -->
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-                <div class="flex items-start gap-2.5">
-                    <i class="ph ph-info text-gov-700 text-lg shrink-0 mt-0.5"></i>
-                    <div>
-                        <strong class="text-slate-800 block font-bold">Automatic Municipal Backup Policy</strong>
-                        <span class="text-slate-600">
-                            The system background worker automatically executes <code class="font-mono bg-slate-200 px-1 py-0.5 rounded text-[11px]">backup:run --type=db --retention=4</code> every Sunday at 01:00 AM. Archives older than 4 weeks are safely pruned to preserve municipal storage.
-                        </span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -803,7 +764,7 @@
                         <select id="modalRoleSelect" name="role" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs sm:text-sm text-slate-800 font-semibold focus:ring-2 focus:ring-gov-600 bg-white">
                             <option value="admin">System Administrator / HR Head (Level 4)</option>
                             <option value="hrmu_staff">HR Records Officer / Staff (Level 3)</option>
-                            <option value="routing_clerk">Routing / Receiving Clerk (Level 2)</option>
+                            <option value="routing_clerk">Routing / Document Receiver (Level 2)</option>
                             <option value="employee">Standard Municipal Employee (Level 1)</option>
                         </select>
                     </div>
@@ -973,7 +934,6 @@
                 </div>
                 <div>
                     <h3 class="font-bold text-sm sm:text-base leading-tight">Register Municipal Personnel & User Account</h3>
-                    <p class="text-[10px] sm:text-xs text-slate-400 mt-0.5">Civil Service employee master record and system RBAC credentials</p>
                 </div>
             </div>
             <button type="button" onclick="closeCreateUserModal()" class="text-slate-400 hover:text-white p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-gov-600 cursor-pointer" aria-label="Close modal">
@@ -1089,32 +1049,6 @@
                         @enderror
                     </div>
                 </div>
-
-                <!-- Starla Table II Accrual Calculation Info Card (Full Width) -->
-                <div id="starlaTable2PreviewCard" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 transition">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-gov-100 text-gov-700 flex items-center justify-center shrink-0">
-                                <i class="ph-bold ph-table text-sm"></i>
-                            </div>
-                            <div>
-                                <h5 class="text-xs font-bold text-slate-800">CSC Starla Table II: Daily Service Accrual</h5>
-                                <p class="text-[10px] text-slate-500 font-mono">Partial month service calculation (CSC MC No. 41, s. 1998)</p>
-                            </div>
-                        </div>
-                        <span id="starlaDailyPreviewBadge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gov-50 text-gov-800 font-mono font-bold text-xs border border-gov-200 w-fit">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gov-600"></span>
-                            <span>Standard: 30 days = 1.250 VL & SL</span>
-                        </span>
-                    </div>
-
-                    <div class="p-2.5 rounded-lg bg-white border border-slate-200 text-[11px] text-slate-600 leading-relaxed flex items-start gap-2" id="starlaDailyPreviewContainer">
-                        <i class="ph-bold ph-info text-gov-600 text-sm shrink-0 mt-0.5"></i>
-                        <p id="starlaDailyPreviewDesc">
-                            When an employee starts mid-month, leave credits are earned based on days of service (<strong>30 − Start Day + 1</strong>). For example, starting on the <strong>26th</strong> equals <strong>5 days</strong> of service, earning exactly <strong class="text-emerald-700">0.208 VL</strong> and <strong class="text-emerald-700">0.208 SL</strong>.
-                        </p>
-                    </div>
-                </div>
             </div>
 
             <!-- Section 2: User Login & Role Assignment -->
@@ -1197,7 +1131,7 @@
                         </label>
                         <select id="create_role" name="role" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs sm:text-sm text-slate-800 font-semibold focus:ring-2 focus:ring-gov-600 bg-white cursor-pointer truncate">
                             <option value="employee" selected>Employee (Level 1)</option>
-                            <option value="routing_clerk">Routing Clerk (Level 2)</option>
+                            <option value="routing_clerk">Routing Receiver (Level 2)</option>
                             <option value="hrmu_staff">HR Records Staff (Level 3)</option>
                             <option value="admin">Administrator (Level 4)</option>
                         </select>
@@ -1219,7 +1153,6 @@
                         <i class="ph ph-coins text-gov-700 text-sm"></i>
                         <span>3. Opening Certified Leave Balances (Year {{ $currentYear }})</span>
                     </span>
-                    <span class="text-[10px] text-slate-400 font-normal">Decimal Days (3 places)</span>
                 </h4>
 
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
@@ -1449,10 +1382,6 @@
                     <i class="ph ph-trash text-base"></i>
                     <span>Delete Archive</span>
                 </button>
-            </div>
-        </form>
-    </div>
-</div>
             </div>
         </form>
     </div>
