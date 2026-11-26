@@ -282,7 +282,13 @@
                     </div>
                 @endif
 
-                <!-- Authentication Form -->
+                    <!-- Client-side Reset Success Banner -->
+                    <div id="forgotSuccessBanner" class="hidden p-4 bg-emerald-50 border-l-4 border-emerald-500 text-emerald-900 rounded-r-2xl text-xs sm:text-sm font-medium flex items-center gap-3 shadow-xs">
+                        <i class="ph-fill ph-check-circle text-emerald-600 text-xl shrink-0"></i>
+                        <span id="forgotSuccessText">Password updated. Sign in with your new passcode.</span>
+                    </div>
+
+                    <!-- Authentication Form -->
                 <form id="loginForm" method="POST" action="{{ route('login.submit') }}" class="space-y-5" autocomplete="off">
                     @csrf
 
@@ -342,7 +348,7 @@
                         </div>
                     </div>
 
-                    <!-- Remember Me -->
+                    <!-- Remember Me & Forgot Password -->
                     <div class="flex items-center justify-between pt-1">
                         <label class="flex items-center gap-2.5 cursor-pointer select-none">
                             <input 
@@ -355,6 +361,13 @@
                             >
                             <span class="text-xs text-slate-700 font-semibold">Remember Me</span>
                         </label>
+                        <button
+                            type="button"
+                            onclick="openForgotPasswordModal()"
+                            class="text-xs font-medium text-gov-700 hover:text-gov-800 hover:underline cursor-pointer"
+                        >
+                            Forgot Password?
+                        </button>
                     </div>
 
                     <!-- Submit Button with Key/Shield Login Icon -->
@@ -377,6 +390,120 @@
             <div class="flex items-center justify-center gap-2">
                 <i class="ph ph-buildings text-sm text-slate-400"></i>
                 <span>Human Resource Management Unit • LGU Municipality of Basud</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div
+        id="forgotPasswordModal"
+        tabindex="-1"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="forgotModalTitle"
+        onclick="if(event.target === this) closeForgotPasswordModal()"
+        class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4"
+    >
+        <div class="bg-white text-slate-800 rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full overflow-hidden">
+            <div class="bg-slate-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+                <h3 id="forgotModalTitle" class="text-base font-medium text-slate-900">Reset Password</h3>
+                <button
+                    type="button"
+                    onclick="closeForgotPasswordModal()"
+                    class="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition cursor-pointer"
+                    aria-label="Close dialog"
+                >
+                    <i class="ph ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <div id="forgotModalAlert" class="hidden p-3 rounded-xl text-xs font-medium flex items-center gap-2"></div>
+
+                <!-- Step 1: Email -->
+                <div class="space-y-2">
+                    <label for="forgotEmailInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider font-mono">
+                        Registered Email <span class="text-rose-500">*</span>
+                    </label>
+                    <input
+                        type="email"
+                        id="forgotEmailInput"
+                        placeholder="Enter your saved email"
+                        class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-600 bg-white"
+                    >
+                </div>
+
+                <!-- Step 2: OTP & New Passcode -->
+                <div id="forgotStep2" class="hidden space-y-4 pt-2 border-t border-slate-100">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="forgotOtpInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider font-mono">
+                                6-Digit Code <span class="text-rose-500">*</span>
+                            </label>
+                            <button type="button" id="btnResendForgotOtp" onclick="sendForgotOtp()" class="text-xs text-gov-700 hover:underline cursor-pointer">
+                                Resend Code
+                            </button>
+                        </div>
+                        <input
+                            type="text"
+                            id="forgotOtpInput"
+                            maxlength="6"
+                            inputmode="numeric"
+                            placeholder="000000"
+                            class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm font-mono tracking-widest text-slate-900 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-600 bg-white"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="forgotNewPassInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                            New Passcode <span class="text-rose-500">*</span>
+                        </label>
+                        <input
+                            type="password"
+                            id="forgotNewPassInput"
+                            placeholder="Minimum 6 characters"
+                            class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-600 bg-white"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="forgotConfirmPassInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1 font-mono">
+                            Confirm Passcode <span class="text-rose-500">*</span>
+                        </label>
+                        <input
+                            type="password"
+                            id="forgotConfirmPassInput"
+                            placeholder="Re-enter new passcode"
+                            class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-600 bg-white"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-5 py-3.5 border-t border-slate-200 flex items-center justify-end gap-2">
+                <button
+                    type="button"
+                    onclick="closeForgotPasswordModal()"
+                    class="px-4 py-2 border border-slate-300 rounded-xl text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="button"
+                    id="btnSendForgotOtp"
+                    onclick="sendForgotOtp()"
+                    class="px-4 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-medium transition cursor-pointer"
+                >
+                    Send Code
+                </button>
+                <button
+                    type="button"
+                    id="btnResetForgotPw"
+                    onclick="submitForgotReset()"
+                    class="hidden px-4 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-medium transition cursor-pointer"
+                >
+                    Reset Password
+                </button>
             </div>
         </div>
     </div>
@@ -416,6 +543,146 @@
     </div>
 
     <script>
+        function openForgotPasswordModal() {
+            const modal = document.getElementById('forgotPasswordModal');
+            const alertBox = document.getElementById('forgotModalAlert');
+            const step2 = document.getElementById('forgotStep2');
+            const btnSend = document.getElementById('btnSendForgotOtp');
+            const btnReset = document.getElementById('btnResetForgotPw');
+            const emailInput = document.getElementById('forgotEmailInput');
+            const loginField = document.getElementById('username');
+
+            if (alertBox) alertBox.classList.add('hidden');
+            if (step2) step2.classList.add('hidden');
+            if (btnSend) {
+                btnSend.classList.remove('hidden');
+                btnSend.disabled = false;
+                btnSend.innerText = 'Send Code';
+            }
+            if (btnReset) btnReset.classList.add('hidden');
+            if (emailInput) {
+                emailInput.readOnly = false;
+                emailInput.value = (loginField && loginField.value.includes('@')) ? loginField.value.trim() : '';
+            }
+            document.getElementById('forgotOtpInput').value = '';
+            document.getElementById('forgotNewPassInput').value = '';
+            document.getElementById('forgotConfirmPassInput').value = '';
+
+            if (modal) modal.classList.remove('hidden');
+            if (emailInput) emailInput.focus();
+        }
+
+        function closeForgotPasswordModal() {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function showForgotAlert(message, isError = true) {
+            const box = document.getElementById('forgotModalAlert');
+            if (!box) return;
+            box.className = isError
+                ? 'p-3 rounded-xl text-xs font-medium flex items-center gap-2 bg-rose-50 text-rose-800 border border-rose-200'
+                : 'p-3 rounded-xl text-xs font-medium flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200';
+            box.innerText = message;
+            box.classList.remove('hidden');
+        }
+
+        async function sendForgotOtp() {
+            const email = document.getElementById('forgotEmailInput').value.trim();
+            const btnSend = document.getElementById('btnSendForgotOtp');
+            const btnResend = document.getElementById('btnResendForgotOtp');
+            if (!email) {
+                showForgotAlert('Enter your registered email address.');
+                return;
+            }
+
+            if (btnSend) { btnSend.disabled = true; btnSend.innerText = 'Sending...'; }
+            if (btnResend) { btnResend.disabled = true; btnResend.innerText = 'Sending...'; }
+
+            try {
+                const res = await fetch("{{ route('password.forgot.send-otp') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+
+                if (!res.ok || !data.success) {
+                    const firstErr = data.errors ? Object.values(data.errors)[0][0] : null;
+                    showForgotAlert(firstErr || data.message || 'Failed to send verification code.');
+                    if (btnSend) { btnSend.disabled = false; btnSend.innerText = 'Send Code'; }
+                    if (btnResend) { btnResend.disabled = false; btnResend.innerText = 'Resend Code'; }
+                    return;
+                }
+
+                showForgotAlert(data.message, false);
+                document.getElementById('forgotEmailInput').readOnly = true;
+                document.getElementById('forgotStep2').classList.remove('hidden');
+                if (btnSend) btnSend.classList.add('hidden');
+                document.getElementById('btnResetForgotPw').classList.remove('hidden');
+                if (btnResend) { btnResend.disabled = false; btnResend.innerText = 'Resend Code'; }
+                document.getElementById('forgotOtpInput').focus();
+            } catch (e) {
+                showForgotAlert('Connection error. Please try again.');
+                if (btnSend) { btnSend.disabled = false; btnSend.innerText = 'Send Code'; }
+                if (btnResend) { btnResend.disabled = false; btnResend.innerText = 'Resend Code'; }
+            }
+        }
+
+        async function submitForgotReset() {
+            const email = document.getElementById('forgotEmailInput').value.trim();
+            const otp = document.getElementById('forgotOtpInput').value.trim();
+            const new_password = document.getElementById('forgotNewPassInput').value;
+            const new_password_confirmation = document.getElementById('forgotConfirmPassInput').value;
+            const btnReset = document.getElementById('btnResetForgotPw');
+
+            btnReset.disabled = true;
+            btnReset.innerText = 'Saving...';
+
+            try {
+                const res = await fetch("{{ route('password.forgot.reset') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ email, otp, new_password, new_password_confirmation })
+                });
+                const data = await res.json();
+
+                if (!res.ok || !data.success) {
+                    const firstErr = data.errors ? Object.values(data.errors)[0][0] : null;
+                    showForgotAlert(firstErr || data.message || 'Could not reset password.');
+                    btnReset.disabled = false;
+                    btnReset.innerText = 'Reset Password';
+                    return;
+                }
+
+                closeForgotPasswordModal();
+                const banner = document.getElementById('forgotSuccessBanner');
+                const bannerText = document.getElementById('forgotSuccessText');
+                if (banner && bannerText) {
+                    bannerText.innerText = data.message;
+                    banner.classList.remove('hidden');
+                }
+                const loginField = document.getElementById('username');
+                if (loginField && data.email) {
+                    loginField.value = data.email;
+                }
+                const passField = document.getElementById('password');
+                if (passField) passField.focus();
+            } catch (e) {
+                showForgotAlert('Connection error. Please try again.');
+                btnReset.disabled = false;
+                btnReset.innerText = 'Reset Password';
+            }
+        }
+
         function togglePasswordVisibility() {
             const passInput = document.getElementById('password');
             const icon = document.getElementById('toggleIcon');
@@ -467,6 +734,7 @@
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeAccessibilityDropdown();
+                    closeForgotPasswordModal();
                 }
             });
         });

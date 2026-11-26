@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\AuditLog;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 /**
@@ -138,6 +140,154 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login')->with('info', 'You have been securely logged out of C-LACTS.');
+    }
+
+    /**
+     * Send a 6-digit OTP to the user's saved email for password recovery.
+     */
+    public function sendForgotPasswordOtp(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email', 'max:255'],
+        ], [
+            'email.required' => 'Enter your registered email address.',
+            'email.email' => 'Enter a valid email address.',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $user = User::with('employee')
+            ->whereRaw('LOWER(email) = ?', [$email])
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No account found with that email address.',
+            ], 422);
+        }
+
+        if (!$user->is_active) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This account is deactivated. Contact your HRMU Administrator.',
+            ], 422);
+        }
+
+        $otp = str_pad((string) random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+        $expiresAt = Carbon::now()->addMinutes(10);
+
+        session([
+            'forgot_pw_otp' => $otp,
+            'forgot_pw_expires' => $expiresAt->timestamp,
+            'forgot_pw_user_id' => $user->user_id,
+            'forgot_pw_email' => $user->email,
+        ]);
+
+        $recipientName = $user->employee?->full_name ?? $user->employee?->employee_no ?? 'Employee';
+
+        try {
+            \App\Services\LeaveNotificationService::deliverEmail(
+                $user->email,
+                $recipientName,
+                'C-LACTS Password Reset Code',
+                "MUNICIPAL GOVERNMENT OF BASUD - HRMU\nCentralized Leave Application & Credit Tracking System (C-LACTS)\n\n" .
+                "Hello {$recipientName},\n\n" .
+                "Your 6-digit password reset code is: {$otp}\n\n" .
+                "This code expires in 10 minutes. Ignore this email if you did not request a reset.\n\n" .
+                "Human Resource Management Unit (HRMU)\nMunicipality of Basud, Camarines Norte"
+            );
+        } catch (\Throwable $e) {
+            Log::warning("Forgot password OTP delivery failed: " . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Could not send reset code right now. Please try again.',
+            ], 500);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => "6-digit code sent to {$user->email}.",
+        ]);
+    }
+
+    /**
+     * Verify OTP from email and set a new password.
+     */
+    public function resetForgottenPassword(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email', 'max:255'],
+            'otp' => ['required', 'string', 'size:6'],
+            'new_password' => ['required', 'string', 'min:6', 'max:100', 'confirmed'],
+        ], [
+            'email.required' => 'Enter your registered email address.',
+            'otp.required' => 'Enter the 6-digit code.',
+            'otp.size' => 'Verification code must be 6 digits.',
+            'new_password.required' => 'Enter a new passcode.',
+            'new_password.min' => 'New passcode must be at least 6 characters.',
+            'new_password.confirmed' => 'Passcode confirmation does not match.',
+        ]);
+
+        $sessionOtp = session('forgot_pw_otp');
+        $sessionExpires = session('forgot_pw_expires');
+        $sessionUserId = session('forgot_pw_user_id');
+        $sessionEmail = session('forgot_pw_email');
+
+        if (!$sessionOtp || !$sessionExpires || !$sessionUserId || !$sessionEmail) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Request a verification code first.',
+            ], 422);
+        }
+
+        if (Carbon::now()->timestamp > (int) $sessionExpires) {
+            session()->forget(['forgot_pw_otp', 'forgot_pw_expires', 'forgot_pw_user_id', 'forgot_pw_email']);
+            return response()->json([
+                'success' => false,
+                'message' => 'Verification code expired. Request a new code.',
+            ], 422);
+        }
+
+        if (strtolower(trim($validated['email'])) !== strtolower($sessionEmail) || trim($validated['otp']) !== (string) $sessionOtp) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid verification code.',
+            ], 422);
+        }
+
+        $user = User::where('user_id', $sessionUserId)->first();
+        if (!$user || !$user->is_active) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Account not found or inactive.',
+            ], 422);
+        }
+
+        $user->update([
+            'password_hash' => Hash::make($validated['new_password']),
+        ]);
+
+        session()->forget(['forgot_pw_otp', 'forgot_pw_expires', 'forgot_pw_user_id', 'forgot_pw_email']);
+
+        AuditLog::create([
+            'user_id' => $user->user_id,
+            'action' => 'USER_FORGOT_PASSWORD_RESET',
+            'table_name' => 'users',
+            'record_id' => $user->user_id,
+            'details' => json_encode([
+                'email' => $user->email,
+                'role' => $user->role,
+                'ip' => $request->ip(),
+            ]),
+            'ip_address' => $request->ip() ?? '127.0.0.1',
+            'logged_at' => Carbon::now(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password updated. Sign in with your new passcode.',
+            'email' => $user->email,
+        ]);
     }
 
     /**

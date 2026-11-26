@@ -33,6 +33,8 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::post('/forgot-password/send-otp', [AuthController::class, 'sendForgotPasswordOtp'])->name('password.forgot.send-otp');
+    Route::post('/forgot-password/reset', [AuthController::class, 'resetForgottenPassword'])->name('password.forgot.reset');
 });
 
 // Authenticated Routes (Requires Civil Service Login)
