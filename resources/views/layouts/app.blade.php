@@ -1436,15 +1436,12 @@
             class="hidden fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
         >
             <div class="bg-gov-navy border border-slate-700/80 rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-rose-400/20 transform animate-in fade-in zoom-in-95 duration-200">
-                <!-- Circular SVG Spinner with Center Municipal Seal -->
+                <!-- Circular SVG Spinner -->
                 <div class="relative inline-flex items-center justify-center">
-                    <svg class="animate-spin w-24 h-24 text-rose-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="animate-spin w-20 h-20 text-rose-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <circle cx="50" cy="50" r="42" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
                         <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="6" stroke-dasharray="264" stroke-dashoffset="198" stroke-linecap="round"/>
                     </svg>
-                    <div class="absolute w-14 h-14 bg-slate-900 rounded-full p-2 flex items-center justify-center border border-slate-700/80 shadow-md">
-                        <img src="{{ asset('images/basud-logo.png') }}" alt="Basud LGU Seal" class="w-full h-full object-contain">
-                    </div>
                 </div>
 
                 <!-- Modal Status Text -->
