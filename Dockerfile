@@ -31,8 +31,6 @@ RUN cp .env.example .env \
 # Default production environment variables
 ENV APP_ENV=production \
     APP_DEBUG=false \
-    DB_CONNECTION=sqlite \
-    DB_DATABASE=/var/www/database/database.sqlite \
     PORT=8000
 
 # Install production dependencies
@@ -40,5 +38,5 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 8000
 
-# Container entrypoint: generate key, run pending migrations, start server
-CMD ["sh", "-c", "php artisan key:generate --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT}"]
+# Container entrypoint: generate key, cache env config, run pending migrations, start server
+CMD ["sh", "-c", "php artisan key:generate --force && php artisan config:clear && php artisan config:cache && php artisan migrate --force && php artisan serve --no-reload --host=0.0.0.0 --port=${PORT}"]
