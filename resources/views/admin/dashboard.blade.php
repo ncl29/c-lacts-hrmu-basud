@@ -896,7 +896,7 @@
                     <span>Delete User</span>
                 </button>
 
-                <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto sm:ml-auto">
                     <button type="button" onclick="closeEditRoleModal()" class="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[40px]">
                         Cancel
                     </button>

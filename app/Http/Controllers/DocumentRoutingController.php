@@ -199,7 +199,7 @@ class DocumentRoutingController extends Controller
                 ];
             }
 
-            $hasDispatched = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED');
+            $hasDispatched = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED' && $l->method !== 'SYSTEM');
             $hasReachedHigherOffice = $allLogs->contains(fn($l) => $l->office_id == 1 || $l->office_id == 2);
 
             if ($hasDispatched || $hasReachedHigherOffice || $hasMayorActed) {
@@ -218,7 +218,7 @@ class DocumentRoutingController extends Controller
         // If at Office of the Municipal Mayor:
         // Once Mayor has acted AND the document has been DISPATCHED from Mayor's Office back to HRMU:
         if ($isMayor) {
-            $hasMayorDispatched = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED');
+            $hasMayorDispatched = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED' && $l->method !== 'SYSTEM');
             if ($hasMayorActed && $hasMayorDispatched) {
                 return [
                     'is_completed' => false,
@@ -235,7 +235,7 @@ class DocumentRoutingController extends Controller
         // If at HRMU:
         // If HRMU certified and DISPATCHED to Mayor's Office, and it hasn't returned from Mayor yet:
         if ($isHrmu) {
-            $hasDispatchedToMayor = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED');
+            $hasDispatchedToMayor = $logsAtStation->contains(fn($l) => $l->action === 'DISPATCHED' && $l->method !== 'SYSTEM');
             if (!$hasMayorActed && $hasDispatchedToMayor) {
                 return [
                     'is_completed' => false,
