@@ -1206,7 +1206,7 @@
                 // Silent Background Live Data Sync (keeps tables, balances, and recent scans updated without page reloads)
                 @auth
                 (function initClactsLiveSync() {
-                    const LIVE_SYNC_INTERVAL_MS = 5000;
+                    const LIVE_SYNC_INTERVAL_MS = 15000;
                     let isSyncing = false;
 
                     function isUserBusy() {
