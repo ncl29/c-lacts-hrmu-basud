@@ -19,6 +19,11 @@ return [
         'driver' => 'file',
     ],
 
+    'mail_webhook' => [
+        'url' => env('MAIL_WEBHOOK_URL'),
+        'secret' => env('MAIL_WEBHOOK_SECRET', 'clacts_hrmu_basud_2026'),
+    ],
+
     'providers' => ServiceProvider::defaultProviders()->merge([
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,

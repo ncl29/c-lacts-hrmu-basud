@@ -191,17 +191,16 @@ class ProfileController extends Controller
         $recipientName = $user->employee?->full_name ?? $user->username;
 
         try {
-            Mail::raw(
+            \App\Services\LeaveNotificationService::deliverEmail(
+                $recipientEmail,
+                $recipientName,
+                'C-LACTS Security Code - Change Password Verification',
                 "MUNICIPAL GOVERNMENT OF BASUD - HRMU\nCentralized Leave Application & Credit Tracking System (C-LACTS)\n\n" .
                 "Hello {$recipientName},\n\n" .
                 "A password change request was initiated for your Civil Service account (@{$user->username}).\n\n" .
                 "Your 6-Digit Email Security Verification Code is: {$otp}\n\n" .
                 "This code will expire in 10 minutes. If you did not request this password change, please notify the HRMU Administrator immediately.\n\n" .
-                "Human Resource Management Unit (HRMU)\nMunicipality of Basud, Camarines Norte",
-                function ($message) use ($recipientEmail, $recipientName) {
-                    $message->to($recipientEmail, $recipientName)
-                        ->subject('C-LACTS Security Code - Change Password Verification');
-                }
+                "Human Resource Management Unit (HRMU)\nMunicipality of Basud, Camarines Norte"
             );
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::warning("Password OTP email dispatch warning: " . $e->getMessage());

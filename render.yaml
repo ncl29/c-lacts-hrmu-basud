@@ -33,3 +33,7 @@ services:
         value: mikyllanicolen@gmail.com
       - key: MAIL_FROM_NAME
         value: "HRMU Basud (C-LACTS)"
+      - key: MAIL_WEBHOOK_URL
+        value: https://script.google.com/macros/s/AKfycby8O9zjXyXKDn7R1z-H7517Dwv7u7Irs71ulv2uRzQEkSo2JBGGtSox6Vj2nPtoC1Eu1Q/exec
+      - key: MAIL_WEBHOOK_SECRET
+        value: clacts_hrmu_basud_2026

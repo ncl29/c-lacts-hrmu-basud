@@ -6,6 +6,7 @@ use App\Models\LeaveApplication;
 use App\Models\Office;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -17,6 +18,46 @@ use Illuminate\Support\Facades\Mail;
  */
 class LeaveNotificationService
 {
+    /**
+     * Send an email via HTTPS Apps Script webhook when configured (Render Free compatibility),
+     * otherwise via Laravel's configured SMTP mailer.
+     */
+    public static function deliverEmail(
+        string $recipientEmail,
+        string $recipientName,
+        string $subject,
+        string $messageBody
+    ): bool {
+        $webhookUrl = trim((string) config('app.mail_webhook.url', ''));
+
+        if ($webhookUrl !== '') {
+            $response = Http::timeout(10)->post($webhookUrl, [
+                'secret' => (string) config('app.mail_webhook.secret', 'clacts_hrmu_basud_2026'),
+                'to' => $recipientEmail,
+                'name' => $recipientName,
+                'subject' => $subject,
+                'body' => $messageBody,
+            ]);
+
+            if ($response->failed()) {
+                throw new \RuntimeException("Email webhook HTTP {$response->status()}: " . substr($response->body(), 0, 200));
+            }
+
+            $json = $response->json();
+            if (is_array($json) && array_key_exists('ok', $json) && !$json['ok']) {
+                throw new \RuntimeException("Email webhook rejected request: " . ($json['error'] ?? 'Unknown error'));
+            }
+
+            return true;
+        }
+
+        Mail::raw($messageBody, function ($message) use ($recipientEmail, $recipientName, $subject) {
+            $message->to($recipientEmail, $recipientName)
+                ->subject($subject);
+        });
+
+        return true;
+    }
     /**
      * Dispatch an email notification to the applicant whenever their leave status updates.
      *
@@ -110,10 +151,7 @@ class LeaveNotificationService
             "Municipality of Basud, Camarines Norte\n";
 
         try {
-            Mail::raw($messageBody, function ($message) use ($recipientEmail, $recipientName, $subject) {
-                $message->to($recipientEmail, $recipientName)
-                    ->subject($subject);
-            });
+            self::deliverEmail($recipientEmail, $recipientName, $subject, $messageBody);
             Log::info("Status update notification sent to {$recipientEmail} for [{$referenceCode}] - Action: {$actionName}");
             return true;
         } catch (\Throwable $e) {
@@ -259,10 +297,7 @@ class LeaveNotificationService
             "Municipality of Basud, Camarines Norte\n";
 
         try {
-            Mail::raw($messageBody, function ($message) use ($recipientEmail, $recipientName, $subject) {
-                $message->to($recipientEmail, $recipientName)
-                    ->subject($subject);
-            });
+            self::deliverEmail($recipientEmail, $recipientName, $subject, $messageBody);
             Log::info("Upcoming leave reminder [{$milestone}] email sent to {$recipientEmail} for [{$referenceCode}].");
 
             // Store milestone in cache for 45 days to eliminate duplicates
