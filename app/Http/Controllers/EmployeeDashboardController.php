@@ -526,6 +526,15 @@ class EmployeeDashboardController extends Controller
                 $successMsg .= " ({$attachedCount} supporting document" . ($attachedCount > 1 ? 's' : '') . " uploaded).";
             }
 
+            DB::afterCommit(function () use ($application, $employee, $routingRemarks) {
+                \App\Services\LeaveNotificationService::notifyStatusUpdate(
+                    $application,
+                    'FILED',
+                    $employee->office,
+                    $routingRemarks
+                );
+            });
+
             return redirect()->route('employee.dashboard', ['employee_id' => $employee->employee_id])
                 ->with('success', $successMsg)
                 ->with('new_reference_code', $referenceCode)
@@ -970,6 +979,16 @@ class EmployeeDashboardController extends Controller
             $successMsg = $wasApproved
                 ? "Approved Leave Application {$application->reference_code} has been cancelled within the 7-working-day period. Deducted credits have been restored."
                 : "Leave Application {$application->reference_code} has been successfully cancelled within the 7-working-day period.";
+
+            DB::afterCommit(function () use ($application, $reasonText) {
+                $application->loadMissing(['employee.office', 'employee.user', 'leaveType']);
+                \App\Services\LeaveNotificationService::notifyStatusUpdate(
+                    $application,
+                    'CANCELLED',
+                    $application->employee?->office,
+                    $reasonText
+                );
+            });
 
             return redirect()->back()
                 ->with('cancellation_success', $successMsg)

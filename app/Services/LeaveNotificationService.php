@@ -32,18 +32,22 @@ class LeaveNotificationService
         ?Office $station = null,
         ?string $remarks = null
     ): bool {
-        // Ensure relations are loaded
-        if (!$application->relationLoaded('employee')) {
-            $application->load(['employee.user', 'leaveType']);
-        }
+        // Ensure relations are loaded (even if employee was preloaded without user)
+        $application->loadMissing(['employee.user', 'leaveType']);
 
         $employee = $application->employee;
         if (!$employee) {
             return false;
         }
 
-        // Determine recipient email: check user account first, then any direct employee email attribute
+        // Determine recipient email from linked user account (with lookup fallback)
         $recipientEmail = $employee->user?->email;
+        if (empty($recipientEmail)) {
+            $recipientEmail = \App\Models\User::where('employee_id', $employee->employee_id)
+                ->whereNotNull('email')
+                ->where('email', '!=', '')
+                ->value('email');
+        }
         if (empty($recipientEmail)) {
             Log::info("Status update email skipped: No registered email found for employee #{$employee->employee_id} ({$employee->full_name}).");
             return false;
@@ -56,6 +60,9 @@ class LeaveNotificationService
         $stationName = $station?->office_name ?? 'Municipal Office';
         $currentStatus = $application->status;
         $formattedDate = Carbon::now()->format('F d, Y • h:i A');
+        $inclusiveDates = ($application->date_from && $application->date_to)
+            ? Carbon::parse($application->date_from)->format('M d, Y') . ' to ' . Carbon::parse($application->date_to)->format('M d, Y')
+            : 'N/A';
 
         // Human-friendly action title
         $friendlyAction = match ($actionName) {
@@ -66,6 +73,10 @@ class LeaveNotificationService
             'DISPATCHED' => "Dispatched / Forwarded from {$stationName}",
             'APPROVED_PHYSICAL' => 'Officially Approved by Municipal Mayor (Physical Wet Signature)',
             'DISAPPROVED_PHYSICAL' => 'Disapproved by Municipal Mayor (Physical Signature)',
+            'CERTIFIED_SECTION_7A' => 'Section 7.A Leave Credits Certified by HRMU',
+            'ATTACHMENT_VERIFIED' => 'Supporting Document Verified by HRMU',
+            'ATTACHMENT_REJECTED' => 'Supporting Document Rejected by HRMU',
+            'ATTACHMENT_PENDING' => 'Supporting Document Status Reset to Pending',
             'CANCELLED' => 'Application Cancelled within 7-Working-Day Period',
             default => str_replace('_', ' ', $actionName),
         };
@@ -82,7 +93,7 @@ class LeaveNotificationService
             "• Reference Code: {$referenceCode}\n" .
             "• Leave Type: {$leaveType}\n" .
             "• Days Applied: {$daysRequested} day(s)\n" .
-            "• Inclusive Dates: " . ($application->inclusive_dates ?? Carbon::parse($application->start_date)->format('M d, Y') . ' to ' . Carbon::parse($application->end_date)->format('M d, Y')) . "\n\n" .
+            "• Inclusive Dates: {$inclusiveDates}\n\n" .
             "ROUTING & STATUS UPDATE:\n" .
             "• Action Taken: {$friendlyAction}\n" .
             "• Office Station: {$stationName}\n" .

@@ -952,13 +952,16 @@ class DocumentRoutingController extends Controller
                 'logged_at' => $now,
             ]);
 
-            // 6. Real-Time Email Notification to Applicant
-            \App\Services\LeaveNotificationService::notifyStatusUpdate(
-                $application,
-                $normalizedAction,
-                $office,
-                $validated['remarks'] ?? null
-            );
+            // 6. Real-Time Email Notification to Applicant (sent right after DB commit)
+            $remarkCopy = $validated['remarks'] ?? null;
+            DB::afterCommit(function () use ($application, $normalizedAction, $office, $remarkCopy) {
+                \App\Services\LeaveNotificationService::notifyStatusUpdate(
+                    $application,
+                    $normalizedAction,
+                    $office,
+                    $remarkCopy
+                );
+            });
 
             $updatedApplication = $application->fresh([
                 'employee.office',
@@ -1440,6 +1443,13 @@ class DocumentRoutingController extends Controller
             'logged_at' => Carbon::now(),
         ]);
 
+        \App\Services\LeaveNotificationService::notifyStatusUpdate(
+            $application,
+            'CERTIFIED_SECTION_7A',
+            $stationOffice,
+            $validated['remarks'] ?? "VL Balance: " . number_format($vlBalance, 3) . "d • SL Balance: " . number_format($slBalance, 3) . "d"
+        );
+
         return response()->json([
             'success' => true,
             'message' => "Civil Service Form 6 Section 7.A certified successfully for {$application->reference_code}.",
@@ -1570,6 +1580,22 @@ class DocumentRoutingController extends Controller
             'ip_address' => $request->ip() ?? '127.0.0.1',
             'logged_at' => Carbon::now(),
         ]);
+
+        if ($attachment->application) {
+            $docAction = match ($attachment->verification_status) {
+                'VERIFIED' => 'ATTACHMENT_VERIFIED',
+                'REJECTED' => 'ATTACHMENT_REJECTED',
+                default => 'ATTACHMENT_PENDING',
+            };
+            $docRemark = $attachment->original_filename
+                . (!empty($attachment->verification_remarks) ? " — {$attachment->verification_remarks}" : '');
+            \App\Services\LeaveNotificationService::notifyStatusUpdate(
+                $attachment->application,
+                $docAction,
+                $user->employee?->office,
+                $docRemark
+            );
+        }
 
         return response()->json([
             'success' => true,
