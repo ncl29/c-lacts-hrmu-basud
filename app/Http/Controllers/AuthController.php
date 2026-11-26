@@ -43,37 +43,43 @@ class AuthController extends Controller
             'username' => ['required', 'string'],
             'password' => ['required', 'string'],
             'remember' => ['nullable', 'boolean'],
+        ], [
+            'username.required' => 'Please enter your Employee ID or Email.',
         ]);
 
         $loginInput = trim($credentials['username']);
 
-        // 1. Look up user by username OR by assigned employee control ID (e.g. HRMU-0001, MAYOR-0001, MPDO-0001)
-        $user = User::with('employee.office')
+        // 1. Look up user(s) strictly by Email OR assigned Employee ID (e.g. HRMU-0001, MPDO-0003)
+        $candidates = User::with('employee.office')
             ->where(function ($query) use ($loginInput) {
-                $query->where('username', strtolower($loginInput))
-                    ->orWhere('username', $loginInput)
+                $query->whereRaw('LOWER(email) = ?', [strtolower($loginInput)])
                     ->orWhereHas('employee', function ($empQuery) use ($loginInput) {
                         $empQuery->where('employee_no', strtoupper($loginInput))
                             ->orWhere('employee_no', $loginInput);
                     });
             })
-            ->first();
+            ->orderBy('user_id', 'asc')
+            ->get();
 
         // Verify existence and active state
-        if (!$user) {
+        if ($candidates->isEmpty()) {
             return back()->withInput($request->only('username', 'remember'))
-                ->withErrors(['username' => 'No municipal user account found with this username or Employee ID.']);
+                ->withErrors(['username' => 'No municipal user account found with this Employee ID or Email.']);
         }
 
-        if (!$user->is_active) {
+        $activeCandidates = $candidates->where('is_active', true);
+        if ($activeCandidates->isEmpty()) {
             return back()->withInput($request->only('username', 'remember'))
                 ->withErrors(['username' => 'This account has been deactivated. Please contact the HRMU Administrator.']);
         }
 
-        // 2. Attempt authentication using verified username & password
+        // 2. Match password across active candidate(s) (handles legacy alias user rows sharing an employee_id)
         $remember = $request->boolean('remember');
+        $user = $activeCandidates->first(function ($candidate) use ($credentials) {
+            return Hash::check($credentials['password'], $candidate->password_hash);
+        });
 
-        if (!Auth::attempt(['username' => $user->username, 'password' => $credentials['password']], $remember)) {
+        if (!$user || !Auth::attempt(['username' => $user->username, 'password' => $credentials['password']], $remember)) {
             return back()->withInput($request->only('username', 'remember'))
                 ->withErrors(['password' => 'Incorrect password entered.']);
         }
