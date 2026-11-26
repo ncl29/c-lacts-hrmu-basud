@@ -13,18 +13,9 @@
                     <i class="ph ph-shield-star"></i>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <div class="text-xs uppercase tracking-wider text-slate-400 font-semibold flex flex-wrap items-center gap-2">
-                        <span>Level 4: System Administrator / HR Head</span>
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
-                            Configuration & Oversight
-                        </span>
-                    </div>
-                    <h1 class="text-lg sm:text-2xl font-bold text-white mt-0.5 leading-tight">
+                    <h1 class="text-lg sm:text-2xl font-bold text-white leading-tight">
                         Governance & Security Control Center
                     </h1>
-                    <div class="text-xs text-slate-400 mt-1">
-                        LGU Municipality of Basud • Civil Service Leave Administration Baseline
-                    </div>
                 </div>
             </div>
 
@@ -611,7 +602,6 @@
                         value="password123"
                         class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-gov-600 bg-white"
                     >
-                    <p class="text-[11px] text-slate-500 mt-1 font-mono">Suggested default: password123</p>
                 </div>
 
                 <div>
@@ -655,7 +645,6 @@
                 </div>
                 <div>
                     <h3 class="text-base font-bold text-white">Confirm User Deletion</h3>
-                    <p class="text-xs text-rose-300 font-mono">Irreversible Administrative Action</p>
                 </div>
             </div>
             <button type="button" onclick="closeDeleteUserModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer">
@@ -672,15 +661,13 @@
                     <div class="flex items-start gap-2.5">
                         <i class="ph-bold ph-shield-warning text-lg text-rose-600 shrink-0 mt-0.5"></i>
                         <div>
-                            <p class="font-bold">Are you sure you want to permanently delete this user account?</p>
-                            <p class="text-rose-700 mt-1">This will revoke terminal login access for:</p>
+                            <p class="font-bold">Permanently delete this user account?</p>
                         </div>
                     </div>
                     <div class="p-2.5 bg-white rounded-lg border border-rose-200 font-mono text-xs text-slate-800 space-y-1 mt-2">
                         <div>Personnel: <strong id="deleteModalEmployeeName" class="text-slate-900">—</strong></div>
                         <div>Username: <strong id="deleteModalUsername" class="text-rose-700">@username</strong></div>
                     </div>
-                    <p class="text-[11px] text-slate-500 mt-1">Historical attendance records, submitted leave applications, and audit entries will be safely preserved with unassigned author references.</p>
                 </div>
             </div>
 
@@ -1279,10 +1266,6 @@
         <form id="createBackupForm" method="POST" action="{{ route('admin.backups.create') }}" class="flex flex-col flex-1 min-h-0 overflow-hidden">
             @csrf
             <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Select the backup category to generate. Archives are created with a timestamped filename and SHA-256 integrity hash.
-                </p>
-
                 <div class="space-y-3">
                     <!-- Option 1: Database Only -->
                     <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
@@ -1293,7 +1276,7 @@
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Recommended</span>
                             </div>
                             <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                                Complete SQL dump of all ~158 employee leave ledgers, certified balances, physical routing logs, Starla conversion tables, and audit logs. Fast (1-3 seconds).
+                                SQL dump of all leave ledgers, balances, routing logs, and audit logs.
                             </p>
                         </div>
                     </label>
@@ -1307,7 +1290,7 @@
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Complete Disaster Recovery</span>
                             </div>
                             <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
-                                Bundles the complete database dump AND all uploaded document attachments (medical certificates, clearances) + system manifest. Complete recovery archive.
+                                Database dump plus all uploaded document attachments.
                             </p>
                         </div>
                     </label>
@@ -1356,7 +1339,7 @@
 
             <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    Are you sure you want to permanently delete this backup archive? This action is permanent and cannot be undone.
+                    Permanently delete this backup archive? This cannot be undone.
                 </p>
 
                 <div class="p-3 bg-rose-50 border border-rose-200 rounded-xl">

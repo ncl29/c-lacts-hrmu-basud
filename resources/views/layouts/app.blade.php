@@ -547,12 +547,8 @@
                     onclick="if(event.target === this) closeCancellationModal()"
                 >
                     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-rose-500 border-x border-b border-slate-200 overflow-hidden transform animate-in zoom-in-95 duration-200 my-auto">
-                        <!-- Top Header with Basud Municipal Branding -->
-                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider font-mono">Civil Service Form Cancellation</span>
-                            </div>
+                        <!-- Top Header -->
+                        <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                             <button 
                                 type="button" 
                                 onclick="closeCancellationModal()" 
@@ -605,7 +601,7 @@
                                     @if($wasApproved)
                                         <div class="sm:col-span-2 bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-amber-900 text-[11px] leading-snug flex items-start gap-2">
                                             <i class="ph-bold ph-arrow-u-up-left text-base text-amber-700 shrink-0 mt-0.5"></i>
-                                            <span><strong>Ledger Credits Restored:</strong> Previously deducted leave credits have been reverted and re-credited to your certified balance ledger.</span>
+                                            <span><strong>Credits Restored:</strong> Deducted leave credits have been returned to your balance.</span>
                                         </div>
                                     @endif
                                 </div>
@@ -1251,12 +1247,8 @@
                 <!-- Modal Body -->
                 <div class="overflow-y-auto flex-1 min-h-0 p-5 sm:p-6 py-4 space-y-3">
                     <p id="logoutModalDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        Are you sure you want to end your current session in <strong>C-LACTS</strong>? Any unsaved edits or pending entries will be closed.
+                        Are you sure you want to sign out?
                     </p>
-                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 flex items-center gap-2">
-                        <i class="ph ph-buildings text-base text-slate-500 shrink-0"></i>
-                        <span>Station: <strong>{{ Auth::user()->employee->office->office_name ?? 'Basud Municipal Office' }}</strong></span>
-                    </div>
                 </div>
 
                 <!-- Modal Actions -->
@@ -1449,9 +1441,6 @@
                     <h3 id="logoutOverlayTitle" class="text-base sm:text-lg font-bold text-white tracking-wide">
                         Signing Out...
                     </h3>
-                    <p class="text-xs text-slate-300 font-mono">
-                        Closing terminal session & saving audit log...
-                    </p>
                 </div>
             </div>
         </div>
@@ -1480,9 +1469,6 @@
                 <h3 id="refreshOverlayTitle" class="text-base sm:text-lg font-bold text-white tracking-wide">
                     Refreshing Page...
                 </h3>
-                <p class="text-xs text-slate-300 font-mono">
-                    Reloading records and municipal ledger data...
-                </p>
             </div>
         </div>
     </div>

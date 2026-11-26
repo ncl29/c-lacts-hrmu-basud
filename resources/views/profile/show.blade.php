@@ -39,9 +39,6 @@
                             <h3 id="passwordSuccessTitle" class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
                                 Password Updated Successfully
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-600 mt-1.5 font-medium">
-                                Your account credentials have been securely updated and authenticated through your email.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -307,7 +304,7 @@
                                         Email Security Verification Code <span class="text-rose-500">*</span>
                                     </label>
                                     <p class="text-[11px] text-slate-600 mt-0.5 leading-snug">
-                                        A 6-digit security code was dispatched to your registered email (<strong class="text-slate-900 font-mono">{{ $user->email }}</strong>). Please check your email inbox and enter the code below.
+                                        Enter the 6-digit code sent to <strong class="text-slate-900 font-mono">{{ $user->email }}</strong>.
                                     </p>
                                 </div>
                             </div>

@@ -406,10 +406,10 @@
             <!-- Modal Text -->
             <div class="space-y-1.5 pt-1">
                 <h3 id="loginOverlayTitle" class="text-base sm:text-lg font-bold text-white tracking-wide">
-                    Authenticating Terminal
+                    Authenticating
                 </h3>
                 <p id="loginOverlayDesc" class="text-xs text-slate-300 font-mono">
-                    Verifying personnel credentials with LGU Basud HRMU...
+                    Verifying credentials...
                 </p>
             </div>
         </div>

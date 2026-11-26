@@ -370,7 +370,6 @@ echo method_field('DELETE');
                             <td colspan="12" class="px-6 py-12 text-center text-slate-500">
                                 <i class="ph ph-files text-3xl text-slate-400 block mb-2"></i>
                                 <span class="font-bold text-sm text-slate-700">No Leave Record Entries Found</span>
-                                <p class="text-xs text-slate-500 mt-1">Click "Add Record Entry" above to post the first certified transaction or monthly accrual.</p>
                             </td>
                         </tr>
                     @endif
@@ -457,7 +456,7 @@ echo method_field('DELETE');
                         Recalculation Successful!
                     </h3>
                     <p class="text-xs text-slate-600 mt-1.5 font-medium leading-relaxed">
-                        All leave ledger entries for <strong class="text-slate-900 font-bold">{{ $recalcInfo['employee_name'] ?? $employee->full_name }}</strong> were verified and re-computed in strict chronological order.
+                        Ledger entries for <strong class="text-slate-900 font-bold">{{ $recalcInfo['employee_name'] ?? $employee->full_name }}</strong> have been recalculated.
                     </p>
                 </div>
             </div>
@@ -500,14 +499,7 @@ echo method_field('DELETE');
             </div>
         </div>
         <div>
-            <h4 class="text-base font-black text-slate-900 tracking-tight">Recalculating Ledger Balances</h4>
-            <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                Applying Table II & Table IV conversion formulas in chronological sequence...
-            </p>
-        </div>
-        <div class="pt-1 flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-400">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-            <span>Processing Civil Service Form 41</span>
+            <h4 class="text-base font-black text-slate-900 tracking-tight">Recalculating Ledger Balances...</h4>
         </div>
     </div>
 </div>
@@ -538,7 +530,7 @@ echo method_field('DELETE');
             <div class="bg-gov-50 border border-gov-200 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <div class="flex items-center gap-2 text-gov-900 font-semibold">
                     <i class="ph-bold ph-calculator text-gov-700 text-base"></i>
-                    <span>Need to encode semi-monthly DTR tardiness, undertime, or unexcused absences?</span>
+                    <span>Encoding DTR tardiness or absences?</span>
                 </div>
                 <a href="{{ route('hr.tardiness.create') }}" class="px-2.5 py-1 text-xs font-bold rounded bg-gov-700 hover:bg-gov-800 text-white transition whitespace-nowrap">
                     Go to Starla DTR Engine →
@@ -873,7 +865,6 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1">Period Covered <span class="text-rose-500">*</span></label>
                     <input type="text" name="period" id="prorated_period" value="{{ $currentMonthDate->format('F Y') }}" required class="w-full text-xs font-bold text-slate-900 border border-slate-300 rounded-lg px-3 py-2 bg-white" placeholder="e.g. October 2026 or 10/16-31/2026">
-                    <span class="text-[10px] text-slate-400 mt-0.5 block">Month and year of service</span>
                 </div>
             </div>
 
@@ -947,7 +938,6 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div>
                 <h3 class="text-base font-bold text-slate-900">Table IV: Working Hours / Minutes Conversion</h3>
-                <p class="text-xs text-slate-500">Official Civil Service Conversion into Fractions of a Day (8-Hour Workday)</p>
             </div>
             <button type="button" onclick="closeModal('tableIVModal')" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
                 <i class="ph ph-x text-lg"></i>

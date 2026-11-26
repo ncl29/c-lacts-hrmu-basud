@@ -526,7 +526,6 @@
                 </div>
                 <div>
                     <h3 class="text-base font-bold text-slate-900 tracking-tight">Select Application Type</h3>
-                    <p class="text-xs text-slate-500">Choose what type of request you wish to submit on CS Form No. 6</p>
                 </div>
             </div>
             <button type="button" onclick="closeFilingOptionModal()" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-200 transition cursor-pointer" aria-label="Close modal">
@@ -573,9 +572,6 @@
                                 @endif
                             </span>
                         </div>
-                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-                            Convert verified leave credits into cash pursuant to CSC Omnibus Rules (Rule XVI, Sec. 22–23). Select a monetization category below:
-                        </p>
                     </div>
                 </div>
 
@@ -760,7 +756,7 @@
             <!-- Contextual Monetization Notice (Revealed when monetization is selected) -->
             <div id="monetization_dates_notice" class="hidden p-3 bg-amber-50 rounded-xl border border-amber-300 text-xs text-amber-950 flex items-center gap-2">
                 <i class="ph-bold ph-coins text-base text-amber-700 shrink-0"></i>
-                <span>Monetization converts credits into cash without requiring dates of absence.</span>
+                <span>No absence dates required for monetization.</span>
             </div>
 
             <!-- Number of Days (Discrete with 3 decimal precision) -->
@@ -901,7 +897,7 @@
                     <i class="ph-bold ph-path"></i>
                 </div>
                 <div>
-                    <div class="text-xs text-slate-400">Physical Routing Audit Trail</div>
+                    <div class="text-xs text-slate-400">Routing Timeline</div>
                     <h3 class="text-base font-bold text-white font-mono" id="modalRefCode">LV-2026-XXXX</h3>
                 </div>
             </div>
@@ -915,7 +911,7 @@
             <!-- Loading Indicator -->
             <div id="trackerLoading" class="py-12 text-center text-slate-500">
                 <i class="ph ph-spinner animate-spin text-3xl text-gov-700 mb-2"></i>
-                <div class="text-sm font-semibold">Retrieving physical movement logs...</div>
+                <div class="text-sm font-semibold">Loading...</div>
             </div>
 
             <!-- Content Area -->
@@ -951,7 +947,7 @@
 
                 <!-- Visual Step-by-Step Chronological Timeline -->
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Physical Hand-off Steps (Wet Signature Journey)</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Routing Steps</h4>
                     <div class="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200" id="timelineList">
                         <!-- Filled dynamically -->
                     </div>
@@ -960,10 +956,9 @@
         </div>
 
         <!-- Tracker Footer (Pinned) -->
-        <div class="bg-slate-50 px-5 sm:px-6 py-3 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500 shrink-0">
-            <span>RA 10173 Compliant: Payload carries strictly reference ID</span>
+        <div class="bg-slate-50 px-5 sm:px-6 py-3 border-t border-slate-200 flex justify-end items-center text-xs text-slate-500 shrink-0">
             <button type="button" onclick="closeTrackerModal()" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 font-bold text-slate-700 transition cursor-pointer">
-                Close Tracker
+                Close
             </button>
         </div>
     </div>
@@ -1248,7 +1243,6 @@
                 </div>
                 <div>
                     <h3 class="text-base font-extrabold text-rose-950">Cancel Leave Application</h3>
-                    <div class="text-xs font-bold text-rose-800" id="cancelModalSubtitle">7-Working-Day Cancellation Window</div>
                 </div>
             </div>
             <button type="button" onclick="closeCancelModal()" class="text-slate-500 hover:text-slate-800 transition p-1.5 rounded-lg cursor-pointer" aria-label="Close dialog">
@@ -1264,10 +1258,10 @@
                     Are you sure you want to cancel leave application <strong id="cancelModalRefCode" class="font-mono text-base font-black text-slate-950">LV-2026-XXXX</strong>?
                 </div>
 
-                <div class="p-3.5 bg-amber-50 rounded-xl border-2 border-amber-300 text-sm font-semibold text-amber-950 flex items-start gap-2.5">
-                    <i class="ph ph-clock text-lg text-amber-800 shrink-0 mt-0.5"></i>
-                    <div id="cancelModalNotice" class="leading-relaxed text-xs sm:text-sm">
-                        Per municipal rules, employees have up to 7 working days from filing (excluding weekends and official holidays) to cancel. Once cancelled, this application is invalidated and cannot be revived.
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-300 text-xs font-semibold text-amber-950 flex items-start gap-2">
+                    <i class="ph ph-clock text-base text-amber-800 shrink-0 mt-0.5"></i>
+                    <div id="cancelModalNotice" class="leading-relaxed">
+                        Allowed within 7 working days of filing. Once cancelled, this cannot be undone.
                     </div>
                 </div>
 
