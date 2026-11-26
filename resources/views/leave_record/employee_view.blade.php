@@ -107,7 +107,7 @@
     <div id="simplifiedLedgerView" class="space-y-6">
 
         <!-- 1. Balances at a Glance (Plain Language) -->
-        <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             
             <!-- Vacation Leave Card -->
             <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-gov-700 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">

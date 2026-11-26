@@ -31,7 +31,7 @@
     @endif
 
     <!-- Profile Header & Switcher Strip -->
-    <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-3.5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div class="flex items-center gap-3 sm:gap-4 min-w-0">
             <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-slate-100 border-2 border-slate-300 flex items-center justify-center text-slate-900 font-black text-xl sm:text-2xl shadow-xs shrink-0">
                 {{ substr($employee->full_name, 0, 1) }}
@@ -54,11 +54,11 @@
         </div>
 
         <!-- Employee Switcher & Quick Actions -->
-        <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto min-w-0">
+        <div class="flex flex-col gap-3 w-full lg:w-auto lg:items-end shrink-0 min-w-0">
             @if(Auth::user() && in_array(Auth::user()->role, ['admin', 'hrmu_staff']))
-                <form method="GET" action="{{ route('employee.dashboard') }}" class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 w-full sm:w-auto min-w-0">
+                <form method="GET" action="{{ route('employee.dashboard') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
                     <label for="emp_switch" class="text-xs font-bold text-slate-700 whitespace-nowrap shrink-0">Review Ledger:</label>
-                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border-2 border-slate-300 rounded-lg px-2.5 py-1.5 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 w-full sm:w-64 md:w-72 truncate min-w-0 max-w-full">
+                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border-2 border-slate-300 rounded-lg px-3 py-2 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 w-full sm:flex-1 lg:w-72 truncate min-w-0 max-w-full">
                         @foreach($allEmployees as $emp)
                             <option value="{{ $emp->employee_id }}" {{ $emp->employee_id == $employee->employee_id ? 'selected' : '' }}>
                                 {{ $emp->full_name }} ({{ $emp->office->office_name ?? 'LGU' }})
@@ -68,21 +68,22 @@
                 </form>
             @endif
 
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
+                <button type="button" onclick="openLimitsModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                    <i class="ph ph-scales text-base sm:text-lg text-slate-700"></i>
+                    <span>Check Limits</span>
+                </button>
 
-            <button type="button" onclick="openLimitsModal()" class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto">
-                <i class="ph ph-scales text-base sm:text-lg text-slate-700"></i>
-                <span>Check Limits</span>
-            </button>
+                <a href="{{ route('employee.leave-record') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                    <i class="ph ph-notebook text-base sm:text-lg"></i>
+                    <span>Leave Record</span>
+                </a>
 
-            <a href="{{ route('employee.leave-record') }}" class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto">
-                <i class="ph ph-notebook text-base sm:text-lg"></i>
-                <span>Leave Record</span>
-            </a>
-
-            <button type="button" onclick="openFilingOptionModal()" class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto">
-                <i class="ph ph-plus-circle text-base sm:text-lg"></i>
-                <span>File Application</span>
-            </button>
+                <button type="button" onclick="openFilingOptionModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                    <i class="ph ph-plus-circle text-base sm:text-lg"></i>
+                    <span>File Application</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -248,7 +249,7 @@
             </h2>
         </div>
 
-        <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <!-- Vacation Leave Card (Primary) -->
             <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-gov-700 shadow-xs flex flex-col justify-between hover:shadow-md transition">
                 <div>
