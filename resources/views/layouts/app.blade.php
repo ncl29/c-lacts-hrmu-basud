@@ -762,7 +762,7 @@
             </div>
 
             <!-- Main Content Area -->
-            <main class="flex-1 max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
+            <main id="clactsLiveMain" class="flex-1 max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
                 @yield('content')
             </main>
 
@@ -1202,6 +1202,118 @@
                         }
                     });
                 }
+
+                // Silent Background Live Data Sync (keeps tables, balances, and recent scans updated without page reloads)
+                @auth
+                (function initClactsLiveSync() {
+                    const LIVE_SYNC_INTERVAL_MS = 5000;
+                    let isSyncing = false;
+
+                    function isUserBusy() {
+                        if (document.visibilityState !== 'visible') return true;
+                        if (document.querySelector('.fixed.inset-0:not(.hidden)')) return true;
+                        const active = document.activeElement;
+                        const mainEl = document.getElementById('clactsLiveMain');
+                        if (active && mainEl && mainEl.contains(active) && ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName)) {
+                            return true;
+                        }
+                        if (typeof html5QrCode !== 'undefined' && html5QrCode && html5QrCode.isScanning) {
+                            return true;
+                        }
+                        if (window.getSelection && window.getSelection().toString().length > 0) {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    async function syncLivePageData() {
+                        if (isSyncing || isUserBusy()) return;
+                        const currentMain = document.getElementById('clactsLiveMain');
+                        if (!currentMain) return;
+
+                        isSyncing = true;
+                        try {
+                            const res = await fetch(window.location.href, {
+                                method: 'GET',
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'Accept': 'text/html'
+                                },
+                                credentials: 'same-origin',
+                                cache: 'no-store'
+                            });
+
+                            if (!res.ok || res.redirected) return;
+                            const html = await res.text();
+                            const doc = new DOMParser().parseFromString(html, 'text/html');
+                            const newMain = doc.getElementById('clactsLiveMain');
+                            if (!newMain) return;
+
+                            // On QR Document Scanner, only update Recent Scans list so active previews/inputs are untouched
+                            const currentScans = document.getElementById('recentScansList');
+                            const newScans = doc.getElementById('recentScansList');
+                            if (currentScans && newScans) {
+                                if (currentScans.innerHTML !== newScans.innerHTML) {
+                                    currentScans.innerHTML = newScans.innerHTML;
+                                }
+                                return;
+                            }
+
+                            if (currentMain.innerHTML === newMain.innerHTML) return;
+
+                            // Preserve active UI state before swapping content
+                            const savedScrollY = window.scrollY;
+                            let activeAdminTab = null;
+                            for (const [btnId, tabKey] of [['tabBtnUsers', 'users'], ['tabBtnStarla', 'starla'], ['tabBtnAudit', 'audit'], ['tabBtnBackups', 'backups']]) {
+                                const btn = document.getElementById(btnId);
+                                if (btn && btn.classList.contains('border-gov-700')) {
+                                    activeAdminTab = tabKey;
+                                    break;
+                                }
+                            }
+
+                            const isCscView = document.getElementById('cscForm41View') && !document.getElementById('cscForm41View').classList.contains('hidden');
+                            let activeYear = null;
+                            document.querySelectorAll('.year-tab-btn').forEach(btn => {
+                                if (btn.classList.contains('bg-white')) {
+                                    activeYear = btn.id.replace('yearTabBtn_', '');
+                                }
+                            });
+
+                            const remindersEl = document.getElementById('remindersCardsList');
+                            const remindersHidden = remindersEl ? remindersEl.classList.contains('hidden') : false;
+
+                            currentMain.innerHTML = newMain.innerHTML;
+
+                            if (activeAdminTab && typeof switchAdminTab === 'function') {
+                                switchAdminTab(activeAdminTab);
+                            }
+                            if (isCscView && typeof toggleRecordView === 'function') {
+                                toggleRecordView();
+                            }
+                            if (activeYear && typeof switchYear === 'function') {
+                                switchYear(activeYear);
+                            }
+                            if (remindersHidden && typeof toggleRemindersCollapse === 'function') {
+                                toggleRemindersCollapse();
+                            }
+
+                            window.scrollTo(0, savedScrollY);
+                        } catch (err) {
+                            // Ignore transient network errors during background sync
+                        } finally {
+                            isSyncing = false;
+                        }
+                    }
+
+                    setInterval(syncLivePageData, LIVE_SYNC_INTERVAL_MS);
+                    document.addEventListener('visibilitychange', function() {
+                        if (document.visibilityState === 'visible') {
+                            syncLivePageData();
+                        }
+                    });
+                })();
+                @endauth
             } catch (e) {}
         });
     </script>
