@@ -10,9 +10,13 @@ services:
       - key: APP_DEBUG
         value: "false"
       - key: DB_CONNECTION
-        value: sqlite
+        value: mysql
+      - key: DB_HOST
+        value: gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: "4000"
       - key: DB_DATABASE
-        value: /var/www/database/database.sqlite
+        value: clacts_db
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST

@@ -7,10 +7,11 @@ RUN apk add --no-cache \
     libzip-dev \
     libpng-dev \
     sqlite-dev \
+    postgresql-dev \
     oniguruma-dev
 
 # Install required PHP extensions
-RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql mbstring zip bcmath
+RUN docker-php-ext-install pdo pdo_sqlite pdo_mysql pdo_pgsql mbstring zip bcmath
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -39,5 +40,5 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 8000
 
-# Container entrypoint: generate key, migrate & seed sqlite, start server
-CMD ["sh", "-c", "php artisan key:generate --force && php artisan migrate --force --seed && php artisan serve --host=0.0.0.0 --port=${PORT}"]
+# Container entrypoint: generate key, run pending migrations, start server
+CMD ["sh", "-c", "php artisan key:generate --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT}"]
