@@ -57,11 +57,9 @@ class EmployeeDashboardController extends Controller
 
         $currentYear = Carbon::now()->year;
 
-        // Fetch certified balances for current year
-        $balances = LeaveBalance::with('leaveType')
-            ->where('employee_id', $employee->employee_id)
+        // Derive certified balances for current year from preloaded employee relation
+        $balances = $employee->balances
             ->where('year', $currentYear)
-            ->get()
             ->keyBy(fn($b) => $b->leaveType->code);
 
         // Fetch available leave types for filing
@@ -92,16 +90,24 @@ class EmployeeDashboardController extends Controller
             ]];
         });
 
-        // Fetch personal leave applications ordered by recent
+        // Fetch personal leave applications ordered by recent (eager-load routing logs for instant 0ms timeline modal)
         $applications = LeaveApplication::with([
+            'employee.office',
             'leaveType',
             'currentLocation',
             'latestRoutingLog.office',
-            'attachments.verifiedBy',
+            'routingLogs.office',
+            'routingLogs.scanner.employee',
+            'attachments.verifiedBy.employee',
         ])
         ->where('employee_id', $employee->employee_id)
         ->orderBy('created_at', 'desc')
         ->paginate(10);
+
+        $routingController = app(DocumentRoutingController::class);
+        $preloadedTimelines = $applications->getCollection()->mapWithKeys(function ($app) use ($routingController) {
+            return [$app->application_id => $routingController->buildApplicationTimelinePayload($app)];
+        });
 
         // Fetch on-screen reminders (upcoming leave start dates and expiring 7-day cancellation windows)
         $reminders = $this->getEmployeeReminders($employee->employee_id);
@@ -112,11 +118,10 @@ class EmployeeDashboardController extends Controller
         // Calculate Civil Service Commission Monetization Eligibility & Limits:
         // Automatically synced with the employee's CS Form No. 41 leave ledger
         $latestRecord = LeaveRecord::where('employee_id', $employee->employee_id)
-            ->orderBy('row_order', 'asc')
-            ->orderBy('created_at', 'asc')
-            ->orderBy('record_id', 'asc')
-            ->get()
-            ->last();
+            ->orderBy('row_order', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('record_id', 'desc')
+            ->first();
 
         $currentVlBalance = $latestRecord?->vl_balance !== null 
             ? (float) $latestRecord->vl_balance 
@@ -181,8 +186,10 @@ class EmployeeDashboardController extends Controller
             ],
         ];
 
-        // Available employees for fast demo switcher (eligible regular employees only)
-        $allEmployees = Employee::with('office')->eligibleForLeave()->orderBy('full_name')->get();
+        // Available employees for switcher (only needed by admin / HRMU staff)
+        $allEmployees = ($user && in_array($user->role, ['admin', 'hrmu_staff'], true))
+            ? Employee::with('office')->eligibleForLeave()->orderBy('full_name')->get()
+            : collect();
 
         return view('employee.dashboard', compact(
             'employee',
@@ -191,6 +198,7 @@ class EmployeeDashboardController extends Controller
             'leaveAllowances',
             'takenItems',
             'applications',
+            'preloadedTimelines',
             'reminders',
             'currentYear',
             'allEmployees',

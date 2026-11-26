@@ -1018,18 +1018,29 @@ class DocumentRoutingController extends Controller
             ], 403);
         }
 
-        $application->load([
-            'employee.office',
-            'leaveType',
-            'currentLocation',
-            'attachments.verifiedBy',
+        return response()->json([
+            'success' => true,
+            'data' => $this->buildApplicationTimelinePayload($application),
         ]);
+    }
 
-        // Retrieve full chronological movement trail
-        $logs = RoutingLog::with(['office', 'scanner.employee'])
-            ->where('application_id', $application->application_id)
-            ->orderBy('scanned_at', 'asc')
-            ->get();
+    /**
+     * Builds the timeline tracker payload from a LeaveApplication (reusing preloaded relations when available).
+     */
+    public function buildApplicationTimelinePayload(LeaveApplication $application): array
+    {
+        $missing = [];
+        foreach (['employee.office', 'leaveType', 'currentLocation', 'attachments.verifiedBy.employee', 'routingLogs.office', 'routingLogs.scanner.employee'] as $rel) {
+            $topRel = explode('.', $rel)[0];
+            if (!$application->relationLoaded($topRel)) {
+                $missing[] = $rel;
+            }
+        }
+        if (!empty($missing)) {
+            $application->load($missing);
+        }
+
+        $logs = $application->routingLogs->sortBy('scanned_at')->values();
 
         // Build Visual Timeline Steps
         $timeline = [];
@@ -1051,12 +1062,12 @@ class DocumentRoutingController extends Controller
         // Subsequent physical routing steps
         $stepCounter = 2;
         foreach ($logs as $log) {
-            $clerkName = $log->scanner->employee->full_name ?? $log->scanner->username;
+            $clerkName = $log->scanner?->employee?->full_name ?? $log->scanner?->username ?? 'System';
 
             $timeline[] = [
                 'step_index' => $stepCounter++,
                 'title' => $this->formatTimelineTitle($log->action, $log->office->office_name ?? 'Office'),
-                'description' => "Physical paper {$log->action} at {$log->office->office_name} (via {$log->method}).",
+                'description' => "Physical paper {$log->action} at " . ($log->office->office_name ?? 'Office') . " (via {$log->method}).",
                 'office' => $log->office->office_name ?? 'Municipal Office',
                 'action' => $log->action,
                 'method' => $log->method,
@@ -1070,39 +1081,60 @@ class DocumentRoutingController extends Controller
         // SLA Compliance calculation
         $sla = $this->calculateSlaStatus($application);
 
+        return [
+            'application_id' => $application->application_id,
+            'reference_code' => $application->reference_code,
+            'status' => $application->status,
+            'current_status' => $application->current_status,
+            'days_requested' => (float) $application->days_requested,
+            'date_range' => $application->date_from->format('M d, Y') . ' to ' . $application->date_to->format('M d, Y'),
+            'current_location' => $application->currentLocation ? [
+                'office_id' => $application->currentLocation->office_id,
+                'office_name' => $application->currentLocation->office_name,
+            ] : null,
+            'sla_tracker' => $sla,
+            'timeline' => $timeline,
+            'attachments' => $application->attachments->map(fn($att) => [
+                'attachment_id' => $att->attachment_id,
+                'document_type' => $att->document_type,
+                'document_label' => $att->document_label ?? ucfirst(str_replace('_', ' ', $att->document_type)),
+                'original_filename' => $att->original_filename,
+                'size_formatted' => $att->formatted_size,
+                'mime_type' => $att->mime_type,
+                'is_pdf' => $att->is_pdf,
+                'is_image' => $att->is_image,
+                'verification_status' => $att->verification_status,
+                'verification_remarks' => $att->verification_remarks,
+                'verified_by' => $att->verifiedBy?->employee?->full_name ?? $att->verifiedBy?->username,
+                'verified_at' => $att->verified_at ? $att->verified_at->format('M d, Y h:i A') : null,
+                'view_url' => route('documents.view', $att->attachment_id),
+                'download_url' => route('documents.download', $att->attachment_id),
+            ])->values()->all(),
+        ];
+    }
+
+    /**
+     * Ultra-lightweight fingerprint endpoint for 1-second cross-device live sync.
+     */
+    public function liveSyncVersion(): JsonResponse
+    {
+        $row = DB::selectOne("
+            SELECT
+                COALESCE((SELECT MAX(updated_at) FROM leave_applications), '') AS a_u,
+                (SELECT COUNT(*) FROM leave_applications) AS a_c,
+                COALESCE((SELECT MAX(scanned_at) FROM routing_logs), '') AS r_u,
+                (SELECT COUNT(*) FROM routing_logs) AS r_c,
+                COALESCE((SELECT MAX(updated_at) FROM leave_records), '') AS l_u,
+                (SELECT COUNT(*) FROM leave_records) AS l_c,
+                COALESCE((SELECT MAX(updated_at) FROM leave_balances), '') AS b_u,
+                COALESCE((SELECT MAX(updated_at) FROM users), '') AS u_u,
+                (SELECT COUNT(*) FROM users) AS u_c,
+                COALESCE((SELECT MAX(created_at) FROM audit_logs), '') AS au_u
+        ");
+
         return response()->json([
-            'success' => true,
-            'data' => [
-                'application_id' => $application->application_id,
-                'reference_code' => $application->reference_code,
-                'status' => $application->status,
-                'current_status' => $application->current_status,
-                'days_requested' => (float) $application->days_requested,
-                'date_range' => $application->date_from->format('M d, Y') . ' to ' . $application->date_to->format('M d, Y'),
-                'current_location' => $application->currentLocation ? [
-                    'office_id' => $application->currentLocation->office_id,
-                    'office_name' => $application->currentLocation->office_name,
-                ] : null,
-                'sla_tracker' => $sla,
-                'timeline' => $timeline,
-                'attachments' => $application->attachments->map(fn($att) => [
-                    'attachment_id' => $att->attachment_id,
-                    'document_type' => $att->document_type,
-                    'document_label' => $att->document_label ?? ucfirst(str_replace('_', ' ', $att->document_type)),
-                    'original_filename' => $att->original_filename,
-                    'size_formatted' => $att->formatted_size,
-                    'mime_type' => $att->mime_type,
-                    'is_pdf' => $att->is_pdf,
-                    'is_image' => $att->is_image,
-                    'verification_status' => $att->verification_status,
-                    'verification_remarks' => $att->verification_remarks,
-                    'verified_by' => $att->verifiedBy?->employee?->full_name ?? $att->verifiedBy?->username,
-                    'verified_at' => $att->verified_at ? $att->verified_at->format('M d, Y h:i A') : null,
-                    'view_url' => route('documents.view', $att->attachment_id),
-                    'download_url' => route('documents.download', $att->attachment_id),
-                ]),
-            ],
-        ]);
+            'version' => md5(json_encode($row)),
+        ])->header('Cache-Control', 'no-store, no-cache, must-revalidate');
     }
 
     /*

@@ -104,6 +104,9 @@ Route::middleware('auth')->group(function () {
 
     // 5. Document Routing & QR Traceability API Endpoints
     Route::prefix('api')->group(function () {
+        // Lightweight live-sync fingerprint for ~1s cross-device updates
+        Route::get('/live-sync', [DocumentRoutingController::class, 'liveSyncVersion'])->name('api.live-sync');
+
         // Visual Timeline Tracker (All authenticated personnel can track their application)
         Route::get('/routing/{id}/timeline', [DocumentRoutingController::class, 'trackApplicationStatus'])->name('api.routing.timeline');
 

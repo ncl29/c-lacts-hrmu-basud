@@ -1203,11 +1203,13 @@
                     });
                 }
 
-                // Silent Background Live Data Sync (keeps tables, balances, and recent scans updated without page reloads)
+                // 1-Second Fingerprint Live Sync (polls lightweight version hash, only refreshes DOM when DB changes)
                 @auth
                 (function initClactsLiveSync() {
-                    const LIVE_SYNC_INTERVAL_MS = 15000;
-                    let isSyncing = false;
+                    const LIVE_SYNC_INTERVAL_MS = 1000;
+                    let isChecking = false;
+                    let lastVersion = null;
+                    let pendingDomSync = false;
 
                     function isUserBusy() {
                         if (document.visibilityState !== 'visible') return true;
@@ -1226,90 +1228,138 @@
                         return false;
                     }
 
-                    async function syncLivePageData() {
-                        if (isSyncing || isUserBusy()) return;
+                    async function refreshPageDom() {
                         const currentMain = document.getElementById('clactsLiveMain');
                         if (!currentMain) return;
 
-                        isSyncing = true;
+                        const res = await fetch(window.location.href, {
+                            method: 'GET',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'text/html'
+                            },
+                            credentials: 'same-origin',
+                            cache: 'no-store'
+                        });
+
+                        if (!res.ok || res.redirected) return;
+                        const html = await res.text();
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        const newMain = doc.getElementById('clactsLiveMain');
+                        if (!newMain) return;
+
+                        // On QR Document Scanner, only update Recent Scans list so active previews/inputs are untouched
+                        const currentScans = document.getElementById('recentScansList');
+                        const newScans = doc.getElementById('recentScansList');
+                        if (currentScans && newScans) {
+                            if (currentScans.innerHTML !== newScans.innerHTML) {
+                                currentScans.innerHTML = newScans.innerHTML;
+                            }
+                            return;
+                        }
+
+                        if (currentMain.innerHTML === newMain.innerHTML) return;
+
+                        // Preserve active UI state before swapping content
+                        const savedScrollY = window.scrollY;
+                        let activeAdminTab = null;
+                        for (const [btnId, tabKey] of [['tabBtnUsers', 'users'], ['tabBtnStarla', 'starla'], ['tabBtnAudit', 'audit'], ['tabBtnBackups', 'backups']]) {
+                            const btn = document.getElementById(btnId);
+                            if (btn && btn.classList.contains('border-gov-700')) {
+                                activeAdminTab = tabKey;
+                                break;
+                            }
+                        }
+
+                        const isCscView = document.getElementById('cscForm41View') && !document.getElementById('cscForm41View').classList.contains('hidden');
+                        let activeYear = null;
+                        document.querySelectorAll('.year-tab-btn').forEach(btn => {
+                            if (btn.classList.contains('bg-white')) {
+                                activeYear = btn.id.replace('yearTabBtn_', '');
+                            }
+                        });
+
+                        const remindersEl = document.getElementById('remindersCardsList');
+                        const remindersHidden = remindersEl ? remindersEl.classList.contains('hidden') : false;
+
+                        currentMain.innerHTML = newMain.innerHTML;
+
+                        if (activeAdminTab && typeof switchAdminTab === 'function') {
+                            switchAdminTab(activeAdminTab);
+                        }
+                        if (isCscView && typeof toggleRecordView === 'function') {
+                            toggleRecordView();
+                        }
+                        if (activeYear && typeof switchYear === 'function') {
+                            switchYear(activeYear);
+                        }
+                        if (remindersHidden && typeof toggleRemindersCollapse === 'function') {
+                            toggleRemindersCollapse();
+                        }
+
+                        window.scrollTo(0, savedScrollY);
+                    }
+
+                    async function checkLiveSyncVersion() {
+                        if (isChecking || document.visibilityState !== 'visible') {
+                            scheduleNextSync(LIVE_SYNC_INTERVAL_MS);
+                            return;
+                        }
+                        isChecking = true;
+                        const startedAt = performance.now();
+
                         try {
-                            const res = await fetch(window.location.href, {
+                            const res = await fetch("{{ route('api.live-sync') }}", {
                                 method: 'GET',
-                                headers: {
-                                    'X-Requested-With': 'XMLHttpRequest',
-                                    'Accept': 'text/html'
-                                },
+                                headers: { 'Accept': 'application/json' },
                                 credentials: 'same-origin',
                                 cache: 'no-store'
                             });
 
                             if (!res.ok || res.redirected) return;
-                            const html = await res.text();
-                            const doc = new DOMParser().parseFromString(html, 'text/html');
-                            const newMain = doc.getElementById('clactsLiveMain');
-                            if (!newMain) return;
+                            const payload = await res.json();
+                            if (!payload || !payload.version) return;
 
-                            // On QR Document Scanner, only update Recent Scans list so active previews/inputs are untouched
-                            const currentScans = document.getElementById('recentScansList');
-                            const newScans = doc.getElementById('recentScansList');
-                            if (currentScans && newScans) {
-                                if (currentScans.innerHTML !== newScans.innerHTML) {
-                                    currentScans.innerHTML = newScans.innerHTML;
-                                }
+                            if (lastVersion === null) {
+                                lastVersion = payload.version;
                                 return;
                             }
 
-                            if (currentMain.innerHTML === newMain.innerHTML) return;
+                            if (payload.version !== lastVersion) {
+                                lastVersion = payload.version;
+                                pendingDomSync = true;
 
-                            // Preserve active UI state before swapping content
-                            const savedScrollY = window.scrollY;
-                            let activeAdminTab = null;
-                            for (const [btnId, tabKey] of [['tabBtnUsers', 'users'], ['tabBtnStarla', 'starla'], ['tabBtnAudit', 'audit'], ['tabBtnBackups', 'backups']]) {
-                                const btn = document.getElementById(btnId);
-                                if (btn && btn.classList.contains('border-gov-700')) {
-                                    activeAdminTab = tabKey;
-                                    break;
+                                // If Routing Timeline modal is open, refresh it immediately even while open
+                                if (typeof window.refreshActiveTrackerModal === 'function') {
+                                    window.refreshActiveTrackerModal();
                                 }
                             }
 
-                            const isCscView = document.getElementById('cscForm41View') && !document.getElementById('cscForm41View').classList.contains('hidden');
-                            let activeYear = null;
-                            document.querySelectorAll('.year-tab-btn').forEach(btn => {
-                                if (btn.classList.contains('bg-white')) {
-                                    activeYear = btn.id.replace('yearTabBtn_', '');
-                                }
-                            });
-
-                            const remindersEl = document.getElementById('remindersCardsList');
-                            const remindersHidden = remindersEl ? remindersEl.classList.contains('hidden') : false;
-
-                            currentMain.innerHTML = newMain.innerHTML;
-
-                            if (activeAdminTab && typeof switchAdminTab === 'function') {
-                                switchAdminTab(activeAdminTab);
+                            if (pendingDomSync && !isUserBusy()) {
+                                pendingDomSync = false;
+                                await refreshPageDom();
                             }
-                            if (isCscView && typeof toggleRecordView === 'function') {
-                                toggleRecordView();
-                            }
-                            if (activeYear && typeof switchYear === 'function') {
-                                switchYear(activeYear);
-                            }
-                            if (remindersHidden && typeof toggleRemindersCollapse === 'function') {
-                                toggleRemindersCollapse();
-                            }
-
-                            window.scrollTo(0, savedScrollY);
                         } catch (err) {
                             // Ignore transient network errors during background sync
                         } finally {
-                            isSyncing = false;
+                            const elapsed = performance.now() - startedAt;
+                            isChecking = false;
+                            // 1s polling on fast servers (Render); back off slightly on high-latency localhost so clicks aren't queued
+                            const nextDelay = elapsed < 400 ? LIVE_SYNC_INTERVAL_MS : Math.min(Math.round(elapsed * 2.5), 4000);
+                            scheduleNextSync(nextDelay);
                         }
                     }
 
-                    setInterval(syncLivePageData, LIVE_SYNC_INTERVAL_MS);
+                    let syncTimer = null;
+                    function scheduleNextSync(delayMs) {
+                        if (syncTimer) clearTimeout(syncTimer);
+                        syncTimer = setTimeout(checkLiveSyncVersion, delayMs);
+                    }
+
+                    scheduleNextSync(LIVE_SYNC_INTERVAL_MS);
                     document.addEventListener('visibilitychange', function() {
                         if (document.visibilityState === 'visible') {
-                            syncLivePageData();
+                            checkLiveSyncVersion();
                         }
                     });
                 })();

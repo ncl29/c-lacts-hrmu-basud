@@ -512,6 +512,7 @@
             </div>
         @endif
     </div>
+    <script type="application/json" id="clactsPreloadedTimelines">@json($preloadedTimelines ?? [])</script>
 </div>
 
 <!-- ======================================================================= -->
@@ -2055,22 +2056,59 @@
         });
     }
 
+    window.activeTrackerAppId = null;
+
+    function getPreloadedTimeline(applicationId) {
+        try {
+            const el = document.getElementById('clactsPreloadedTimelines');
+            if (!el) return null;
+            const map = JSON.parse(el.textContent || '{}');
+            return map[String(applicationId)] || map[applicationId] || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    async function fetchAndRenderTimeline(applicationId) {
+        const response = await fetch(`/api/routing/${applicationId}/timeline`, { cache: 'no-store' });
+        const data = await response.json();
+
+        if (data.success) {
+            renderTimeline(data.data);
+        } else {
+            alert('Could not load tracking information: ' + data.message);
+            closeTrackerModal();
+        }
+    }
+
+    window.refreshActiveTrackerModal = async function() {
+        const modal = document.getElementById('trackerModal');
+        if (!window.activeTrackerAppId || !modal || modal.classList.contains('hidden')) return;
+        try {
+            const response = await fetch(`/api/routing/${window.activeTrackerAppId}/timeline`, { cache: 'no-store' });
+            const data = await response.json();
+            if (data.success) {
+                renderTimeline(data.data);
+            }
+        } catch (err) {}
+    };
+
     async function openTrackerModal(applicationId, refCode) {
+        window.activeTrackerAppId = applicationId;
         document.getElementById('modalRefCode').innerText = refCode;
         document.getElementById('trackerModal').classList.remove('hidden');
+
+        const preloaded = getPreloadedTimeline(applicationId);
+        if (preloaded) {
+            renderTimeline(preloaded);
+            return;
+        }
+
         document.getElementById('trackerLoading').classList.remove('hidden');
         document.getElementById('trackerContent').classList.add('hidden');
 
         try {
-            const response = await fetch(`/api/routing/${applicationId}/timeline`);
-            const data = await response.json();
-
-            if (data.success) {
-                renderTimeline(data.data);
-            } else {
-                alert('Could not load tracking information: ' + data.message);
-                closeTrackerModal();
-            }
+            await fetchAndRenderTimeline(applicationId);
         } catch (err) {
             console.error(err);
             alert('Failed to connect to tracking API.');
@@ -2079,6 +2117,7 @@
     }
 
     function closeTrackerModal() {
+        window.activeTrackerAppId = null;
         document.getElementById('trackerModal').classList.add('hidden');
     }
 

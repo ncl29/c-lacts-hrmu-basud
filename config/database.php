@@ -22,12 +22,15 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? (
-                str_contains((string) env('DB_HOST', ''), 'tidbcloud.com') || env('MYSQL_ATTR_SSL_CA')
-                    ? array_filter([
-                        PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA') ?: true,
-                        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => filter_var(env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', false), FILTER_VALIDATE_BOOLEAN),
-                    ], fn ($v) => $v !== null)
-                    : []
+                array_filter([
+                    PDO::ATTR_PERSISTENT => filter_var(env('DB_PERSISTENT', false), FILTER_VALIDATE_BOOLEAN) ? true : null,
+                    PDO::MYSQL_ATTR_SSL_CA => (str_contains((string) env('DB_HOST', ''), 'tidbcloud.com') || env('MYSQL_ATTR_SSL_CA'))
+                        ? (env('MYSQL_ATTR_SSL_CA') ?: true)
+                        : null,
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => (str_contains((string) env('DB_HOST', ''), 'tidbcloud.com') || env('MYSQL_ATTR_SSL_CA'))
+                        ? filter_var(env('MYSQL_ATTR_SSL_VERIFY_SERVER_CERT', false), FILTER_VALIDATE_BOOLEAN)
+                        : null,
+                ], fn ($v) => $v !== null)
             ) : [],
         ],
 
