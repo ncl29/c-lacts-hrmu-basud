@@ -1312,13 +1312,10 @@
 
     function openCancelModal(appId, refCode, deadline, daysLeft, status) {
         document.getElementById('cancelModalRefCode').innerText = refCode;
-        document.getElementById('cancelModalSubtitle').innerText = `${daysLeft} working day${daysLeft > 1 ? 's' : ''} remaining in 7-working-day window${status === 'Approved' ? ' (Approved)' : ''}`;
-        
-        let notice = `Per municipal rules, employees have up to 7 working days from filing (excluding weekends and official holidays) to cancel. Your cancellation window expires on <strong>${deadline}</strong> (${daysLeft} working day${daysLeft > 1 ? 's' : ''} left).`;
+
+        let notice = `Allowed until <strong>${deadline}</strong> (${daysLeft} working day${daysLeft > 1 ? 's' : ''} left).`;
         if (status === 'Approved') {
-            notice += `<br><span class="text-amber-800 font-bold block mt-1"><i class="ph-bold ph-arrow-u-up-left"></i> Note: This application is currently Approved. Cancelling will revoke the approval and restore any deducted leave credits to your ledger.</span>`;
-        } else {
-            notice += ` Once cancelled, the physical routing is stopped and ledger entries are removed.`;
+            notice += ` Deducted credits will be restored.`;
         }
         document.getElementById('cancelModalNotice').innerHTML = notice;
         document.getElementById('cancelApplicationForm').action = `/employee/leave/${appId}/cancel`;
