@@ -804,7 +804,56 @@
 
             <!-- Main Content Area -->
             <main id="clactsLiveMain" class="flex-1 max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
-                @yield('content')
+                <div id="clactsPageContent">
+                    @yield('content')
+                </div>
+
+                <!-- Navigation Skeleton UI (Shown immediately when switching pages) -->
+                <div id="clactsNavSkeleton" class="hidden space-y-6 animate-pulse" aria-hidden="true">
+                    <!-- Header Skeleton -->
+                    <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="w-11 h-11 rounded-xl bg-slate-200 shrink-0"></div>
+                            <div class="space-y-2 flex-1 max-w-md">
+                                <div class="h-3 w-28 bg-slate-200 rounded"></div>
+                                <div class="h-5 w-56 bg-slate-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="h-10 w-28 bg-slate-200 rounded-lg"></div>
+                            <div class="h-10 w-32 bg-slate-200 rounded-lg"></div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards Skeleton -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                        @for($s = 0; $s < 4; $s++)
+                            <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-3">
+                                <div class="h-3 w-24 bg-slate-200 rounded"></div>
+                                <div class="h-7 w-20 bg-slate-200 rounded"></div>
+                                <div class="h-2.5 w-32 bg-slate-100 rounded"></div>
+                            </div>
+                        @endfor
+                    </div>
+
+                    <!-- Table Card Skeleton -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+                            <div class="h-4 w-44 bg-slate-200 rounded"></div>
+                            <div class="h-6 w-24 bg-slate-100 rounded-lg"></div>
+                        </div>
+                        <div class="p-4 sm:p-5 space-y-3">
+                            @for($r = 0; $r < 5; $r++)
+                                <div class="flex items-center justify-between gap-4 py-2 border-b border-slate-100 last:border-b-0">
+                                    <div class="h-3.5 w-28 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-40 bg-slate-200 rounded hidden sm:block"></div>
+                                    <div class="h-3.5 w-24 bg-slate-100 rounded"></div>
+                                    <div class="h-6 w-20 bg-slate-200 rounded-full"></div>
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
             </main>
 
             <!-- GovTech System Footer -->
@@ -1237,6 +1286,56 @@
                         closeRefreshCompletedModal();
                     }
                 });
+
+                // Navigation Skeleton UI on internal link clicks
+                function showNavSkeleton() {
+                    const content = document.getElementById('clactsPageContent');
+                    const skeleton = document.getElementById('clactsNavSkeleton');
+                    if (content && skeleton) {
+                        content.classList.add('hidden');
+                        skeleton.classList.remove('hidden');
+                    }
+                }
+
+                function hideNavSkeleton() {
+                    const content = document.getElementById('clactsPageContent');
+                    const skeleton = document.getElementById('clactsNavSkeleton');
+                    if (content && skeleton) {
+                        skeleton.classList.add('hidden');
+                        content.classList.remove('hidden');
+                    }
+                }
+
+                document.addEventListener('click', function(e) {
+                    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+                    const link = e.target.closest('a[href]');
+                    if (!link) return;
+                    if (link.hasAttribute('download') || link.hasAttribute('data-no-skeleton')) return;
+                    if (link.target && link.target !== '_self') return;
+
+                    const href = link.getAttribute('href') || '';
+                    if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+                    try {
+                        const targetUrl = new URL(link.href, window.location.origin);
+                        if (targetUrl.origin !== window.location.origin) return;
+                        if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search && targetUrl.hash) return;
+                    } catch (_) {
+                        return;
+                    }
+
+                    // Close mobile drawer if open before showing skeleton
+                    const panel = document.getElementById('sidePanel');
+                    const backdrop = document.getElementById('sidePanelBackdrop');
+                    if (panel && !panel.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+                        panel.classList.add('-translate-x-full');
+                        if (backdrop) backdrop.classList.add('hidden');
+                    }
+
+                    showNavSkeleton();
+                });
+
+                window.addEventListener('pageshow', hideNavSkeleton);
 
                 // Logout Form Submission Loader
                 const logoutForm = document.getElementById('logoutForm');

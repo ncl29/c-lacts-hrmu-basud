@@ -911,10 +911,31 @@
 
         <!-- Tracker Body (Scrollable within viewport) -->
         <div class="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
-            <!-- Loading Indicator -->
-            <div id="trackerLoading" class="py-12 text-center text-slate-500">
-                <i class="ph ph-spinner animate-spin text-3xl text-gov-700 mb-2"></i>
-                <div class="text-sm font-semibold">Loading...</div>
+            <!-- Loading Skeleton (Shown while fetching routing timeline) -->
+            <div id="trackerLoading" class="space-y-5 animate-pulse" aria-hidden="true">
+                <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between gap-4">
+                    <div class="space-y-2 flex-1">
+                        <div class="h-3 w-28 bg-slate-200 rounded"></div>
+                        <div class="h-4 w-48 bg-slate-200 rounded"></div>
+                    </div>
+                    <div class="h-7 w-24 bg-slate-200 rounded-full shrink-0"></div>
+                </div>
+
+                <div class="space-y-4">
+                    @for($t = 0; $t < 3; $t++)
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 shrink-0 mt-1"></div>
+                            <div class="flex-1 p-4 rounded-xl border border-slate-200 bg-white space-y-2">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="h-3.5 w-36 bg-slate-200 rounded"></div>
+                                    <div class="h-3 w-20 bg-slate-100 rounded"></div>
+                                </div>
+                                <div class="h-3 w-3/4 bg-slate-100 rounded"></div>
+                                <div class="h-3 w-1/2 bg-slate-100 rounded"></div>
+                            </div>
+                        </div>
+                    @endfor
+                </div>
             </div>
 
             <!-- Content Area -->
