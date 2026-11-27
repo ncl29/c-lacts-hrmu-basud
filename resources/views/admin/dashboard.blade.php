@@ -569,7 +569,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL: RESET USER PASSWORD (ADMIN OVERRIDE)                             -->
 <!-- ======================================================================= -->
-<div id="resetPasswordModal" onclick="if(event.target === this) closeResetPasswordModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="resetPasswordModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeResetPasswordModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">
@@ -642,7 +642,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL: DELETE USER ACCOUNT (CONFIRMATION ALERTDIALOG)                   -->
 <!-- ======================================================================= -->
-<div id="deleteUserModal" onclick="if(event.target === this) closeDeleteUserModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="deleteUserModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeDeleteUserModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-gov-navy text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-slate-800 shrink-0">
             <div class="flex items-center gap-3">
@@ -693,7 +693,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL: EDIT USER & EMPLOYEE PROFILE (ADMIN CONTROL)                     -->
 <!-- ======================================================================= -->
-<div id="roleModal" onclick="if(event.target === this) closeEditRoleModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="roleModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeEditRoleModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
         <!-- Modal Header -->
         <div class="bg-gov-navy text-white px-5 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
@@ -917,7 +917,7 @@
 </div>
 
 <!-- Modal: Add Personnel & User Account -->
-<div id="createUserModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="createUserModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeCreateUserModal()" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto" onclick="event.stopPropagation()">
         <!-- Modal Header -->
         <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
@@ -1257,7 +1257,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL: CREATE ON-DEMAND SYSTEM BACKUP                                    -->
 <!-- ======================================================================= -->
-<div id="createBackupModal" onclick="if(event.target === this) closeCreateBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="createBackupModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeCreateBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-gov-navy text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">
@@ -1274,7 +1274,7 @@
             <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
                 <div class="space-y-3">
                     <!-- Option 1: Database Only -->
-                    <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
+                    <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
                         <input type="radio" name="type" value="db" checked class="mt-0.5 text-gov-700 focus:ring-gov-600">
                         <div>
                             <div class="flex items-center gap-2">
@@ -1288,12 +1288,12 @@
                     </label>
 
                     <!-- Option 2: Full System Archive -->
-                    <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
+                    <label class="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 hover:border-gov-600 bg-slate-50/50 hover:bg-gov-50/20 cursor-pointer transition">
                         <input type="radio" name="type" value="full" class="mt-0.5 text-gov-700 focus:ring-gov-600">
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-slate-900 text-xs">Full System Snapshot (.zip)</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-300">Complete Disaster Recovery</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-gov-100 text-gov-800 border border-gov-300">Complete Disaster Recovery</span>
                             </div>
                             <p class="text-[11px] text-slate-500 mt-0.5 leading-snug">
                                 Database dump plus all uploaded document attachments.
@@ -1327,7 +1327,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL: DELETE BACKUP ARCHIVE CONFIRMATION                               -->
 <!-- ======================================================================= -->
-<div id="deleteBackupModal" onclick="if(event.target === this) closeDeleteBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="deleteBackupModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeDeleteBackupModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto" onclick="event.stopPropagation()">
         <div class="bg-rose-900 text-white px-4 sm:px-6 py-3.5 sm:py-4 border-b border-rose-950 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2">

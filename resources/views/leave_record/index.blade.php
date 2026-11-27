@@ -143,7 +143,7 @@
                 </form>
 
                 <!-- Update All Leave Records (Earned at start of month) -->
-                <form method="POST" action="{{ route('hr.leave-records.update-all') }}" class="inline" onsubmit="return confirm('Update all municipal personnel leave records to ensure every month begins with an Earned row (1.25 VL / 1.25 SL) in chronological sequence?');">
+                <form method="POST" action="{{ route('hr.leave-records.update-all') }}" class="inline" onsubmit="return openConfirmActionModal(this, 'Update All Leave Records', 'Update all municipal personnel leave records to ensure every month begins with an Earned row (1.25 VL / 1.25 SL) in chronological sequence?', 'Update All Records', 'gov');">
                     @csrf
                     <input type="hidden" name="employee_id" value="{{ $employee->employee_id }}">
                     <button 
@@ -353,7 +353,7 @@ $partUpper = strtoupper(trim((string)($rec->particular ?? '')));
                                     </button>
                                     
                                     <!-- Delete Row -->
-                                    <form method="POST" action="{{ route('hr.leave-records.destroy', $rec->record_id) }}" onsubmit="return confirm('Remove row #{{ $rec->row_order }} ({{ $rec->particular }})? Subsequent balances will automatically be recalculated.');" class="inline">
+                                    <form method="POST" action="{{ route('hr.leave-records.destroy', $rec->record_id) }}" onsubmit="return openConfirmActionModal(this, 'Delete Ledger Row', 'Remove row #{{ $rec->row_order }} ({{ addslashes($rec->particular) }})? Subsequent balances will automatically be recalculated.', 'Delete Row', 'rose');" class="inline">
                                         @csrf
                                         @php
 echo method_field('DELETE');
@@ -510,7 +510,7 @@ echo method_field('DELETE');
 
 
 <!-- ========================================================================= -->
-<div id="addRowModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="addRowModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeModal('addRowModal')" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full max-h-[90vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div class="flex items-center gap-2">
@@ -668,7 +668,7 @@ echo method_field('DELETE');
 
 
 <!-- ========================================================================= -->
-<div id="editRowModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="editRowModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeModal('editRowModal')" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full max-h-[90vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div class="flex items-center gap-2">
@@ -764,7 +764,7 @@ echo method_field('PUT');
 
 
 <!-- ========================================================================= -->
-<div id="tableIIModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="tableIIModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeModal('tableIIModal')" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full max-h-[90vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div>
@@ -834,7 +834,7 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
 
 
 <!-- ========================================================================= -->
-<div id="proratedModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="proratedModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeModal('proratedModal')" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full max-h-[90vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div class="flex items-center gap-2.5">
@@ -933,7 +933,7 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
 
 
 <!-- ========================================================================= -->
-<div id="tableIVModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+<div id="tableIVModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeModal('tableIVModal')" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col p-4 sm:p-6 space-y-4 my-auto overflow-hidden">
         <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
             <div>
@@ -983,14 +983,96 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
         </div>
 
         <div class="text-right shrink-0 pt-2">
-            <button type="button" onclick="closeModal('tableIVModal')" class="w-full sm:w-auto px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer min-h-[40px]">
+            <button type="button" onclick="closeModal('tableIVModal')" class="w-full sm:w-auto px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer min-h-10">
                 Close
             </button>
         </div>
     </div>
 </div>
 
+<!-- ========================================================================= -->
+<!-- 5. CONFIRMATION ALERT DIALOG (Replaces native browser confirm())          -->
+<!-- ========================================================================= -->
+<div id="confirmActionModal" role="dialog" aria-modal="true" aria-labelledby="confirmActionTitle" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden" onclick="event.stopPropagation()">
+        <div id="confirmActionHeader" class="bg-rose-50 px-5 py-4 border-b border-rose-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div id="confirmActionIconWrap" class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+                    <i id="confirmActionIcon" class="ph-bold ph-warning text-xl"></i>
+                </div>
+                <h3 id="confirmActionTitle" class="text-base font-bold text-slate-900">Confirm Action</h3>
+            </div>
+            <button type="button" onclick="closeConfirmActionModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-200/60 transition cursor-pointer" aria-label="Close dialog">
+                <i class="ph ph-x text-lg"></i>
+            </button>
+        </div>
+        <div class="p-5">
+            <p id="confirmActionMessage" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
+        </div>
+        <div class="bg-slate-50 px-5 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3">
+            <button type="button" onclick="closeConfirmActionModal()" class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold transition cursor-pointer min-h-10">
+                Cancel
+            </button>
+            <button type="button" id="confirmActionSubmitBtn" onclick="executeConfirmedAction()" class="w-full sm:w-auto px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer min-h-10">
+                Confirm
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
+    let pendingConfirmForm = null;
+
+    function openConfirmActionModal(formEl, title, message, confirmLabel = 'Confirm', variant = 'rose') {
+        pendingConfirmForm = formEl;
+        const modal = document.getElementById('confirmActionModal');
+        const header = document.getElementById('confirmActionHeader');
+        const iconWrap = document.getElementById('confirmActionIconWrap');
+        const icon = document.getElementById('confirmActionIcon');
+        const submitBtn = document.getElementById('confirmActionSubmitBtn');
+
+        document.getElementById('confirmActionTitle').textContent = title;
+        document.getElementById('confirmActionMessage').textContent = message;
+        submitBtn.textContent = confirmLabel;
+
+        if (variant === 'gov') {
+            header.className = 'bg-slate-50 px-5 py-4 border-b border-slate-200 flex items-center justify-between';
+            iconWrap.className = 'w-10 h-10 rounded-xl bg-gov-100 text-gov-700 flex items-center justify-center shrink-0';
+            icon.className = 'ph-bold ph-calendar-check text-xl';
+            submitBtn.className = 'w-full sm:w-auto px-5 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer min-h-10';
+        } else {
+            header.className = 'bg-rose-50 px-5 py-4 border-b border-rose-100 flex items-center justify-between';
+            iconWrap.className = 'w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0';
+            icon.className = 'ph-bold ph-warning text-xl';
+            submitBtn.className = 'w-full sm:w-auto px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer min-h-10';
+        }
+
+        modal.classList.remove('hidden');
+        return false;
+    }
+
+    function closeConfirmActionModal() {
+        pendingConfirmForm = null;
+        document.getElementById('confirmActionModal').classList.add('hidden');
+    }
+
+    function executeConfirmedAction() {
+        if (pendingConfirmForm) {
+            const formToSubmit = pendingConfirmForm;
+            pendingConfirmForm = null;
+            formToSubmit.onsubmit = null;
+            document.getElementById('confirmActionModal').classList.add('hidden');
+            formToSubmit.submit();
+        }
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            ['addRowModal', 'editRowModal', 'tableIIModal', 'proratedModal', 'tableIVModal'].forEach(closeModal);
+            closeConfirmActionModal();
+        }
+    });
+
     function openModal(id) {
         document.getElementById(id).classList.remove('hidden');
     }

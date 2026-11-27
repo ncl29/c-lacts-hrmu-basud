@@ -518,8 +518,8 @@
 <!-- ======================================================================= -->
 <!-- MODAL 0: APPLICATION TYPE SELECTION (LEAVE VS MONETIZATION)            -->
 <!-- ======================================================================= -->
-<div id="filingOptionModal" onclick="if(event.target === this) closeFilingOptionModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 flex flex-col my-auto">
+<div id="filingOptionModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeFilingOptionModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 flex flex-col my-auto">
         <!-- Header -->
         <div class="bg-slate-50 px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
             <div class="flex items-center gap-2.5">
@@ -541,7 +541,7 @@
             <button 
                 type="button" 
                 onclick="chooseApplicationType('leave')"
-                class="w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-gov-600 hover:bg-gov-50/40 bg-white transition cursor-pointer group flex items-start gap-4 shadow-2xs"
+                class="w-full text-left p-4 rounded-2xl border border-slate-200 hover:border-gov-600 hover:bg-gov-50/40 bg-white transition cursor-pointer group flex items-start gap-4 shadow-2xs"
             >
                 <div class="w-12 h-12 rounded-2xl bg-gov-100 text-gov-800 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
                     <i class="ph-bold ph-calendar-plus text-2xl"></i>
@@ -558,7 +558,7 @@
             </button>
 
             <!-- Option 2: Monetization of Leave Credits -->
-            <div class="border-2 rounded-2xl p-4 transition {{ $monetizationInfo['is_eligible'] ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200 bg-slate-50 opacity-80' }} space-y-3">
+            <div class="border rounded-2xl p-4 transition {{ $monetizationInfo['is_eligible'] ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200 bg-slate-50 opacity-80' }} space-y-3">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-2xl {{ $monetizationInfo['is_eligible'] ? 'bg-amber-100 text-amber-800' : 'bg-slate-200 text-slate-500' }} flex items-center justify-center shrink-0">
                         <i class="ph-bold ph-coins text-2xl"></i>
@@ -643,7 +643,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL 1: FILE NEW LEAVE APPLICATION FORM                                -->
 <!-- ======================================================================= -->
-<div id="filingModal" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
+<div id="filingModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeFilingModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4">
     <div class="bg-white rounded-2xl max-w-xl sm:max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Modal Header (Pinned) -->
         <div class="bg-slate-50 px-5 sm:px-6 py-4 border-b border-slate-200/90 flex items-center justify-between shrink-0">
@@ -891,7 +891,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL 2: VISUAL ROUTING TIMELINE & SLA TRACKER                          -->
 <!-- ======================================================================= -->
-<div id="trackerModal" onclick="if(event.target === this) closeTrackerModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="trackerModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeTrackerModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Tracker Header (Pinned) -->
         <div class="bg-slate-900 text-white px-5 sm:px-6 py-4 border-b border-slate-800 flex items-center justify-between shrink-0">
@@ -970,7 +970,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL 3: CIVIL SERVICE LEAVE ENTITLEMENTS & REMAINING LIMITS            -->
 <!-- ======================================================================= -->
-<div id="limitsModal" onclick="if(event.target === this) closeLimitsModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="limitsModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeLimitsModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Modal Header (Pinned) -->
         <div class="bg-gov-navy text-white px-5 py-3.5 border-b border-slate-800 flex items-center justify-between shrink-0">
@@ -1236,7 +1236,7 @@
 <!-- ======================================================================= -->
 <!-- MODAL 4: CANCEL LEAVE APPLICATION (7-DAY STATUTORY WINDOW)              -->
 <!-- ======================================================================= -->
-<div id="cancelModal" onclick="if(event.target === this) closeCancelModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+<div id="cancelModal" role="dialog" aria-modal="true" onclick="if(event.target === this) closeCancelModal()" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] shadow-2xl border border-slate-200 overflow-hidden transform transition-all flex flex-col my-auto">
         <!-- Header (Pinned) -->
         <div class="bg-rose-50 px-5 sm:px-6 py-4 border-b border-rose-100 flex items-center justify-between shrink-0">
@@ -1272,16 +1272,16 @@
                     <label for="cancellation_reason" class="block text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                         Reason for Cancellation <span class="text-slate-500 font-normal normal-case">(Optional)</span>
                     </label>
-                    <textarea id="cancellation_reason" name="cancellation_reason" rows="2" placeholder="e.g. Schedule changed, emergency resolved, personal reasons..." class="w-full border-2 border-slate-300 rounded-xl p-3 text-xs sm:text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-rose-500 bg-white"></textarea>
+                    <textarea id="cancellation_reason" name="cancellation_reason" rows="2" placeholder="e.g. Schedule changed, emergency resolved, personal reasons..." class="w-full border border-slate-300 rounded-xl p-3 text-xs sm:text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-rose-500 bg-white"></textarea>
                 </div>
             </div>
 
             <!-- Modal Actions (Pinned) -->
             <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
-                <button type="button" onclick="closeCancelModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-[44px]">
+                <button type="button" onclick="closeCancelModal()" class="w-full sm:w-auto px-5 py-2.5 border border-slate-300 rounded-xl text-xs sm:text-sm font-bold text-slate-700 hover:bg-slate-100 transition cursor-pointer min-h-11">
                     Keep Application
                 </button>
-                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer min-h-[44px]">
+                <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xs transition flex items-center justify-center gap-2 cursor-pointer min-h-11">
                     <i class="ph-bold ph-trash text-base sm:text-lg"></i>
                     <span>Confirm Cancellation</span>
                 </button>
@@ -2252,6 +2252,7 @@
     // Dismiss modals when Escape key is pressed
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
+            closeFilingOptionModal();
             closeFilingModal();
             closeTrackerModal();
             closeLimitsModal();
