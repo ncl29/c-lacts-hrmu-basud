@@ -476,7 +476,7 @@
                     <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
                         <tr>
                             <th class="px-4 py-3 text-left">Archive Filename & Type</th>
-                            <th class="px-4 py-3 text-left">Date Created</th>
+                            <th class="px-4 py-3 text-left hidden sm:table-cell">Date Created</th>
                             <th class="px-4 py-3 text-left">Size</th>
                             <th class="px-4 py-3 text-left hidden md:table-cell">SHA-256 Checksum</th>
                             <th class="px-4 py-3 text-right">Actions</th>
@@ -491,19 +491,20 @@
                                             <i class="ph {{ $b['icon'] }} text-base"></i>
                                         </div>
                                         <div class="min-w-0">
-                                            <div class="font-mono font-bold text-slate-900 text-xs truncate max-w-[280px]">
+                                            <div class="font-mono font-bold text-slate-900 text-xs truncate max-w-[140px] sm:max-w-[240px] md:max-w-[280px]">
                                                 {{ $b['filename'] }}
                                             </div>
-                                            <div class="flex items-center gap-1.5 mt-0.5">
+                                            <div class="flex flex-wrap items-center gap-1.5 mt-0.5">
                                                 <span class="inline-flex items-center px-1.5 py-1 rounded text-[10px] font-bold {{ $b['type'] === 'Full System Archive' ? 'bg-gov-50 text-gov-700 border border-gov-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
                                                     {{ $b['type'] }}
                                                 </span>
                                                 <span class="text-[10px] font-mono text-slate-400 uppercase">{{ $b['format'] }}</span>
+                                                <span class="text-[10px] text-slate-500 sm:hidden">• {{ $b['created_at'] }}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-slate-700 font-medium whitespace-nowrap">
+                                <td class="px-4 py-3 text-slate-700 font-medium whitespace-nowrap hidden sm:table-cell">
                                     {{ $b['created_at'] }}
                                 </td>
                                 <td class="px-4 py-3 font-mono font-semibold text-slate-800 whitespace-nowrap">

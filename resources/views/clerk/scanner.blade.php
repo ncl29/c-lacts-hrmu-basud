@@ -6,7 +6,7 @@
 <div class="space-y-6">
 
     <!-- Toast Notification Container (Non-blocking feedback per UI rules) -->
-    <div id="scannerToastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
+    <div id="scannerToastContainer" class="fixed bottom-4 left-4 right-4 sm:left-auto z-50 flex flex-col gap-2 sm:max-w-sm sm:w-full pointer-events-none"></div>
 
     <!-- Station Location Header -->
     <div class="bg-white rounded-xl p-3.5 sm:p-6 border border-slate-200 shadow-xs flex flex-col xl:flex-row xl:items-center justify-between gap-3 sm:gap-4">

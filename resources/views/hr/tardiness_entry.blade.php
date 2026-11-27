@@ -244,7 +244,7 @@
                         </span>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <!-- 1. Tardiness & Undertime Total -->
                         <div class="bg-white p-2.5 rounded-lg border border-gov-200">
                             <span class="text-[11px] font-bold text-slate-700 block">Tardiness & Undertime</span>

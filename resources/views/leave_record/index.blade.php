@@ -24,7 +24,7 @@
                         <input type="hidden" name="employee_id" id="selected_employee_id" value="{{ $employee->employee_id }}">
 
                         <!-- Typeable Searchable Employee Combobox -->
-                        <div class="relative min-w-0 w-full sm:w-80 md:w-[440px]" id="employeeComboboxWrapper">
+                        <div class="relative min-w-0 w-full sm:w-80 lg:w-[440px]" id="employeeComboboxWrapper">
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                                     <i class="ph ph-magnifying-glass text-sm"></i>

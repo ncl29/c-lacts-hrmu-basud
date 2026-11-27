@@ -59,7 +59,7 @@
 
     <!-- Top Navigation Header: Clean GovTech Profile & Actions -->
     <div class="bg-white rounded-xl shadow-xs border border-slate-200 p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
+        <div class="min-w-0 flex-1">
             <div class="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
                 <span>Personal Leave Record</span>
                 <span>•</span>
