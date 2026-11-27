@@ -911,14 +911,17 @@
 
         <!-- Tracker Body (Scrollable within viewport) -->
         <div class="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
-            <!-- Loading Skeleton (Shown while fetching routing timeline) -->
-            <div id="trackerLoading" class="space-y-5 animate-pulse" aria-hidden="true">
-                <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between gap-4">
-                    <div class="space-y-2 flex-1">
-                        <div class="h-3 w-28 bg-slate-200 rounded"></div>
-                        <div class="h-4 w-48 bg-slate-200 rounded"></div>
+            <!-- Loading Skeleton (Matched to Status/SLA Banner + Timeline) -->
+            <div id="trackerLoading" class="space-y-5 sm:space-y-6 animate-pulse" aria-hidden="true">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-slate-50 p-3.5 sm:p-4 rounded-xl border border-slate-200">
+                    <div class="space-y-2">
+                        <div class="h-3 w-36 bg-slate-200 rounded"></div>
+                        <div class="h-4 w-44 bg-slate-200 rounded"></div>
                     </div>
-                    <div class="h-7 w-24 bg-slate-200 rounded-full shrink-0"></div>
+                    <div class="space-y-2">
+                        <div class="h-3 w-36 bg-slate-200 rounded"></div>
+                        <div class="h-6 w-32 bg-slate-200 rounded-full"></div>
+                    </div>
                 </div>
 
                 <div class="space-y-4">

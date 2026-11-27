@@ -808,52 +808,7 @@
                     @yield('content')
                 </div>
 
-                <!-- Navigation Skeleton UI (Shown immediately when switching pages) -->
-                <div id="clactsNavSkeleton" class="hidden space-y-6 animate-pulse" aria-hidden="true">
-                    <!-- Header Skeleton -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div class="flex items-center gap-3 flex-1">
-                            <div class="w-11 h-11 rounded-xl bg-slate-200 shrink-0"></div>
-                            <div class="space-y-2 flex-1 max-w-md">
-                                <div class="h-3 w-28 bg-slate-200 rounded"></div>
-                                <div class="h-5 w-56 bg-slate-200 rounded"></div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="h-10 w-28 bg-slate-200 rounded-lg"></div>
-                            <div class="h-10 w-32 bg-slate-200 rounded-lg"></div>
-                        </div>
-                    </div>
-
-                    <!-- KPI Cards Skeleton -->
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-                        @for($s = 0; $s < 4; $s++)
-                            <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-3">
-                                <div class="h-3 w-24 bg-slate-200 rounded"></div>
-                                <div class="h-7 w-20 bg-slate-200 rounded"></div>
-                                <div class="h-2.5 w-32 bg-slate-100 rounded"></div>
-                            </div>
-                        @endfor
-                    </div>
-
-                    <!-- Table Card Skeleton -->
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
-                        <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
-                            <div class="h-4 w-44 bg-slate-200 rounded"></div>
-                            <div class="h-6 w-24 bg-slate-100 rounded-lg"></div>
-                        </div>
-                        <div class="p-4 sm:p-5 space-y-3">
-                            @for($r = 0; $r < 5; $r++)
-                                <div class="flex items-center justify-between gap-4 py-2 border-b border-slate-100 last:border-b-0">
-                                    <div class="h-3.5 w-28 bg-slate-200 rounded"></div>
-                                    <div class="h-3.5 w-40 bg-slate-200 rounded hidden sm:block"></div>
-                                    <div class="h-3.5 w-24 bg-slate-100 rounded"></div>
-                                    <div class="h-6 w-20 bg-slate-200 rounded-full"></div>
-                                </div>
-                            @endfor
-                        </div>
-                    </div>
-                </div>
+                @include('layouts.partials.nav-skeletons')
             </main>
 
             <!-- GovTech System Footer -->
@@ -1287,11 +1242,27 @@
                     }
                 });
 
-                // Navigation Skeleton UI on internal link clicks
-                function showNavSkeleton() {
+                // Navigation Skeleton UI on internal link clicks (matched to destination page)
+                function resolveSkeletonKey(pathname) {
+                    if (pathname.startsWith('/employee/leave-record')) return 'employee-leave-record';
+                    if (pathname.startsWith('/employee/dashboard')) return 'employee-dashboard';
+                    if (pathname.startsWith('/hr/leave-records')) return 'hr-leave-records';
+                    if (pathname.startsWith('/hr/tardiness')) return 'hr-tardiness';
+                    if (pathname.startsWith('/hr/starla-tables')) return 'hr-starla';
+                    if (pathname.startsWith('/clerk/scanner')) return 'clerk-scanner';
+                    if (pathname.startsWith('/admin/dashboard')) return 'admin-dashboard';
+                    if (pathname.startsWith('/profile')) return 'profile';
+                    return 'employee-dashboard';
+                }
+
+                function showNavSkeleton(pathname) {
                     const content = document.getElementById('clactsPageContent');
                     const skeleton = document.getElementById('clactsNavSkeleton');
                     if (content && skeleton) {
+                        const key = resolveSkeletonKey(pathname || '');
+                        skeleton.querySelectorAll('[data-skeleton-for]').forEach((el) => {
+                            el.classList.toggle('hidden', el.getAttribute('data-skeleton-for') !== key);
+                        });
                         content.classList.add('hidden');
                         skeleton.classList.remove('hidden');
                     }
@@ -1316,10 +1287,12 @@
                     const href = link.getAttribute('href') || '';
                     if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
 
+                    let targetPathname = '';
                     try {
                         const targetUrl = new URL(link.href, window.location.origin);
                         if (targetUrl.origin !== window.location.origin) return;
                         if (targetUrl.pathname === window.location.pathname && targetUrl.search === window.location.search && targetUrl.hash) return;
+                        targetPathname = targetUrl.pathname;
                     } catch (_) {
                         return;
                     }
@@ -1332,7 +1305,7 @@
                         if (backdrop) backdrop.classList.add('hidden');
                     }
 
-                    showNavSkeleton();
+                    showNavSkeleton(targetPathname);
                 });
 
                 window.addEventListener('pageshow', hideNavSkeleton);
