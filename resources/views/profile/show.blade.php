@@ -16,7 +16,7 @@
             class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300"
             onclick="if(event.target === this) closePasswordSuccessModal()"
         >
-            <div class="bg-white rounded-3xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
+            <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
                 <!-- Header with Close Button -->
                 <div class="shrink-0 bg-slate-50 px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                     <button 

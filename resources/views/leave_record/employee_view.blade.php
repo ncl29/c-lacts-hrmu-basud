@@ -80,7 +80,7 @@
                 type="button" 
                 id="btnToggleRecordView" 
                 onclick="toggleRecordView()" 
-                class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer border-2 border-gov-700 hover:border-gov-800 focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto"
+                class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer border border-gov-700 hover:border-gov-800 focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-10 sm:min-h-11 w-full sm:w-auto"
                 title="Toggle between simplified monthly table and official 11-column CSC Form 41 ledger"
             >
                 <i id="toggleViewIcon" class="ph ph-file-text text-base sm:text-lg"></i>
@@ -92,7 +92,7 @@
                 type="button" 
                 id="btnPrintLeaveRecords" 
                 onclick="printCurrentRecordView()" 
-                class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:w-auto" 
+                class="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border border-slate-300 min-h-10 sm:min-h-11 w-full sm:w-auto" 
                 title="Print leave records in currently active view"
             >
                 <i class="ph ph-printer text-base sm:text-lg"></i>

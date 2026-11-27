@@ -560,7 +560,7 @@
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 text-[10px] font-mono">
                         <span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">VL ${emp.vl}</span>
-                        <span class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200">SL ${emp.sl}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-gov-50 text-gov-700 border border-gov-200">SL ${emp.sl}</span>
                     </div>
                 </div>
             `;

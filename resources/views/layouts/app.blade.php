@@ -546,7 +546,7 @@
                     class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300 animate-in fade-in"
                     onclick="if(event.target === this) closeCancellationModal()"
                 >
-                    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-rose-500 border-x border-b border-slate-200 overflow-hidden transform animate-in zoom-in-95 duration-200 my-auto">
+                    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-rose-500 border-x border-b border-slate-200 overflow-hidden transform animate-in zoom-in-95 duration-200 my-auto">
                         <!-- Top Header -->
                         <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                             <button 
@@ -633,7 +633,7 @@
                     class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300"
                     onclick="if(event.target === this) closeLoginSuccessModal()"
                 >
-                    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto">
+                    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto">
                         <!-- Top Header with Close Button -->
                         <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                             <button 
@@ -1636,7 +1636,7 @@
             aria-labelledby="logoutOverlayTitle"
             class="hidden fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
         >
-            <div class="bg-gov-navy border border-slate-700/80 rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-rose-400/20 transform animate-in fade-in zoom-in-95 duration-200">
+            <div class="bg-gov-navy border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-rose-400/20 transform animate-in fade-in zoom-in-95 duration-200">
                 <!-- Circular SVG Spinner -->
                 <div class="relative inline-flex items-center justify-center">
                     <svg class="animate-spin w-20 h-20 text-rose-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1664,7 +1664,7 @@
         aria-labelledby="refreshOverlayTitle"
         class="hidden fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
     >
-        <div class="bg-gov-navy border border-slate-700/80 rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-amber-400/30 transform animate-in fade-in zoom-in-95 duration-200">
+        <div class="bg-gov-navy border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-4 ring-1 ring-amber-400/30 transform animate-in fade-in zoom-in-95 duration-200">
             <!-- Circular SVG Spinner -->
             <div class="relative inline-flex items-center justify-center">
                 <svg class="animate-spin w-20 h-20 text-amber-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1692,7 +1692,7 @@
         class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300"
         onclick="if(event.target === this) closeRefreshCompletedModal()"
     >
-        <div class="bg-white rounded-3xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
             <!-- Top Header -->
             <div class="shrink-0 bg-slate-50 px-5 sm:px-6 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                 <button 

@@ -671,7 +671,7 @@
             <div class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
 
             <!-- Applicant Snapshot (Read-only) -->
-            <div class="bg-slate-50 p-3.5 rounded-xl border-2 border-slate-200 text-sm flex justify-between">
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-sm flex justify-between">
                 <div>
                     <span class="text-slate-600 font-semibold">Applicant:</span>
                     <strong class="text-slate-950 block text-base font-bold">{{ $employee->last_first_middle }}</strong>
@@ -689,7 +689,7 @@
                     <span>Date of Filing (Box 3)</span>
                     <span class="text-rose-500">*</span>
                 </label>
-                <input type="date" id="date_of_filing" name="date_of_filing" value="{{ date('Y-m-d') }}" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                <input type="date" id="date_of_filing" name="date_of_filing" value="{{ date('Y-m-d') }}" required class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-11">
             </div>
 
             <!-- Salary (Box 5) -->
@@ -697,7 +697,7 @@
                 <label for="declared_salary" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                     Monthly Salary (Box 5)
                 </label>
-                <input type="number" id="declared_salary" name="declared_salary" value="{{ old('declared_salary') }}" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 25000.00 (Optional)" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold font-mono text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                <input type="number" id="declared_salary" name="declared_salary" value="{{ old('declared_salary') }}" step="0.01" min="0" inputmode="decimal" placeholder="e.g. 25000.00 (Optional)" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold font-mono text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
                 @error('declared_salary')<span class="text-xs font-bold text-rose-600 mt-1 block">{{ $message }}</span>@enderror
             </div>
 
@@ -706,7 +706,7 @@
                 <label for="leave_type_id" class="block text-sm font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                     Type of Leave to be Availed (Box 6.A) <span class="text-rose-500">*</span>
                 </label>
-                <select id="leave_type_id" name="leave_type_id" required onchange="handleLeaveTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
+                <select id="leave_type_id" name="leave_type_id" required onchange="handleLeaveTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                     <option value="" disabled selected>— Select Civil Service Leave Category —</option>
                     @foreach($leaveTypes as $type)
                         <option value="{{ $type->leave_type_id }}" data-code="{{ $type->code }}">
@@ -716,17 +716,17 @@
                 </select>
 
                 <!-- Remaining days reminder (revealed after a leave type is selected) -->
-                <div id="leave_allowance_hint" class="hidden mt-2 p-3.5 rounded-xl border-2 text-sm font-semibold flex items-start gap-2" role="status">
+                <div id="leave_allowance_hint" class="hidden mt-2 p-3.5 rounded-xl border text-sm font-semibold flex items-start gap-2" role="status">
                     <i id="leave_allowance_icon" class="ph ph-info text-lg shrink-0 mt-0.5"></i>
                     <span id="leave_allowance_text"></span>
                 </div>
 
                 <!-- Other Leave Specification (Revealed when 'Others' or 'OTHER' is selected) -->
-                <div id="other_leave_container" class="hidden mt-2.5 p-3.5 bg-amber-50 rounded-xl border-2 border-amber-300">
+                <div id="other_leave_container" class="hidden mt-2.5 p-3.5 bg-amber-50 rounded-xl border border-amber-300">
                     <label for="other_leave_type" class="block text-xs sm:text-sm font-bold text-amber-950 uppercase tracking-wider mb-1.5">
                         Specify Other Type of Leave (Box 6.A "Others:") <span class="text-rose-500">*</span>
                     </label>
-                    <input type="text" id="other_leave_type" name="other_leave_type" placeholder="e.g. Wellness Leave, Quarantine Leave" class="w-full border-2 border-amber-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                    <input type="text" id="other_leave_type" name="other_leave_type" placeholder="e.g. Wellness Leave, Quarantine Leave" class="w-full border border-amber-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
                 </div>
             </div>
 
@@ -742,7 +742,7 @@
                             <span>Date From</span>
                             <span class="text-rose-500">*</span>
                         </label>
-                        <input type="date" id="date_from" name="date_from" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                        <input type="date" id="date_from" name="date_from" required onchange="calculateDays()" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-11">
                     </div>
                     <div class="bg-slate-50/70 p-3 rounded-xl border border-slate-200">
                         <label for="date_to" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1 flex items-center gap-1.5">
@@ -750,7 +750,7 @@
                             <span>Date To</span>
                             <span class="text-rose-500">*</span>
                         </label>
-                        <input type="date" id="date_to" name="date_to" required onchange="calculateDays()" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                        <input type="date" id="date_to" name="date_to" required onchange="calculateDays()" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-11">
                     </div>
                 </div>
             </div>
@@ -768,7 +768,7 @@
                     <span>Number of Working Days Applied For (Box 6.C)</span>
                     <span class="text-rose-500">*</span>
                 </label>
-                <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-11">
                 <p id="days_requested_help" class="hidden text-xs text-slate-500 mt-1"></p>
             </div>
 
@@ -784,7 +784,7 @@
                     <label for="details_type" class="block text-sm font-bold text-slate-800 mb-1.5">
                         Specification Category:
                     </label>
-                    <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
+                    <select id="details_type" name="details_type" required onchange="handleDetailsTypeChange()" onkeydown="if(this.dataset.locked==='true'){event.preventDefault();return false;}" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white transition">
                         <optgroup label="In case of Vacation / Special Privilege Leave:">
                             <option value="within_ph" selected>Within the Philippines (Specify Location)</option>
                             <option value="abroad">Abroad (Specify Country/Destination)</option>
@@ -812,14 +812,14 @@
                     <label for="details_specify" id="details_specify_label" class="block text-sm font-bold text-slate-800 mb-1.5">
                         Location / Hospital / Remarks:
                     </label>
-                    <input type="text" id="details_specify" name="details_specify" value="Basud, Camarines Norte" placeholder="e.g. Basud, Camarines Norte" class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
+                    <input type="text" id="details_specify" name="details_specify" value="Basud, Camarines Norte" placeholder="e.g. Basud, Camarines Norte" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-semibold text-slate-900 focus:ring-2 focus:ring-gov-600 bg-white">
                 </div>
             </div>
 
             <!-- =============================================================== -->
             <!-- CONDITIONAL SUPPORTING DOCUMENT UPLOAD SECTION (CSC Form No. 6) -->
             <!-- =============================================================== -->
-            <div id="supporting_documents_section" class="hidden p-3.5 sm:p-4 rounded-xl border-2 border-amber-300 bg-amber-50/70 space-y-3">
+            <div id="supporting_documents_section" class="hidden p-3.5 sm:p-4 rounded-xl border border-amber-300 bg-amber-50/70 space-y-3">
                 <div class="flex items-start justify-between gap-2">
                     <div class="min-w-0 flex-1">
                         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-amber-200 text-amber-950 border border-amber-400">
@@ -851,7 +851,7 @@
                         multiple 
                         accept=".pdf,.jpg,.jpeg,.png"
                         onchange="handleFileSelection(event)"
-                        class="w-full max-w-full text-xs sm:text-sm font-bold text-slate-800 border-2 border-amber-300 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gov-600 file:mr-2 sm:file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-gov-700 file:text-white hover:file:bg-gov-800 file:cursor-pointer cursor-pointer"
+                        class="w-full max-w-full text-xs sm:text-sm font-bold text-slate-800 border border-amber-300 rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-gov-600 file:mr-2 sm:file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-black file:bg-gov-700 file:text-white hover:file:bg-gov-800 file:cursor-pointer cursor-pointer"
                     >
                     <span class="text-xs font-semibold text-slate-600 mt-1 block">
                         Accepted: <strong>PDF, JPG, PNG</strong> • Max: <strong>25MB</strong> (PDF), <strong>10MB</strong> (Images) • Multiple files allowed.
@@ -876,10 +876,10 @@
 
         <!-- Pinned Modal Footer -->
         <div class="bg-slate-50 px-5 sm:px-6 py-3.5 border-t border-slate-200 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 shrink-0">
-            <button type="button" onclick="closeFilingModal()" class="w-full sm:w-auto px-5 py-2.5 border-2 border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-[44px] cursor-pointer">
+            <button type="button" onclick="closeFilingModal()" class="w-full sm:w-auto px-5 py-2.5 border border-slate-300 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-100 transition min-h-11 cursor-pointer">
                 Cancel
             </button>
-            <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center justify-center gap-2 min-h-[44px] cursor-pointer">
+            <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-xl text-sm sm:text-base font-bold shadow-sm transition flex items-center justify-center gap-2 min-h-11 cursor-pointer">
                 <i class="ph-bold ph-paper-plane-tilt text-lg"></i>
                 <span>Generate CS Form 6 & QR</span>
             </button>
@@ -1542,7 +1542,7 @@
                 daysInput.placeholder = `${minDays} to ${maxDays}`;
             }
             if (daysHelp) {
-                daysHelp.innerHTML = `<span class="text-purple-800 font-bold flex items-center gap-1.5"><i class="ph-bold ph-info text-sm shrink-0"></i><span>Special Monetization: Enter <strong>whole days only</strong> between <strong>${minDays}</strong> days (min 50% of ${monetizationData.combined_total.toFixed(3)} credits) and <strong>${maxDays}</strong> days (retaining mandatory 5.000 buffer).</span></span>`;
+                daysHelp.innerHTML = `<span class="text-gov-800 font-bold flex items-center gap-1.5"><i class="ph-bold ph-info text-sm shrink-0"></i><span>Special Monetization: Enter <strong>whole days only</strong> between <strong>${minDays}</strong> days (min 50% of ${monetizationData.combined_total.toFixed(3)} credits) and <strong>${maxDays}</strong> days (retaining mandatory 5.000 buffer).</span></span>`;
                 daysHelp.className = 'text-xs mt-1 block';
             }
         }
@@ -1758,7 +1758,7 @@
                     }
                 }
                 if (daysHelp) {
-                    daysHelp.innerHTML = `<span class="text-purple-800 font-bold flex items-center gap-1.5"><i class="ph-bold ph-info text-sm shrink-0"></i><span>Special Monetization: Enter <strong>whole days only</strong> between <strong>${minDays}</strong> days (min 50% of ${monetizationData.combined_total.toFixed(3)} credits) and <strong>${maxDays}</strong> days (retaining mandatory 5.000 buffer).</span></span>`;
+                    daysHelp.innerHTML = `<span class="text-gov-800 font-bold flex items-center gap-1.5"><i class="ph-bold ph-info text-sm shrink-0"></i><span>Special Monetization: Enter <strong>whole days only</strong> between <strong>${minDays}</strong> days (min 50% of ${monetizationData.combined_total.toFixed(3)} credits) and <strong>${maxDays}</strong> days (retaining mandatory 5.000 buffer).</span></span>`;
                     daysHelp.className = 'text-xs mt-1 block';
                 }
             }

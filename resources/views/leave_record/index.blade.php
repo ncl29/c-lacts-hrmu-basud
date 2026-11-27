@@ -431,7 +431,7 @@ echo method_field('DELETE');
         onclick="if (event.target === this) { const d = document.getElementById('recalcSuccessDialog'); if(d) d.remove(); }"
         class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 transition-all duration-200"
     >
-        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 relative z-10" onclick="event.stopPropagation()">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border-t-4 border-t-emerald-500 border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 relative z-10" onclick="event.stopPropagation()">
             <!-- Header -->
             <div class="bg-slate-50 px-5 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
                 <button 
@@ -491,7 +491,7 @@ echo method_field('DELETE');
     role="status"
     aria-live="polite"
 >
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-200 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-200 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
         <div class="relative inline-flex items-center justify-center">
             <div class="w-16 h-16 rounded-full border-4 border-slate-100 border-t-gov-700 animate-spin"></div>
             <div class="absolute inset-0 flex items-center justify-center text-gov-700">
@@ -744,10 +744,10 @@ echo method_field('PUT');
             </div>
 
             <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-200 shrink-0">
-                <button type="button" onclick="closeModal('editRowModal')" class="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer min-h-[40px]">
+                <button type="button" onclick="closeModal('editRowModal')" class="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer min-h-10">
                     Cancel
                 </button>
-                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition shadow-sm cursor-pointer min-h-[40px]">
+                <button type="submit" class="w-full sm:w-auto px-5 py-2.5 text-xs font-bold rounded-lg bg-gov-700 hover:bg-gov-800 text-white transition shadow-sm cursor-pointer min-h-10">
                     Update Row & Recalculate
                 </button>
             </div>

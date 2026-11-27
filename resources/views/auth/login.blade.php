@@ -244,7 +244,7 @@
 
     <!-- Login Card Container -->
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-lg lg:max-w-xl px-3 sm:px-0">
-        <div class="bg-white text-slate-800 rounded-3xl shadow-2xl border-t-4 border-t-amber-400 border-x border-b border-slate-200/90 overflow-hidden">
+        <div class="bg-white text-slate-800 rounded-2xl shadow-2xl border-t-4 border-t-amber-400 border-x border-b border-slate-200/90 overflow-hidden">
 
             <!-- Form Body -->
             <div class="p-6 sm:p-10 space-y-5 sm:space-y-6">
@@ -518,7 +518,7 @@
         aria-describedby="loginOverlayDesc"
         class="hidden fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300"
     >
-        <div class="bg-gov-navy border border-slate-700/80 rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-5 ring-1 ring-amber-400/20 transform animate-in fade-in zoom-in-95 duration-200">
+        <div class="bg-gov-navy border border-slate-700/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center space-y-5 ring-1 ring-amber-400/20 transform animate-in fade-in zoom-in-95 duration-200">
             <!-- Circular Spinner -->
             <div class="relative inline-flex items-center justify-center">
                 <!-- Circular SVG Track & Animated Spinner Head -->
