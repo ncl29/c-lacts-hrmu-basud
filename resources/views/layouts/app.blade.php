@@ -808,7 +808,347 @@
                     @yield('content')
                 </div>
 
-                @include('layouts.partials.nav-skeletons')
+                <!-- Route-Specific Navigation Skeleton UIs (Matched 1:1 to destination page layouts) -->
+                <div id="clactsNavSkeleton" class="hidden animate-pulse" aria-hidden="true">
+
+                    {{-- 1. Employee Self-Service Dashboard (/employee/dashboard) --}}
+                    <div data-skeleton-for="employee-dashboard" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl border border-slate-200 p-4 flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-lg bg-slate-200"></div>
+                                <div class="h-4 w-36 bg-slate-200 rounded"></div>
+                            </div>
+                            <div class="h-7 w-16 bg-slate-100 rounded-lg"></div>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-5 w-48 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-64 bg-slate-100 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <div class="h-10 w-28 bg-slate-200 rounded-lg"></div>
+                                <div class="h-10 w-32 bg-slate-200 rounded-lg"></div>
+                                <div class="h-10 w-36 bg-slate-200 rounded-lg"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                            @for($i = 0; $i < 4; $i++)
+                                <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-3">
+                                    <div class="h-3 w-28 bg-slate-200 rounded"></div>
+                                    <div class="h-8 w-24 bg-slate-200 rounded"></div>
+                                    <div class="h-2.5 w-32 bg-slate-100 rounded"></div>
+                                </div>
+                            @endfor
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+                            <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+                                <div class="h-4 w-48 bg-slate-200 rounded"></div>
+                                <div class="h-6 w-28 bg-slate-100 rounded-lg"></div>
+                            </div>
+                            <div class="h-10 bg-slate-900/10 border-b border-slate-200"></div>
+                            <div class="p-4 sm:p-5 space-y-3">
+                                @for($r = 0; $r < 4; $r++)
+                                    <div class="flex items-center justify-between gap-4 py-2 border-b border-slate-100 last:border-b-0">
+                                        <div class="h-4 w-28 bg-slate-200 rounded"></div>
+                                        <div class="h-4 w-36 bg-slate-200 rounded"></div>
+                                        <div class="h-4 w-28 bg-slate-100 rounded hidden sm:block"></div>
+                                        <div class="h-6 w-20 bg-slate-200 rounded-full"></div>
+                                        <div class="h-8 w-20 bg-slate-100 rounded-lg"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 2. Employee Leave Record (/employee/leave-record) --}}
+                    <div data-skeleton-for="employee-leave-record" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="space-y-2">
+                                <div class="h-3 w-40 bg-slate-200 rounded"></div>
+                                <div class="h-6 w-56 bg-slate-200 rounded"></div>
+                                <div class="h-3.5 w-48 bg-slate-100 rounded"></div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-2.5">
+                                <div class="h-11 w-56 bg-slate-200 rounded-lg"></div>
+                                <div class="h-11 w-28 bg-slate-200 rounded-lg"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                            @for($i = 0; $i < 4; $i++)
+                                <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-3">
+                                    <div class="h-3 w-24 bg-slate-200 rounded"></div>
+                                    <div class="h-8 w-20 bg-slate-200 rounded"></div>
+                                    <div class="h-2.5 w-28 bg-slate-100 rounded"></div>
+                                </div>
+                            @endfor
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+                            <div class="p-4 border-b border-slate-200 flex items-center justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <div class="h-9 w-20 bg-slate-200 rounded-md"></div>
+                                    <div class="h-9 w-20 bg-slate-100 rounded-md"></div>
+                                </div>
+                                <div class="h-4 w-36 bg-slate-100 rounded hidden sm:block"></div>
+                            </div>
+                            <div class="p-4 sm:p-5 space-y-3">
+                                @for($r = 0; $r < 6; $r++)
+                                    <div class="grid grid-cols-4 sm:grid-cols-6 gap-4 py-2 border-b border-slate-100 last:border-b-0">
+                                        <div class="h-4 bg-slate-200 rounded"></div>
+                                        <div class="h-4 bg-slate-100 rounded col-span-2 hidden sm:block"></div>
+                                        <div class="h-4 bg-slate-200 rounded"></div>
+                                        <div class="h-4 bg-slate-200 rounded"></div>
+                                        <div class="h-4 bg-slate-100 rounded"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 3. HR Leave Records (/hr/leave-records) --}}
+                    <div data-skeleton-for="hr-leave-records" class="hidden space-y-6">
+                        <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-4">
+                            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+                                <div class="flex items-center gap-3 flex-1">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-200 shrink-0"></div>
+                                    <div class="space-y-2 flex-1 max-w-md">
+                                        <div class="h-3 w-40 bg-slate-200 rounded"></div>
+                                        <div class="h-9 w-full bg-slate-100 rounded-xl"></div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="h-9 w-28 bg-slate-200 rounded-xl"></div>
+                                    <div class="h-9 w-32 bg-slate-200 rounded-xl"></div>
+                                    <div class="h-9 w-24 bg-slate-200 rounded-xl"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap items-center justify-between gap-3">
+                                <div class="flex gap-2">
+                                    <div class="h-7 w-24 bg-slate-100 rounded-lg"></div>
+                                    <div class="h-7 w-28 bg-slate-100 rounded-lg"></div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <div class="h-8 w-24 bg-slate-200 rounded-xl"></div>
+                                    <div class="h-8 w-28 bg-slate-200 rounded-xl"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                            <div class="h-14 bg-slate-900/10 border-b border-slate-200"></div>
+                            <div class="p-4 space-y-3">
+                                @for($r = 0; $r < 8; $r++)
+                                    <div class="grid grid-cols-6 sm:grid-cols-11 gap-3 py-2 border-b border-slate-100 last:border-b-0">
+                                        <div class="h-4 bg-slate-200 rounded"></div>
+                                        <div class="h-4 bg-slate-200 rounded col-span-2"></div>
+                                        <div class="h-4 bg-slate-100 rounded"></div>
+                                        <div class="h-4 bg-slate-100 rounded"></div>
+                                        <div class="h-4 bg-slate-200 rounded"></div>
+                                        <div class="h-4 bg-slate-100 rounded hidden sm:block"></div>
+                                        <div class="h-4 bg-slate-100 rounded hidden sm:block"></div>
+                                        <div class="h-4 bg-slate-200 rounded hidden sm:block"></div>
+                                        <div class="h-4 bg-slate-100 rounded hidden sm:block"></div>
+                                        <div class="h-4 bg-slate-100 rounded hidden sm:block"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 4. HR Tardiness Entry (/hr/tardiness) --}}
+                    <div data-skeleton-for="hr-tardiness" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl bg-slate-200"></div>
+                                <div class="space-y-2">
+                                    <div class="h-5 w-56 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-72 bg-slate-100 rounded hidden sm:block"></div>
+                                </div>
+                            </div>
+                            <div class="h-9 w-36 bg-slate-200 rounded-lg hidden sm:block"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200 p-5 space-y-4">
+                                <div class="h-5 w-48 bg-slate-200 rounded"></div>
+                                <div class="h-10 w-full bg-slate-100 rounded-lg"></div>
+                                <div class="h-10 w-full bg-slate-100 rounded-lg"></div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="h-10 bg-slate-100 rounded-lg"></div>
+                                    <div class="h-10 bg-slate-100 rounded-lg"></div>
+                                </div>
+                                <div class="h-20 w-full bg-slate-100 rounded-xl"></div>
+                                <div class="h-11 w-full bg-slate-200 rounded-xl"></div>
+                            </div>
+                            <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200 p-5 space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="h-4 w-48 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-20 bg-slate-100 rounded"></div>
+                                </div>
+                                @for($r = 0; $r < 6; $r++)
+                                    <div class="flex items-center justify-between gap-4 py-2.5 border-b border-slate-100 last:border-b-0">
+                                        <div class="space-y-1.5 flex-1">
+                                            <div class="h-3.5 w-40 bg-slate-200 rounded"></div>
+                                            <div class="h-2.5 w-28 bg-slate-100 rounded"></div>
+                                        </div>
+                                        <div class="h-4 w-24 bg-slate-100 rounded"></div>
+                                        <div class="h-4 w-16 bg-slate-200 rounded"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 5. Starla Reference Tables (/hr/starla-tables) --}}
+                    <div data-skeleton-for="hr-starla" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 flex items-center justify-between gap-4">
+                            <div class="space-y-2">
+                                <div class="h-5 w-64 bg-slate-200 rounded"></div>
+                                <div class="h-3.5 w-80 bg-slate-100 rounded hidden sm:block"></div>
+                            </div>
+                            <div class="h-9 w-32 bg-slate-200 rounded-lg"></div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            @for($c = 0; $c < 2; $c++)
+                                <div class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+                                    <div class="h-5 w-48 bg-slate-200 rounded"></div>
+                                    @for($r = 0; $r < 7; $r++)
+                                        <div class="flex justify-between py-2 border-b border-slate-100 last:border-b-0">
+                                            <div class="h-3.5 w-32 bg-slate-200 rounded"></div>
+                                            <div class="h-3.5 w-16 bg-slate-200 rounded"></div>
+                                            <div class="h-3.5 w-16 bg-slate-100 rounded"></div>
+                                        </div>
+                                    @endfor
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+
+                    {{-- 6. Clerk Scanner & Reception Desk (/clerk/scanner) --}}
+                    <div data-skeleton-for="clerk-scanner" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-5 w-60 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-40 bg-slate-100 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full xl:w-auto">
+                                <div class="h-10 sm:w-56 bg-slate-100 rounded-lg"></div>
+                                <div class="h-10 sm:w-56 bg-slate-100 rounded-lg"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <div class="lg:col-span-7 bg-white rounded-xl border border-slate-200 overflow-hidden">
+                                <div class="h-12 bg-slate-900/10 border-b border-slate-200"></div>
+                                <div class="p-6 space-y-5">
+                                    <div class="h-12 w-full bg-slate-100 rounded-xl"></div>
+                                    <div class="h-32 w-full bg-slate-100 rounded-xl"></div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="h-11 bg-slate-200 rounded-xl"></div>
+                                        <div class="h-11 bg-slate-200 rounded-xl"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lg:col-span-5 bg-white rounded-xl border border-slate-200 p-5 space-y-4">
+                                <div class="h-4 w-40 bg-slate-200 rounded"></div>
+                                @for($r = 0; $r < 5; $r++)
+                                    <div class="p-3 rounded-xl border border-slate-100 space-y-2">
+                                        <div class="flex justify-between">
+                                            <div class="h-3.5 w-24 bg-slate-200 rounded"></div>
+                                            <div class="h-3 w-16 bg-slate-100 rounded"></div>
+                                        </div>
+                                        <div class="h-3 w-48 bg-slate-100 rounded"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 7. Admin Dashboard (/admin/dashboard) --}}
+                    <div data-skeleton-for="admin-dashboard" class="hidden space-y-6">
+                        <div class="bg-white rounded-xl p-4 sm:p-6 border border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-5 w-60 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-72 bg-slate-100 rounded hidden sm:block"></div>
+                                </div>
+                            </div>
+                            <div class="h-10 w-44 bg-slate-200 rounded-xl"></div>
+                        </div>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                            @for($i = 0; $i < 4; $i++)
+                                <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 space-y-3">
+                                    <div class="h-3 w-28 bg-slate-200 rounded"></div>
+                                    <div class="h-8 w-20 bg-slate-200 rounded"></div>
+                                    <div class="h-2.5 w-32 bg-slate-100 rounded"></div>
+                                </div>
+                            @endfor
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                            <div class="bg-slate-50 border-b border-slate-200 px-6 pt-4 flex gap-3">
+                                <div class="h-9 w-28 bg-white border border-b-0 border-slate-200 rounded-t-lg"></div>
+                                <div class="h-9 w-28 bg-slate-100 rounded-t-lg"></div>
+                                <div class="h-9 w-24 bg-slate-100 rounded-t-lg"></div>
+                                <div class="h-9 w-24 bg-slate-100 rounded-t-lg hidden sm:block"></div>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div class="h-10 w-full max-w-sm bg-slate-100 rounded-lg"></div>
+                                @for($r = 0; $r < 5; $r++)
+                                    <div class="flex items-center justify-between gap-4 py-2.5 border-b border-slate-100 last:border-b-0">
+                                        <div class="h-4 w-44 bg-slate-200 rounded"></div>
+                                        <div class="h-4 w-28 bg-slate-100 rounded hidden sm:block"></div>
+                                        <div class="h-6 w-20 bg-slate-200 rounded-full"></div>
+                                        <div class="h-8 w-24 bg-slate-100 rounded-lg"></div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- 8. Profile Page (/profile) --}}
+                    <div data-skeleton-for="profile" class="hidden space-y-6">
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-slate-200 shrink-0"></div>
+                                <div class="space-y-2">
+                                    <div class="h-5 w-48 bg-slate-200 rounded"></div>
+                                    <div class="h-3.5 w-60 bg-slate-100 rounded"></div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <div class="h-9 w-32 bg-slate-200 rounded-xl"></div>
+                                <div class="h-9 w-32 bg-slate-100 rounded-xl"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            @for($c = 0; $c < 2; $c++)
+                                <div class="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+                                    <div class="h-5 w-44 bg-slate-200 rounded"></div>
+                                    @for($f = 0; $f < 4; $f++)
+                                        <div class="space-y-1.5">
+                                            <div class="h-3 w-24 bg-slate-200 rounded"></div>
+                                            <div class="h-10 w-full bg-slate-100 rounded-xl"></div>
+                                        </div>
+                                    @endfor
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+
+                </div>
             </main>
 
             <!-- GovTech System Footer -->
