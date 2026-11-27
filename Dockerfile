@@ -31,6 +31,7 @@ RUN cp .env.example .env \
 # Default production environment variables
 ENV APP_ENV=production \
     APP_DEBUG=false \
+    LOG_CHANNEL=stderr \
     PORT=8000
 
 # Install production dependencies
