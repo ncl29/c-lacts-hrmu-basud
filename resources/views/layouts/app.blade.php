@@ -678,88 +678,129 @@
                 </div>
             @endif
 
-            <!-- Standard In-Page Operational Alerts (Success, Error, Warning, Info) -->
-            <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 mt-3 sm:mt-4 w-full">
+            <!-- Centered Operational Feedback Dialogue Box (Success, Error, Warning, Info) -->
+            @php
+                $showSuccessDialog = session('success') && !session('login_success') && !session('recalculate_success') && !session('cancellation_success') && !str_contains(session('success'), 'Welcome') && !str_contains(session('success'), 'cancelled');
+                $feedbackType = null;
+                $feedbackTitle = '';
+                $feedbackMessage = '';
+                $feedbackErrors = [];
 
-                @if(session('success') && !session('login_success') && !session('recalculate_success') && !session('cancellation_success') && !str_contains(session('success'), 'Welcome') && !str_contains(session('success'), 'cancelled'))
-                    <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-xl shadow-xs flex items-start justify-between gap-3 mb-3">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-check-circle text-emerald-600 text-xl shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-emerald-900">Success</h4>
-                                <p class="text-xs text-emerald-800 mt-0.5">{{ session('success') }}</p>
+                if ($errors->any()) {
+                    $feedbackType = 'error';
+                    $feedbackTitle = 'Please Correct the Following Errors';
+                    $feedbackErrors = $errors->all();
+                } elseif (session('error')) {
+                    $feedbackType = 'error';
+                    $feedbackTitle = 'Operational Notice';
+                    $feedbackMessage = session('error');
+                } elseif (session('warning')) {
+                    $feedbackType = 'warning';
+                    $feedbackTitle = 'Notice';
+                    $feedbackMessage = session('warning');
+                } elseif ($showSuccessDialog) {
+                    $feedbackType = 'success';
+                    $feedbackTitle = 'Success';
+                    $feedbackMessage = session('success');
+                } elseif (session('info')) {
+                    $feedbackType = 'info';
+                    $feedbackTitle = 'Information';
+                    $feedbackMessage = session('info');
+                }
+
+                $feedbackStyles = [
+                    'success' => [
+                        'borderTop' => 'border-t-emerald-500',
+                        'iconWrap'  => 'bg-emerald-100 text-emerald-600 border-emerald-200',
+                        'icon'      => 'ph-bold ph-check-circle',
+                        'ring'      => 'focus:ring-emerald-500',
+                        'btn'       => 'bg-gov-700 hover:bg-gov-800 focus:ring-gov-600',
+                    ],
+                    'error' => [
+                        'borderTop' => 'border-t-rose-500',
+                        'iconWrap'  => 'bg-rose-100 text-rose-600 border-rose-200',
+                        'icon'      => 'ph-bold ph-warning-circle',
+                        'ring'      => 'focus:ring-rose-500',
+                        'btn'       => 'bg-rose-600 hover:bg-rose-700 focus:ring-rose-500',
+                    ],
+                    'warning' => [
+                        'borderTop' => 'border-t-amber-500',
+                        'iconWrap'  => 'bg-amber-100 text-amber-600 border-amber-200',
+                        'icon'      => 'ph-bold ph-warning',
+                        'ring'      => 'focus:ring-amber-500',
+                        'btn'       => 'bg-amber-600 hover:bg-amber-700 focus:ring-amber-500',
+                    ],
+                    'info' => [
+                        'borderTop' => 'border-t-gov-600',
+                        'iconWrap'  => 'bg-gov-100 text-gov-700 border-gov-200',
+                        'icon'      => 'ph-bold ph-info',
+                        'ring'      => 'focus:ring-gov-600',
+                        'btn'       => 'bg-gov-700 hover:bg-gov-800 focus:ring-gov-600',
+                    ],
+                ];
+            @endphp
+
+            @if($feedbackType)
+                @php
+                    $st = $feedbackStyles[$feedbackType];
+                @endphp
+                <div
+                    id="sessionFeedbackModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="sessionFeedbackTitle"
+                    class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all duration-300"
+                    onclick="if(event.target === this) closeSessionFeedbackModal()"
+                >
+                    <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border-t-4 {{ $st['borderTop'] }} border-x border-b border-slate-200 overflow-hidden transform animate-in fade-in zoom-in-95 duration-200 my-auto" onclick="event.stopPropagation()">
+                        <div class="shrink-0 bg-slate-50 px-5 py-3.5 border-b border-slate-200/90 flex items-center justify-end">
+                            <button
+                                type="button"
+                                onclick="closeSessionFeedbackModal()"
+                                class="text-slate-400 hover:text-slate-700 p-1.5 rounded-xl hover:bg-slate-200 transition cursor-pointer focus:outline-none focus:ring-2 {{ $st['ring'] }}"
+                                aria-label="Close dialog"
+                            >
+                                <i class="ph ph-x text-lg"></i>
+                            </button>
+                        </div>
+
+                        <div class="overflow-y-auto flex-1 min-h-0 p-6 space-y-4 text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full border-4 shadow-xs {{ $st['iconWrap'] }}">
+                                <i class="{{ $st['icon'] }} text-3xl"></i>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <h3 id="sessionFeedbackTitle" class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                                    {{ $feedbackTitle }}
+                                </h3>
+
+                                @if(count($feedbackErrors) > 0)
+                                    <ul class="list-disc list-inside text-left text-xs sm:text-sm text-rose-800 bg-rose-50 border border-rose-200 rounded-xl p-3 mt-2 space-y-1">
+                                        @foreach($feedbackErrors as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                                        {{ $feedbackMessage }}
+                                    </p>
+                                @endif
                             </div>
                         </div>
-                        <button type="button" onclick="this.parentElement.remove()" class="text-emerald-600 hover:text-emerald-800 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer" aria-label="Close notice">
-                            <i class="ph ph-x text-base"></i>
-                        </button>
-                    </div>
-                @endif
 
-                @if($errors->any())
-                    <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl shadow-xs flex items-start justify-between gap-3 mb-3">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-warning-circle text-rose-600 text-xl shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-rose-900">Please correct the following errors:</h4>
-                                <ul class="list-disc list-inside text-xs text-rose-800 mt-1 space-y-0.5">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="shrink-0 px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-end">
+                            <button
+                                type="button"
+                                onclick="closeSessionFeedbackModal()"
+                                class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer flex items-center justify-center min-h-10 focus:outline-none focus:ring-2 {{ $st['btn'] }}"
+                            >
+                                OK, Got It
+                            </button>
                         </div>
-                        <button type="button" onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-800 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer" aria-label="Close notice">
-                            <i class="ph ph-x text-base"></i>
-                        </button>
                     </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r-xl shadow-xs flex items-start justify-between gap-3">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-warning-circle text-rose-600 text-xl shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-rose-900">Operational Notice</h4>
-                                <p class="text-xs text-rose-800 mt-0.5">{{ session('error') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" onclick="this.parentElement.remove()" class="text-rose-600 hover:text-rose-800 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 cursor-pointer" aria-label="Close notice">
-                            <i class="ph ph-x text-base"></i>
-                        </button>
-                    </div>
-                @endif
-
-                @if(session('warning'))
-                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl shadow-xs flex items-start justify-between gap-3">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-warning text-amber-600 text-xl shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-amber-900">Notice</h4>
-                                <p class="text-xs text-amber-800 mt-0.5">{{ session('warning') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" onclick="this.parentElement.remove()" class="text-amber-600 hover:text-amber-800 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer" aria-label="Close notice">
-                            <i class="ph ph-x text-base"></i>
-                        </button>
-                    </div>
-                @endif
-
-                @if(session('info'))
-                    <div class="bg-sky-50 border-l-4 border-gov-600 p-4 rounded-r-xl shadow-xs flex items-start justify-between gap-3">
-                        <div class="flex items-start gap-3">
-                            <i class="ph-fill ph-info text-gov-700 text-xl shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-gov-900">Information</h4>
-                                <p class="text-xs text-gov-800 mt-0.5">{{ session('info') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" onclick="this.parentElement.remove()" class="text-gov-700 hover:text-gov-900 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-gov-600 cursor-pointer" aria-label="Close information">
-                            <i class="ph ph-x text-base"></i>
-                        </button>
-                    </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
             <!-- Main Content Area -->
             <main id="clactsLiveMain" class="flex-1 max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-2.5 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
@@ -1098,6 +1139,17 @@
             }
         }
 
+        // Operational Feedback Modal Close Handler
+        function closeSessionFeedbackModal() {
+            const modal = document.getElementById('sessionFeedbackModal');
+            if (modal) {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modal.remove();
+                }, 250);
+            }
+        }
+
         // Refresh Completed Dialog Close Handler
         function closeRefreshCompletedModal() {
             const modal = document.getElementById('refreshCompletedModal');
@@ -1180,6 +1232,7 @@
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') {
                         closeLoginSuccessModal();
+                        closeSessionFeedbackModal();
                         closeCancellationModal();
                         closeRefreshCompletedModal();
                     }
