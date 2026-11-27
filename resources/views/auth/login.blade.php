@@ -285,7 +285,7 @@
                     <!-- Client-side Reset Success Banner -->
                     <div id="forgotSuccessBanner" class="hidden p-4 bg-emerald-50 border-l-4 border-emerald-500 text-emerald-900 rounded-r-2xl text-xs sm:text-sm font-medium flex items-center gap-3 shadow-xs">
                         <i class="ph-fill ph-check-circle text-emerald-600 text-xl shrink-0"></i>
-                        <span id="forgotSuccessText">Password updated. Sign in with your new passcode.</span>
+                        <span id="forgotSuccessText">Password updated. Sign in with your new password.</span>
                     </div>
 
                     <!-- Authentication Form -->
@@ -322,7 +322,7 @@
                     <!-- Password -->
                     <div>
                         <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 font-mono">
-                            Security Passcode <span class="text-rose-500">*</span>
+                            Password <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
@@ -334,7 +334,7 @@
                                 name="password" 
                                 required 
                                 autocomplete="current-password"
-                                placeholder="Enter passcode"
+                                placeholder="Enter password"
                                 class="w-full pl-11 pr-12 py-3 border border-slate-300 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-amber-400/30 focus:border-amber-500 bg-slate-50/50 hover:bg-white focus:bg-white transition"
                             >
                             <button 
@@ -456,7 +456,7 @@
 
                     <div>
                         <label for="forgotNewPassInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                            New Passcode <span class="text-rose-500">*</span>
+                            New Password <span class="text-rose-500">*</span>
                         </label>
                         <input
                             type="password"
@@ -468,12 +468,12 @@
 
                     <div>
                         <label for="forgotConfirmPassInput" class="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1 font-mono">
-                            Confirm Passcode <span class="text-rose-500">*</span>
+                            Confirm Password <span class="text-rose-500">*</span>
                         </label>
                         <input
                             type="password"
                             id="forgotConfirmPassInput"
-                            placeholder="Re-enter new passcode"
+                            placeholder="Re-enter new password"
                             class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-gov-500/20 focus:border-gov-600 bg-white"
                         >
                     </div>

@@ -15,7 +15,7 @@
             <a 
                 href="{{ route('hr.starla.tables') }}" 
                 class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 shadow-2xs transition flex items-center justify-center gap-2 shrink-0 cursor-pointer min-h-[40px]"
-                title="View digitized CSC Starla conversion matrices (Tables II, III, & IV)"
+                title="View digitized CSC Starla conversion matrices (Tables II & IV)"
             >
                 <i class="ph ph-table text-slate-600 text-sm"></i>
                 <span>View Starla Tables</span>
@@ -365,7 +365,7 @@
                                     </td>
                                     <td class="py-3 px-3 whitespace-nowrap text-slate-500 text-[11px] hidden sm:table-cell">
                                         {{ $ded->encoded_at->format('M d, h:i A') }}
-                                        <span class="block text-[10px] text-slate-400">by {{ $ded->encoder->username ?? 'HR' }}</span>
+                                        <span class="block text-[10px] text-slate-400">by {{ $ded->encoder?->employee?->full_name ?? $ded->encoder?->employee?->employee_no ?? 'HR' }}</span>
                                     </td>
                                 </tr>
                             @empty

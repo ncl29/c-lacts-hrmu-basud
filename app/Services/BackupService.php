@@ -123,11 +123,12 @@ class BackupService
         $zip->addFromString('database.sql', $sqlContent);
 
         // 2. Add Uploaded Attachments
-        $attachmentDirs = [
+        $attachmentDirs = array_unique([
+            FileStorageService::getBaseDir(),
             storage_path('app/public'),
             storage_path('app/documents'),
             storage_path('app/attachments'),
-        ];
+        ]);
 
         $filesCount = 0;
         foreach ($attachmentDirs as $dir) {

@@ -498,7 +498,7 @@
                             <td colspan="7" class="py-12 text-center text-slate-500 font-bold">
                                 <i class="ph ph-folder-open text-5xl mb-2 block text-slate-400"></i>
                                 <span class="text-base font-bold">No leave applications found for this employee.</span>
-                                <span class="block text-sm text-slate-500 mt-1">Click "File Leave Application" above to begin.</span>
+                                <span class="block text-sm text-slate-500 mt-1">Click "File Application" above to begin.</span>
                             </td>
                         </tr>
                     @endforelse
@@ -769,6 +769,7 @@
                     <span class="text-rose-500">*</span>
                 </label>
                 <input type="number" step="0.125" min="0.500" max="120.000" id="days_requested" name="days_requested" placeholder="e.g. 3.000 or 0.500" required class="w-full border-2 border-slate-300 rounded-xl px-3.5 py-2.5 text-sm sm:text-base font-mono font-bold text-slate-900 focus:border-gov-600 focus:ring-2 focus:ring-gov-600/20 bg-white min-h-[44px]">
+                <p id="days_requested_help" class="hidden text-xs text-slate-500 mt-1"></p>
             </div>
 
             <!-- 6.B Details of Leave Selector (Exact Match to CSC Form 6) -->
@@ -1425,12 +1426,16 @@
         // Automatic validation against Civil Service Commission rules before opening form
         if (subType === 'regular') {
             if (!regData.is_eligible) {
-                alert(`Ineligible for Regular Monetization: Pursuant to CSC Omnibus Rules (Rule XVI, Sec. 22), an employee must hold at least 15.000 Vacation Leave (VL) days. Your current certified VL balance is ${monetizationData.current_vl.toFixed(3)} days (need ${regData.remaining_needed.toFixed(3)} more days).`);
+                if (typeof window.showClactsToast === 'function') {
+                    window.showClactsToast(`Regular Monetization requires at least 15.000 VL days (need ${regData.remaining_needed.toFixed(3)} more).`, 'warning');
+                }
                 return;
             }
         } else if (subType === 'special') {
             if (!specData.is_eligible) {
-                alert(`Ineligible for Special Monetization: Pursuant to CSC Omnibus Rules (Rule XVI, Sec. 23), total combined VL and SL credits must strictly exceed 30.000 days. Your current combined balance is ${monetizationData.combined_total.toFixed(3)} days (need ${specData.remaining_needed.toFixed(3)} more days).`);
+                if (typeof window.showClactsToast === 'function') {
+                    window.showClactsToast(`Special Monetization requires > 30.000 combined VL + SL days (need ${specData.remaining_needed.toFixed(3)} more).`, 'warning');
+                }
                 return;
             }
         }
@@ -2076,7 +2081,9 @@
         if (data.success) {
             renderTimeline(data.data);
         } else {
-            alert('Could not load tracking information: ' + data.message);
+            if (typeof window.showClactsToast === 'function') {
+                window.showClactsToast(data.message || 'Could not load routing timeline.', 'error');
+            }
             closeTrackerModal();
         }
     }
@@ -2111,7 +2118,9 @@
             await fetchAndRenderTimeline(applicationId);
         } catch (err) {
             console.error(err);
-            alert('Failed to connect to tracking API.');
+            if (typeof window.showClactsToast === 'function') {
+                window.showClactsToast('Failed to load routing timeline.', 'error');
+            }
             closeTrackerModal();
         }
     }

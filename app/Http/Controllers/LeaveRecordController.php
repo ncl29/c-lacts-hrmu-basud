@@ -108,27 +108,44 @@ class LeaveRecordController extends Controller
         $employeeId = $user?->employee_id;
 
         if (!$employeeId) {
+            if ($user && $user->role === 'employee') {
+                abort(403, 'No employee profile is linked to this account.');
+            }
             $employeeId = Employee::eligibleForLeave()->first()?->employee_id ?? 1;
         }
 
-        $employee = Employee::with(['office', 'balances.leaveType'])->findOrFail($employeeId);
+        $employee = Employee::with('office')->findOrFail($employeeId);
+
+        if ($user && (int) $user->employee_id === (int) $employee->employee_id) {
+            $user->setRelation('employee', $employee);
+        }
 
         if ($employee->isJobOrder()) {
             return redirect()->route('employee.dashboard')
                 ->with('error', "Job Order personnel do not have Civil Service Form 41 leave records. Leave credits apply only to regular municipal personnel.");
         }
 
-        // Auto-seed initial baseline / earned Table II row if employee currently has zero records
-        $this->service->ensureInitialRecordForEmployee($employee, Auth::id() ?? 1);
-
-        $records = LeaveRecord::where('employee_id', $employee->employee_id)
+        $records = LeaveRecord::with(['application', 'leaveApplication'])
+            ->where('employee_id', $employee->employee_id)
             ->orderBy('row_order', 'asc')
             ->orderBy('created_at', 'asc')
             ->orderBy('record_id', 'asc')
             ->get();
 
+        // Auto-seed initial baseline / earned Table II row only if employee currently has zero records
+        if ($records->isEmpty()) {
+            $employee->load('balances.leaveType');
+            $this->service->ensureInitialRecordForEmployee($employee, Auth::id() ?? 1);
+            $records = LeaveRecord::with(['application', 'leaveApplication'])
+                ->where('employee_id', $employee->employee_id)
+                ->orderBy('row_order', 'asc')
+                ->orderBy('created_at', 'asc')
+                ->orderBy('record_id', 'asc')
+                ->get();
+        }
+
         // Ensure official release is registered in sequential registry
-        \App\Models\LeaveRecordRelease::getOrCreateForEmployee($employee->employee_id, Auth::id() ?? 1);
+        $release = \App\Models\LeaveRecordRelease::getOrCreateForEmployee($employee->employee_id, Auth::id() ?? 1);
 
         $latestRecord = $records->last();
         $latestVlBalance = $latestRecord?->vl_balance ?? '0';
@@ -139,6 +156,7 @@ class LeaveRecordController extends Controller
         return view('leave_record.employee_view', array_merge([
             'employee' => $employee,
             'records' => $records,
+            'release' => $release,
             'latestVlBalance' => $latestVlBalance,
             'latestSlBalance' => $latestSlBalance,
         ], $simplified));

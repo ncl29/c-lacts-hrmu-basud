@@ -1203,6 +1203,30 @@
                     });
                 }
 
+                window.showClactsToast = function(message, type = 'info') {
+                    const colors = {
+                        success: 'bg-emerald-900 border-emerald-500 text-white',
+                        warning: 'bg-amber-900 border-amber-400 text-white',
+                        error: 'bg-rose-900 border-rose-500 text-white',
+                        info: 'bg-slate-900 border-slate-600 text-white'
+                    };
+                    let container = document.getElementById('clactsGlobalToastContainer');
+                    if (!container) {
+                        container = document.createElement('div');
+                        container.id = 'clactsGlobalToastContainer';
+                        container.className = 'fixed bottom-4 right-4 z-[120] flex flex-col gap-2 max-w-sm w-[calc(100vw-32px)] pointer-events-none';
+                        document.body.appendChild(container);
+                    }
+                    const toast = document.createElement('div');
+                    toast.className = `pointer-events-auto px-4 py-3 rounded-xl border-l-4 shadow-xl text-xs sm:text-sm font-medium transition-opacity duration-200 ${colors[type] || colors.info}`;
+                    toast.innerText = message;
+                    container.appendChild(toast);
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => toast.remove(), 220);
+                    }, 4200);
+                };
+
                 // 1-Second Fingerprint Live Sync (polls lightweight version hash, only refreshes DOM when DB changes)
                 @auth
                 (function initClactsLiveSync() {
@@ -1228,10 +1252,30 @@
                         return false;
                     }
 
+                    let syncAbortController = null;
+                    let isNavigatingAway = false;
+
+                    window.addEventListener('beforeunload', function() {
+                        isNavigatingAway = true;
+                        if (syncAbortController) {
+                            try { syncAbortController.abort(); } catch (e) {}
+                        }
+                    });
+
+                    document.addEventListener('click', function(e) {
+                        const anchor = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                        if (anchor && anchor.getAttribute('target') !== '_blank' && !anchor.getAttribute('href').startsWith('#') && !anchor.hasAttribute('download')) {
+                            if (syncAbortController) {
+                                try { syncAbortController.abort(); } catch (err) {}
+                            }
+                        }
+                    }, true);
+
                     async function refreshPageDom() {
                         const currentMain = document.getElementById('clactsLiveMain');
-                        if (!currentMain) return;
+                        if (!currentMain || isNavigatingAway) return;
 
+                        syncAbortController = new AbortController();
                         const res = await fetch(window.location.href, {
                             method: 'GET',
                             headers: {
@@ -1239,7 +1283,8 @@
                                 'Accept': 'text/html'
                             },
                             credentials: 'same-origin',
-                            cache: 'no-store'
+                            cache: 'no-store',
+                            signal: syncAbortController.signal
                         });
 
                         if (!res.ok || res.redirected) return;
@@ -1271,7 +1316,7 @@
                             }
                         }
 
-                        const isCscView = document.getElementById('cscForm41View') && !document.getElementById('cscForm41View').classList.contains('hidden');
+                        const isCscView = document.getElementById('originalLedgerView') && !document.getElementById('originalLedgerView').classList.contains('hidden');
                         let activeYear = null;
                         document.querySelectorAll('.year-tab-btn').forEach(btn => {
                             if (btn.classList.contains('bg-white')) {
@@ -1301,19 +1346,21 @@
                     }
 
                     async function checkLiveSyncVersion() {
-                        if (isChecking || document.visibilityState !== 'visible') {
-                            scheduleNextSync(LIVE_SYNC_INTERVAL_MS);
+                        if (isChecking || isNavigatingAway || document.visibilityState !== 'visible') {
+                            if (!isNavigatingAway) scheduleNextSync(LIVE_SYNC_INTERVAL_MS);
                             return;
                         }
                         isChecking = true;
                         const startedAt = performance.now();
 
                         try {
+                            syncAbortController = new AbortController();
                             const res = await fetch("{{ route('api.live-sync') }}", {
                                 method: 'GET',
                                 headers: { 'Accept': 'application/json' },
                                 credentials: 'same-origin',
-                                cache: 'no-store'
+                                cache: 'no-store',
+                                signal: syncAbortController.signal
                             });
 
                             if (!res.ok || res.redirected) return;
@@ -1446,7 +1493,7 @@
             role="dialog"
             aria-modal="true"
             aria-labelledby="changePasswordModalTitle"
-            class="{{ session('password_modal_open') || (isset($errors) && ($errors->has('current_password') || $errors->has('new_password'))) ? '' : 'hidden' }} fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
+            class="{{ session('password_modal_open') ? '' : 'hidden' }} fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
             onclick="if(event.target === this) closeChangePasswordModal()"
         >
             <div class="bg-white rounded-2xl max-w-md w-full max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden transform transition-all my-auto" onclick="event.stopPropagation()">
@@ -1458,7 +1505,7 @@
                         </div>
                         <div>
                             <h3 id="changePasswordModalTitle" class="text-base font-bold text-white leading-tight">Change Password</h3>
-                            <p class="text-xs text-slate-300 font-mono">@<span>{{ Auth::user()->username }}</span> • Civil Service Account</p>
+                            <p class="text-xs text-slate-300 font-mono">{{ Auth::user()->employee->employee_no ?? Auth::user()->email ?? 'Civil Service Account' }}</p>
                         </div>
                     </div>
                     <button 

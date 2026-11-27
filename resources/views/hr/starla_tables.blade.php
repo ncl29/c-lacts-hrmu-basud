@@ -358,7 +358,7 @@
             <div class="border-b border-slate-200 pb-4 flex items-center justify-between">
                 <div>
                     <h3 class="text-base font-extrabold text-slate-900">
-                        ⭐ STARLA ⭐ Master Civil Service Conversion Reference Sheet
+                        STARLA Master Civil Service Conversion Reference Sheet
                     </h3>
                 </div>
             </div>
@@ -368,7 +368,7 @@
                 <div class="text-xs uppercase font-bold tracking-widest text-slate-600">Republic of the Philippines • Region V</div>
                 <div class="text-lg font-bold text-slate-900">Municipality of Basud, Camarines Norte</div>
                 <div class="text-sm font-semibold text-slate-800">Human Resource Management Unit (HRMU)</div>
-                <div class="text-xs text-slate-600 mt-1">⭐ STARLA ⭐ Civil Service Leave Deduction & Accrual Matrix (Tables II & IV)</div>
+                <div class="text-xs text-slate-600 mt-1">STARLA Civil Service Leave Deduction & Accrual Matrix (Tables II & IV)</div>
             </div>
 
             <!-- Section 1: Table IV Summary -->
@@ -458,7 +458,7 @@
                         </div>
                         <div>
                             <label for="calc_absent" class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                Absences (Table II/III)
+                                Absences (Table II)
                             </label>
                             <input 
                                 type="number" 
@@ -491,7 +491,7 @@
                         </div>
 
                         <div class="flex items-center justify-between text-slate-600">
-                            <span>Absence Deduction (Table II / III):</span>
+                            <span>Absence Deduction (Table II):</span>
                             <span class="font-mono font-bold text-gov-900" id="calcAbsenceEquiv">0.000 days</span>
                         </div>
 

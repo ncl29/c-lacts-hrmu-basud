@@ -372,7 +372,7 @@ echo method_field('DELETE');
                                 <span class="font-bold text-sm text-slate-700">No Leave Record Entries Found</span>
                             </td>
                         </tr>
-                    @endif
+                    @endforelse
                 </tbody>
                 <!-- Footer: Total Carried Forwarded (Matches Scanned Card) -->
                 <tfoot>
@@ -1415,8 +1415,8 @@ echo json_encode($employee->full_name . ' (' . $employee->control_no . ') - ' . 
                 if (recalcIcon) {
                     recalcIcon.className = 'ph ph-spinner text-sm text-gov-700 animate-spin';
                 }
-                if (recalculateLabel) {
-                    recalculateLabel.textContent = 'Recalculating...';
+                if (recalcLabel) {
+                    recalcLabel.textContent = 'Recalculating...';
                 }
                 if (loadingBackdrop) {
                     loadingBackdrop.classList.remove('hidden');

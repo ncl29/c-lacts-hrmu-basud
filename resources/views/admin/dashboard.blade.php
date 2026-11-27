@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="text-[10px] sm:text-[11px] text-gov-700 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
-                <span class="font-semibold">14 Offices</span>
+                <span class="font-semibold">{{ $totalOffices }} Offices</span>
                 <span class="text-slate-400 font-mono text-[10px]">LGU Basud</span>
             </div>
         </div>
@@ -148,7 +148,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100 bg-white">
-                        @foreach($users as $u)
+                        @forelse($users as $u)
                             <tr class="hover:bg-slate-50/80 transition">
                                 <td class="px-3 sm:px-4 py-3 font-mono font-bold text-gov-900">
                                     <div class="flex items-center gap-2">
@@ -231,7 +231,13 @@
                                     </button>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="px-4 py-8 text-center text-slate-500 text-xs">
+                                    No user accounts found.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -1393,8 +1399,8 @@
         if (audit) audit.classList.add('hidden');
         if (backups) backups.classList.add('hidden');
 
-        const inactiveBtnClass = 'px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer';
-        const activeBtnClass = 'px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-gov-700 text-gov-700 bg-white font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer';
+        const inactiveBtnClass = 'px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-transparent text-slate-600 hover:text-slate-900 flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0';
+        const activeBtnClass = 'px-3 sm:px-4 py-2 sm:py-2.5 rounded-t-lg transition border-b-2 border-gov-700 text-gov-700 bg-white font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer shrink-0';
 
         if (btnUsers) btnUsers.className = inactiveBtnClass;
         if (btnStarla) btnStarla.className = inactiveBtnClass;
@@ -1688,9 +1694,13 @@
     function copyChecksum(hash) {
         if (!hash) return;
         navigator.clipboard.writeText(hash).then(() => {
-            alert('Copied SHA-256 Checksum to clipboard:\n\n' + hash);
+            if (typeof window.showClactsToast === 'function') {
+                window.showClactsToast('SHA-256 checksum copied.', 'success');
+            }
         }).catch(() => {
-            prompt('Copy SHA-256 Checksum:', hash);
+            if (typeof window.showClactsToast === 'function') {
+                window.showClactsToast('Copy failed. Checksum: ' + hash, 'warning');
+            }
         });
     }
 

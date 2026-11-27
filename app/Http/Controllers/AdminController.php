@@ -239,7 +239,20 @@ class AdminController extends Controller
             if ($employee) {
                 $employeeData = [];
                 if (!empty($validated['full_name'])) {
-                    $employeeData['full_name'] = trim($validated['full_name']);
+                    $fullName = trim($validated['full_name']);
+                    $employeeData['full_name'] = $fullName;
+                    if (str_contains($fullName, ',')) {
+                        [$last, $rest] = array_map('trim', explode(',', $fullName, 2));
+                        $parts = preg_split('/\s+/', $rest) ?: [];
+                        $employeeData['last_name'] = $last;
+                        $employeeData['first_name'] = $parts[0] ?? $last;
+                        $employeeData['middle_name'] = count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : null;
+                    } else {
+                        $parts = preg_split('/\s+/', $fullName) ?: [];
+                        $employeeData['first_name'] = $parts[0] ?? $fullName;
+                        $employeeData['last_name'] = count($parts) > 1 ? end($parts) : $fullName;
+                        $employeeData['middle_name'] = count($parts) > 2 ? implode(' ', array_slice($parts, 1, -1)) : null;
+                    }
                 }
                 if (!empty($validated['employee_no'])) {
                     $normalizedNo = strtoupper(trim($validated['employee_no']));

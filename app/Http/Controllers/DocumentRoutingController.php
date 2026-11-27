@@ -485,30 +485,11 @@ class DocumentRoutingController extends Controller
 
         $authorizedUsers = $stationUsers;
 
-        // Resolve active operator:
-        // 1. Explicit query param ?user_id=...
-        // 2. Currently logged in user
-        // 3. Fallback to first authorized personnel
-        $clerkUserId = $request->query('user_id');
-        $currentClerk = null;
-
-        if ($clerkUserId) {
-            $currentClerk = $authorizedUsers->firstWhere('user_id', $clerkUserId);
-            if ($currentClerk) {
-                Auth::login($currentClerk);
-            }
-        }
-
-        if (!$currentClerk && $user && $user->canAccessQrScanner()) {
-            $currentClerk = $user;
-        }
+        // Strictly use the currently authenticated operator (never switch login session via query params)
+        $currentClerk = ($user && $user->canAccessQrScanner()) ? $user : null;
 
         if (!$currentClerk) {
-            $currentClerk = $authorizedUsers->first(fn($u) => $u->employee?->office_id == $currentOffice->office_id)
-                ?? $authorizedUsers->first();
-            if ($currentClerk) {
-                Auth::login($currentClerk);
-            }
+            abort(403, 'Access Restricted: Only authorized routing personnel may open the QR Document Scanner.');
         }
 
         // Recent routing logs recorded today / recently
@@ -722,40 +703,7 @@ class DocumentRoutingController extends Controller
             'remarks' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        // Resolve receiving operator: any authenticated personnel in the office can receive/route documents
-        if (!empty($validated['user_id']) && (!$user || $user->user_id != $validated['user_id'])) {
-            $candidate = User::with('employee')->find($validated['user_id']);
-            if ($candidate && $candidate->is_active) {
-                $user = $candidate;
-                Auth::login($user);
-            }
-        }
-
-        if (!$user) {
-            // Check if station office has any assigned personnel
-            $stationOfficeId = $validated['office_id'] ?? null;
-            if ($stationOfficeId) {
-                $stationReceiver = User::with('employee')
-                    ->whereHas('employee', fn($q) => $q->where('office_id', $stationOfficeId))
-                    ->where('is_active', true)
-                    ->first();
-
-                if ($stationReceiver) {
-                    $user = $stationReceiver;
-                    Auth::login($user);
-                }
-            }
-
-            // Fallback for demo/defense terminal
-            if (!$user) {
-                $user = User::with('employee')->where('is_active', true)->first();
-                if ($user) {
-                    Auth::login($user);
-                }
-            }
-        }
-
-        // Authentication Enforcement: Any authenticated active personnel can act as receiving/routing clerk for their office
+        // Authentication Enforcement: Strictly use the currently authenticated active user
         if (!$user || !$user->is_active) {
             return response()->json([
                 'success' => false,

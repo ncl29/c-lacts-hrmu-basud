@@ -331,7 +331,7 @@
                                 <span class="font-semibold text-slate-900 truncate">{{ $log->leaveApplication->employee->full_name ?? 'Employee' }}</span>
                             </div>
                             <div class="text-xs text-slate-400 truncate mt-1">
-                                {{ $log->office->office_name ?? 'Office' }} • {{ $log->scanner->username ?? 'Receiver' }}
+                                {{ $log->office->office_name ?? 'Office' }} • {{ $log->scanner?->employee?->full_name ?? $log->scanner?->employee?->employee_no ?? 'Receiver' }}
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -539,7 +539,6 @@
         if (!decodedText) return;
         
         let cleanCode = decodedText.trim();
-        console.log("Raw QR Code Scanned:", cleanCode);
 
         // Flash target box green
         const box = document.getElementById('cameraPreviewBox');
@@ -582,13 +581,6 @@
         } finally {
             event.target.value = '';
         }
-    }
-
-    function testSampleCode(code) {
-        const input = document.getElementById('reference_code');
-        input.value = code;
-        stopCameraScanner();
-        lookupReference();
     }
 
     function fillReference(code) {

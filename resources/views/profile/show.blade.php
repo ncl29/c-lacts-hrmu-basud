@@ -132,8 +132,8 @@
 
                 <div class="p-5 space-y-4 text-xs">
                     <div>
-                        <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Username</div>
-                        <div class="text-sm font-bold text-slate-900 mt-0.5 font-mono">@<span>{{ $user->username }}</span></div>
+                        <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">Employee ID</div>
+                        <div class="text-sm font-bold text-slate-900 mt-0.5 font-mono">{{ $user->employee?->employee_no ?? 'Not assigned' }}</div>
                     </div>
 
                     <div>

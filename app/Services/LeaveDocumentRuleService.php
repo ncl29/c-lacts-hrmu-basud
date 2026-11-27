@@ -133,11 +133,6 @@ class LeaveDocumentRuleService
                         'required' => true,
                         'leave_title' => 'Sick Leave',
                         'reason' => "Application is accompanied by medical certificate due to: {$triggerStr}.",
-                        'documents' => [
-                            'Medical Certificate filled out and signed by attending physician (with PTR/license number)',
-                            'Affidavit executed by the applicant (strictly in case medical consultation was not availed of)',
-                            $isInHospital ? 'Hospital Clinical Summary / Discharge Order (for in-hospital confinement)' : null,
-                        ],
                         'documents' => array_values(array_filter([
                             'Medical Certificate filled out and signed by attending physician (with PTR/license number)',
                             'Affidavit executed by applicant (only if medical consultation was not availed of, pursuant to CSC instructions)',

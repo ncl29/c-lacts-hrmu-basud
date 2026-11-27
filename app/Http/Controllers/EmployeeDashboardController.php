@@ -47,13 +47,23 @@ class EmployeeDashboardController extends Controller
 
         // RBAC Isolation: Standard employees are strictly restricted to their own employee profile
         if ($user && $user->role === 'employee') {
-            $employeeId = $user->employee_id ?? 1;
+            if (!$user->employee_id) {
+                abort(403, 'No employee profile is linked to this account.');
+            }
+            $employeeId = $user->employee_id;
         } else {
             // Administrators can review other employee ledgers
-            $employeeId = $request->query('employee_id') ?? $user?->employee_id ?? 1;
+            $employeeId = $request->query('employee_id') ?? $user?->employee_id;
+            if (!$employeeId) {
+                $employeeId = Employee::eligibleForLeave()->value('employee_id') ?? 1;
+            }
         }
 
         $employee = Employee::with(['office', 'balances.leaveType'])->findOrFail($employeeId);
+
+        if ($user && (int) $user->employee_id === (int) $employee->employee_id) {
+            $user->setRelation('employee', $employee);
+        }
 
         $currentYear = Carbon::now()->year;
 
@@ -62,12 +72,42 @@ class EmployeeDashboardController extends Controller
             ->where('year', $currentYear)
             ->keyBy(fn($b) => $b->leaveType->code);
 
-        // Fetch available leave types for filing
+        // Fetch available leave types once
         $leaveTypes = LeaveType::orderBy('type_name', 'asc')->get();
+
+        // Fetch employee's leave applications & leave records ONCE and reuse across usage, table, timelines, and reminders
+        $allEmployeeApps = LeaveApplication::with([
+            'leaveType',
+            'currentLocation',
+            'latestRoutingLog.office',
+            'routingLogs.office',
+            'routingLogs.scanner.employee',
+            'attachments.verifiedBy.employee',
+        ])
+        ->where('employee_id', $employee->employee_id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        foreach ($allEmployeeApps as $empApp) {
+            $empApp->setRelation('employee', $employee);
+        }
+
+        $employeeRecords = LeaveRecord::with('leaveApplication.leaveType')
+            ->where('employee_id', $employee->employee_id)
+            ->orderBy('row_order', 'asc')
+            ->orderBy('created_at', 'asc')
+            ->orderBy('record_id', 'asc')
+            ->get();
 
         // Comprehensive calculation of leaves taken by the employee across both
         // official CS Form 41 leave records and active leave applications
-        $leaveUsage = $this->getEmployeeLeaveUsage($employee->employee_id, $currentYear);
+        $leaveUsage = $this->getEmployeeLeaveUsage(
+            $employee->employee_id,
+            $currentYear,
+            $leaveTypes->keyBy('code'),
+            $employeeRecords,
+            $allEmployeeApps->whereNotIn('status', ['Disapproved', 'Cancelled'])->values()
+        );
         $usedByCode = $leaveUsage['usedByCode'];
         $takenItems = $leaveUsage['takenItems'];
 
@@ -90,38 +130,36 @@ class EmployeeDashboardController extends Controller
             ]];
         });
 
-        // Fetch personal leave applications ordered by recent (eager-load routing logs for instant 0ms timeline modal)
-        $applications = LeaveApplication::with([
-            'employee.office',
-            'leaveType',
-            'currentLocation',
-            'latestRoutingLog.office',
-            'routingLogs.office',
-            'routingLogs.scanner.employee',
-            'attachments.verifiedBy.employee',
-        ])
-        ->where('employee_id', $employee->employee_id)
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+        // Paginate in-memory for table view and preload timeline payloads (0ms timeline modal)
+        $perPage = 10;
+        $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
+        $applications = new \Illuminate\Pagination\LengthAwarePaginator(
+            $allEmployeeApps->forPage($currentPage, $perPage)->values(),
+            $allEmployeeApps->count(),
+            $perPage,
+            $currentPage,
+            [
+                'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
+                'query' => $request->query(),
+            ]
+        );
 
         $routingController = app(DocumentRoutingController::class);
         $preloadedTimelines = $applications->getCollection()->mapWithKeys(function ($app) use ($routingController) {
             return [$app->application_id => $routingController->buildApplicationTimelinePayload($app)];
         });
 
-        // Fetch on-screen reminders (upcoming leave start dates and expiring 7-day cancellation windows)
-        $reminders = $this->getEmployeeReminders($employee->employee_id);
+        // Compute on-screen reminders using already-loaded applications
+        $reminders = $this->getEmployeeReminders(
+            $employee->employee_id,
+            $allEmployeeApps->whereNotIn('status', ['Cancelled', 'Disapproved'])->sortBy('date_from')->values()
+        );
 
         // Fetch CSC Form 6 rules map for supporting document auto-determination
         $leaveDocRules = LeaveDocumentRuleService::getClientRulesMap();
 
-        // Calculate Civil Service Commission Monetization Eligibility & Limits:
-        // Automatically synced with the employee's CS Form No. 41 leave ledger
-        $latestRecord = LeaveRecord::where('employee_id', $employee->employee_id)
-            ->orderBy('row_order', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->orderBy('record_id', 'desc')
-            ->first();
+        // Calculate Civil Service Commission Monetization Eligibility & Limits from already-loaded records
+        $latestRecord = $employeeRecords->last();
 
         $currentVlBalance = $latestRecord?->vl_balance !== null 
             ? (float) $latestRecord->vl_balance 
@@ -523,7 +561,6 @@ class EmployeeDashboardController extends Controller
             $successMsg = "Leave Application {$referenceCode} successfully filed! You may now print your pre-filled CS Form 6.";
             if ($attachedCount > 0) {
                 $successMsg .= " ({$attachedCount} supporting document" . ($attachedCount > 1 ? 's' : '') . " uploaded and queued for HRMU verification).";
-                $successMsg .= " ({$attachedCount} supporting document" . ($attachedCount > 1 ? 's' : '') . " uploaded).";
             }
 
             DB::afterCommit(function () use ($application, $employee, $routingRemarks) {
@@ -550,16 +587,21 @@ class EmployeeDashboardController extends Controller
      * - 'usedByCode': map of leave type code => total days taken
      * - 'takenItems': list of itemized leave events taken by the employee
      */
-    public function getEmployeeLeaveUsage(int $employeeId, ?int $year = null): array
-    {
+    public function getEmployeeLeaveUsage(
+        int $employeeId,
+        ?int $year = null,
+        $preloadedLeaveTypes = null,
+        $preloadedRecords = null,
+        $preloadedApplications = null
+    ): array {
         $year = $year ?? Carbon::now()->year;
-        $leaveTypes = LeaveType::all()->keyBy('code');
+        $leaveTypes = $preloadedLeaveTypes ?? LeaveType::all()->keyBy('code');
 
-        $records = LeaveRecord::with('leaveApplication.leaveType')
+        $records = $preloadedRecords ?? LeaveRecord::with('leaveApplication.leaveType')
             ->where('employee_id', $employeeId)
             ->get();
 
-        $applications = LeaveApplication::with('leaveType')
+        $applications = $preloadedApplications ?? LeaveApplication::with('leaveType')
             ->where('employee_id', $employeeId)
             ->whereNotIn('status', ['Disapproved', 'Cancelled'])
             ->get();
@@ -713,12 +755,12 @@ class EmployeeDashboardController extends Controller
      *
      * Note: Formatted for on-screen dashboard presentation, structured for upcoming automated email notifications.
      */
-    public function getEmployeeReminders(int $employeeId): array
+    public function getEmployeeReminders(int $employeeId, $preloadedActiveApps = null): array
     {
         $now = Carbon::now();
         $today = Carbon::today();
 
-        $activeApps = LeaveApplication::with(['leaveType', 'currentLocation'])
+        $activeApps = $preloadedActiveApps ?? LeaveApplication::with(['leaveType', 'currentLocation'])
             ->where('employee_id', $employeeId)
             ->whereNotIn('status', ['Cancelled', 'Disapproved'])
             ->orderBy('date_from', 'asc')

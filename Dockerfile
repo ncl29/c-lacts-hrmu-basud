@@ -38,5 +38,5 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 EXPOSE 8000
 
-# Container entrypoint: generate key, cache env config, run pending migrations, start server
-CMD ["sh", "-c", "php artisan key:generate --force && php artisan config:clear && php artisan config:cache && php artisan migrate --force && php artisan serve --no-reload --host=0.0.0.0 --port=${PORT}"]
+# Container entrypoint: preserve existing APP_KEY if set, cache env config, run pending migrations, start server
+CMD ["sh", "-c", "([ -n \"$APP_KEY\" ] || php artisan key:generate --force) && php artisan config:clear && php artisan config:cache && php artisan migrate --force && php artisan serve --no-reload --host=0.0.0.0 --port=${PORT}"]
