@@ -156,16 +156,16 @@
             </div>
 
             <!-- Total Available Balance Card -->
-            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-indigo-600 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
+            <div class="bg-white rounded-xl shadow-xs border border-slate-200 border-t-4 border-t-slate-700 p-3 sm:p-5 space-y-2 flex flex-col justify-between hover:shadow-md transition">
                 <div>
                     <div class="flex items-center justify-between gap-1">
-                        <span class="text-[10px] sm:text-xs font-bold text-indigo-900 uppercase tracking-wider block font-mono truncate">Total Paid Leave</span>
-                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-indigo-50 text-indigo-800 border border-indigo-200 font-mono shrink-0">VL + SL</span>
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-800 uppercase tracking-wider block font-mono truncate">Total Paid Leave</span>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200 font-mono shrink-0">VL + SL</span>
                     </div>
                     <div class="mt-1">
                         <div class="text-[10px] sm:text-xs text-slate-500 font-medium">Combined Balance</div>
                         <div class="flex items-baseline gap-1 mt-0.5">
-                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-indigo-950 tabular-nums">
+                            <span class="text-xl min-[400px]:text-2xl sm:text-3xl font-black font-mono text-slate-900 tabular-nums">
                                 {{ number_format((float) ($totalAvailableBalance ?? 0), 3) }}
                             </span>
                             <span class="text-[10px] sm:text-xs font-bold text-slate-500">days</span>
@@ -485,7 +485,7 @@
                     <thead>
                         <!-- Level 1 Header -->
                         <tr class="bg-slate-900 text-slate-100 border-b border-slate-800 text-center font-bold font-mono">
-                            <th rowspan="2" class="px-3 py-3 border-r border-slate-800 min-w-[100px] text-left uppercase tracking-wider text-xs">PERIOD</th>
+                            <th rowspan="2" class="sticky left-0 z-10 bg-slate-900 px-3 py-3 border-r border-slate-800 min-w-[100px] text-left uppercase tracking-wider text-xs">PERIOD</th>
                             <th rowspan="2" class="px-3 py-3 border-r border-slate-800 min-w-[140px] text-left uppercase tracking-wider text-xs">PARTICULAR</th>
                             
                             <!-- Vacation Leave Group -->
@@ -529,7 +529,7 @@
                             <tr class="transition font-sans hover:bg-slate-50 {{ $isEarned || $isBaseline ? 'border-t border-slate-300' : '' }} {{ $loop->iteration % 2 === 0 ? 'bg-slate-50/40' : 'bg-white' }}">
                                 
                                 <!-- Col 1: Period -->
-                                <td class="px-3 py-2.5 border-r border-slate-200 whitespace-nowrap text-xs sm:text-sm font-mono {{ $isEarned || $isBaseline ? 'font-black text-slate-950' : 'font-normal text-slate-600 pl-5' }}">
+                                <td class="sticky left-0 z-10 bg-white px-3 py-2 border-r border-slate-200 whitespace-nowrap text-xs sm:text-sm font-mono {{ $isEarned || $isBaseline ? 'font-bold text-slate-950' : 'font-normal text-slate-600 pl-5' }}">
                                     {{ $rec->period }}
                                 </td>
 

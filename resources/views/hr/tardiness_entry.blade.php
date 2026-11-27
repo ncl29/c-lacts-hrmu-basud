@@ -140,7 +140,7 @@
                         </div>
                         <div class="flex items-center gap-1.5 shrink-0 text-[10px] font-mono">
                             <span id="cardVlBadge" class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold border border-emerald-200" title="Certified Vacation Leave balance">VL: 0.000</span>
-                            <span id="cardSlBadge" class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-semibold border border-indigo-200" title="Certified Sick Leave balance">SL: 0.000</span>
+                            <span id="cardSlBadge" class="px-2 py-0.5 rounded bg-gov-100 text-gov-800 font-semibold border border-gov-200" title="Certified Sick Leave balance">SL: 0.000</span>
                         </div>
                     </div>
 

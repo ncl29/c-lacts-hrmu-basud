@@ -198,7 +198,7 @@
                 <thead>
                     <!-- Level 1 Header -->
                     <tr class="bg-slate-900 text-slate-100 border-b border-slate-800 text-center font-bold font-mono">
-                        <th rowspan="2" class="px-3 py-3 border-r border-slate-800 min-w-[100px] text-left uppercase tracking-wider text-xs">PERIOD</th>
+                        <th rowspan="2" class="sticky left-0 z-10 bg-slate-900 px-3 py-3 border-r border-slate-800 min-w-[100px] text-left uppercase tracking-wider text-xs">PERIOD</th>
                         <th rowspan="2" class="px-3 py-3 border-r border-slate-800 min-w-[140px] text-left uppercase tracking-wider text-xs">PARTICULAR</th>
                         
                         <!-- Vacation Leave Group -->
@@ -245,7 +245,7 @@ $partUpper = strtoupper(trim((string)($rec->particular ?? '')));
                         <tr class="transition font-sans hover:bg-slate-50 {{ $isEarned || $isBaseline ? 'border-t border-slate-300' : '' }} {{ $loop->iteration % 2 === 0 ? 'bg-slate-50/40' : 'bg-white' }}">
                             
                             <!-- Col 1: Period -->
-                            <td class="px-3 py-2.5 border-r border-slate-200 whitespace-nowrap {{ $isEarned || $isBaseline ? 'font-black text-slate-950 text-xs sm:text-sm font-mono' : 'font-normal text-slate-700 pl-4 sm:pl-5 text-xs font-mono' }}">
+                            <td class="sticky left-0 z-10 bg-white px-3 py-2 border-r border-slate-200 whitespace-nowrap {{ $isEarned || $isBaseline ? 'font-bold text-slate-950 text-xs sm:text-sm font-mono' : 'font-normal text-slate-700 pl-4 sm:pl-5 text-xs font-mono' }}">
                                 {{ $rec->period }}
 
                             </td>
@@ -795,9 +795,9 @@ $daysNum = preg_replace('/[^0-9]/', '', $item->input_value);
                                 {{ $item->input_value }}
 
                                 @if($daysNum == '15')
-                                    <span class="text-[10px] text-sky-700 bg-sky-100 px-1.5 py-0.2 rounded font-sans ml-1">Half Month</span>
+                                    <span class="text-[10px] text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded font-sans ml-1">Half Month</span>
                                 @elseif($daysNum == '30')
-                                    <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded font-sans ml-1">Full Month</span>
+                                    <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-sans ml-1">Full Month</span>
                                 @endif
                             </td>
                             <td class="px-3 py-1.5 text-right font-bold text-emerald-700">{{ $item->day_equivalent }}</td>
@@ -1207,7 +1207,7 @@ echo json_encode($employee->full_name . ' (' . $employee->control_no . ') - ' . 
                                 ${highlightMatch(emp.name, query)}
                             </div>
                             <div class="text-[11px] text-slate-500 truncate flex items-center gap-1.5 mt-0.5">
-                                <span class="font-mono text-slate-700 bg-slate-100 px-1.5 py-0.2 rounded font-semibold text-[10px]">
+                                <span class="font-mono text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded font-semibold text-[10px]">
                                     ${highlightMatch(emp.no, query)}
                                 </span>
                                 <span>•</span>

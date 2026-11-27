@@ -233,9 +233,9 @@
                                             <span class="font-mono font-bold text-slate-800 w-8 text-right">{{ $minVal }}</span>
                                             <span class="text-slate-400 text-[11px] font-mono">min{{ $minVal > 1 ? 's' : '' }}</span>
                                             @if($minVal === 30)
-                                                <span class="text-[9px] font-bold px-1.5 py-0.2 bg-amber-200 text-amber-900 rounded font-mono">.062</span>
+                                                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-amber-200 text-amber-900 rounded font-mono">.062</span>
                                             @elseif($minVal === 60)
-                                                <span class="text-[9px] font-bold px-1.5 py-0.2 bg-gov-200 text-gov-900 rounded font-mono">1 hr</span>
+                                                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-gov-200 text-gov-900 rounded font-mono">1 hr</span>
                                             @endif
                                         </div>
                                         <div class="font-mono font-extrabold text-gov-900 text-xs text-right">
@@ -292,7 +292,7 @@
                                         <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-emerald-800">
                                             {{ number_format($dayRow->day_equivalent, 3) }}
                                         </td>
-                                        <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-gov-800">
                                             {{ number_format($dayRow->day_equivalent, 3) }}
                                         </td>
                                         <td class="px-2 sm:px-4 py-2 font-mono font-extrabold text-right text-slate-900">
@@ -336,7 +336,7 @@
                                         <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-emerald-800">
                                             {{ number_format($dayRow->day_equivalent, 3) }}
                                         </td>
-                                        <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-indigo-800">
+                                        <td class="px-2 sm:px-4 py-2 font-mono font-bold text-right text-gov-800">
                                             {{ number_format($dayRow->day_equivalent, 3) }}
                                         </td>
                                         <td class="px-2 sm:px-4 py-2 font-mono font-extrabold text-right text-slate-900">

@@ -5,24 +5,24 @@
 @section('content')
 <div class="space-y-6">
 
-    <!-- Top Executive Banner -->
-    <div class="bg-gov-navy rounded-xl p-4 sm:p-6 text-white shadow-xs border border-slate-800">
+    <!-- Top Executive Header (Unified White Card) -->
+    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-xs border border-slate-200">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white text-xl sm:text-2xl shrink-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gov-50 border border-gov-200 flex items-center justify-center text-gov-700 text-xl sm:text-2xl shrink-0">
                     <i class="ph ph-shield-star"></i>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <h1 class="text-lg sm:text-2xl font-bold text-white leading-tight">
+                    <h1 class="text-lg sm:text-2xl font-bold text-slate-900 leading-tight">
                         Governance & Security Control Center
                     </h1>
                 </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-2 text-xs shrink-0">
-                <div class="bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 text-left sm:text-right w-full sm:w-auto">
-                    <div class="text-[10px] text-slate-400 font-mono">Calendar Year</div>
-                    <div class="text-xs font-mono font-bold text-white">{{ $currentYear }} Active</div>
+                <div class="bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 text-left sm:text-right w-full sm:w-auto">
+                    <div class="text-[10px] text-slate-500 font-mono">Calendar Year</div>
+                    <div class="text-xs font-mono font-bold text-slate-900">{{ $currentYear }} Active</div>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
         </div>
 
         <!-- Metric 4: System User Accounts -->
-        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-purple-600 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
+        <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-slate-700 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition">
             <div>
                 <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1 truncate">RBAC User Accounts</div>
                 <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums">
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="text-[10px] sm:text-[11px] text-slate-600 mt-2 sm:mt-3 pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1">
-                <span class="text-purple-700 font-semibold font-mono">{{ $usersByRole['admin'] ?? 0 }} Admin • {{ $usersByRole['hrmu_staff'] ?? 0 }} HR</span>
+                <span class="text-gov-700 font-semibold font-mono">{{ $usersByRole['admin'] ?? 0 }} Admin • {{ $usersByRole['hrmu_staff'] ?? 0 }} HR</span>
                 <span class="text-slate-400 font-mono text-[10px]">{{ $usersByRole['routing_clerk'] ?? 0 }} Receivers</span>
             </div>
         </div>
@@ -139,10 +139,10 @@
                     <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
                         <tr>
                             <th class="px-3 sm:px-4 py-3 text-left">Civil Service User</th>
-                            <th class="px-3 sm:px-4 py-3 text-left">Employee ID</th>
+                            <th class="px-3 sm:px-4 py-3 text-left hidden sm:table-cell">Employee ID</th>
                             <th class="px-3 sm:px-4 py-3 text-left">Employee Name & Position</th>
                             <th class="px-4 py-3 text-left hidden md:table-cell">Assigned Station</th>
-                            <th class="px-3 sm:px-4 py-3 text-center">RBAC Role</th>
+                            <th class="px-3 sm:px-4 py-3 text-center hidden sm:table-cell">RBAC Role</th>
                             <th class="px-4 py-3 text-center hidden sm:table-cell">Account Status</th>
                             <th class="px-3 sm:px-4 py-3 text-right">Actions</th>
                         </tr>
@@ -163,7 +163,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-3 sm:px-4 py-3 font-mono">
+                                <td class="px-3 sm:px-4 py-3 font-mono hidden sm:table-cell">
                                     <span class="inline-block px-2.5 py-1 rounded-lg text-xs font-bold tracking-wide bg-slate-100 text-slate-900 border border-slate-200 shadow-2xs">
                                         {{ $u->employee->employee_no ?? 'ID: ' . $u->employee_id }}
                                     </span>
@@ -180,7 +180,7 @@
                                 <td class="px-4 py-3 text-slate-700 hidden md:table-cell">
                                     {{ $u->employee->office->office_name ?? 'Municipal Office' }}
                                 </td>
-                                <td class="px-3 sm:px-4 py-3 text-center">
+                                <td class="px-3 sm:px-4 py-3 text-center hidden sm:table-cell">
                                     @if($u->role === 'admin')
                                         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
                                             Administrator
@@ -487,7 +487,7 @@
                             <tr class="hover:bg-slate-50/80 transition">
                                 <td class="px-4 py-3">
                                     <div class="flex items-center gap-2.5">
-                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 {{ $b['type'] === 'Full System Archive' ? 'bg-purple-100 text-purple-700' : 'bg-emerald-100 text-emerald-700' }}">
+                                        <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 {{ $b['type'] === 'Full System Archive' ? 'bg-gov-100 text-gov-700' : 'bg-emerald-100 text-emerald-700' }}">
                                             <i class="ph {{ $b['icon'] }} text-base"></i>
                                         </div>
                                         <div class="min-w-0">
@@ -495,7 +495,7 @@
                                                 {{ $b['filename'] }}
                                             </div>
                                             <div class="flex items-center gap-1.5 mt-0.5">
-                                                <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-bold {{ $b['type'] === 'Full System Archive' ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
+                                                <span class="inline-flex items-center px-1.5 py-1 rounded text-[10px] font-bold {{ $b['type'] === 'Full System Archive' ? 'bg-gov-50 text-gov-700 border border-gov-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200' }}">
                                                     {{ $b['type'] }}
                                                 </span>
                                                 <span class="text-[10px] font-mono text-slate-400 uppercase">{{ $b['format'] }}</span>

@@ -293,7 +293,7 @@
 
                     <!-- Email Security Verification (OTP) Section - Initially Hidden -->
                     <!-- Appears ONLY after user clicks "Verify & Update Password" and fields match -->
-                    <div id="otpVerificationContainer" class="{{ $errors->has('otp_code') ? '' : 'hidden' }} p-4.5 bg-slate-50 border-2 border-amber-400/60 rounded-2xl space-y-3 animate-in fade-in zoom-in-95 duration-200">
+                    <div id="otpVerificationContainer" class="{{ $errors->has('otp_code') ? '' : 'hidden' }} p-4 bg-slate-50 border border-amber-400/60 rounded-xl space-y-3 animate-in fade-in zoom-in-95 duration-200">
                         <div class="flex items-start justify-between gap-3">
                             <div class="flex items-start gap-2.5">
                                 <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center font-bold shrink-0 mt-0.5">

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
-                <a href="{{ route('forms.form6.print', session('new_application_id')) }}" target="_blank" class="w-full sm:w-auto justify-center px-5 py-2.5 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-sm font-semibold shadow-xs flex items-center gap-2 transition min-h-[42px]">
+                <a href="{{ route('forms.form6.print', session('new_application_id')) }}" target="_blank" class="w-full sm:w-auto justify-center px-5 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-sm font-semibold shadow-xs flex items-center gap-2 transition min-h-11">
                     <i class="ph ph-printer text-base"></i>
                     <span>Open & Print CS Form 6</span>
                 </a>
@@ -58,7 +58,7 @@
             @if(Auth::user() && in_array(Auth::user()->role, ['admin', 'hrmu_staff']))
                 <form method="GET" action="{{ route('employee.dashboard') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
                     <label for="emp_switch" class="text-xs font-bold text-slate-700 whitespace-nowrap shrink-0">Review Ledger:</label>
-                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border-2 border-slate-300 rounded-lg px-3 py-2 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 w-full sm:flex-1 lg:w-72 truncate min-w-0 max-w-full">
+                    <select id="emp_switch" name="employee_id" onchange="this.form.submit()" class="text-xs sm:text-sm border border-slate-300 rounded-lg px-3 py-2 bg-slate-50 text-slate-900 font-bold focus:ring-2 focus:ring-gov-600 w-full sm:flex-1 lg:w-72 truncate min-w-0 max-w-full min-h-10">
                         @foreach($allEmployees as $emp)
                             <option value="{{ $emp->employee_id }}" {{ $emp->employee_id == $employee->employee_id ? 'selected' : '' }}>
                                 {{ $emp->full_name }} ({{ $emp->office->office_name ?? 'LGU' }})
@@ -69,17 +69,17 @@
             @endif
 
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
-                <button type="button" onclick="openLimitsModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                <button type="button" onclick="openLimitsModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border border-slate-300 min-h-10 sm:min-h-11 w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
                     <i class="ph ph-scales text-base sm:text-lg text-slate-700"></i>
                     <span>Check Limits</span>
                 </button>
 
-                <a href="{{ route('employee.leave-record') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border-2 border-slate-300 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                <a href="{{ route('employee.leave-record') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 text-slate-800 rounded-lg text-xs sm:text-sm font-bold shadow-2xs transition cursor-pointer border border-slate-300 min-h-10 sm:min-h-11 w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
                     <i class="ph ph-notebook text-base sm:text-lg"></i>
                     <span>Leave Record</span>
                 </a>
 
-                <button type="button" onclick="openFilingOptionModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-[40px] sm:min-h-[44px] w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
+                <button type="button" onclick="openFilingOptionModal()" class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gov-700 hover:bg-gov-800 text-white rounded-lg text-xs sm:text-sm font-bold shadow-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-gov-600 min-h-10 sm:min-h-11 w-full sm:flex-1 lg:flex-initial lg:w-auto whitespace-nowrap">
                     <i class="ph ph-plus-circle text-base sm:text-lg"></i>
                     <span>File Application</span>
                 </button>
@@ -91,7 +91,7 @@
         <!-- ======================================================================= -->
         <!-- ON-SCREEN ACTION REMINDERS: UPCOMING LEAVE & 7-WORKING-DAY CANCELLATION -->
         <!-- ======================================================================= -->
-        <div id="employeeRemindersSection" class="bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-xl border border-slate-200 p-4 shadow-2xs">
+        <div id="employeeRemindersSection" class="bg-white rounded-xl border border-slate-200 p-4 shadow-2xs">
             <div id="remindersHeader" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200">
                 <div class="flex items-start sm:items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-gov-100 text-gov-800 flex items-center justify-center font-bold shrink-0 mt-0.5 sm:mt-0">
@@ -285,11 +285,11 @@
             </div>
 
             <!-- Total Paid Leave Credits Card (VL + SL Combined) -->
-            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-indigo-600 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 border-t-4 border-t-slate-700 shadow-xs flex flex-col justify-between hover:shadow-md transition">
                 <div>
                     <div class="flex items-center justify-between gap-1 mb-1">
                         <span class="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider font-mono truncate">Total Paid Leave</span>
-                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">VL + SL</span>
+                        <span class="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 shrink-0">VL + SL</span>
                     </div>
                     <div class="text-xl min-[400px]:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 font-mono tracking-tight tabular-nums mt-1">
                         {{ number_format($monetizationInfo['combined_total'] ?? ((float)($balances->get('VL')?->balance ?? 0) + (float)($balances->get('SL')?->balance ?? 0)), 3) }}
@@ -297,7 +297,7 @@
                 </div>
                 <div class="text-[10px] min-[400px]:text-xs text-slate-500 mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between">
                     <span class="font-medium truncate">Combined Balance</span>
-                    <span class="text-indigo-700 font-bold font-mono shrink-0">+2.500/mo</span>
+                    <span class="text-slate-700 font-bold font-mono shrink-0">+2.500/mo</span>
                 </div>
             </div>
 
@@ -472,7 +472,7 @@
                                         href="{{ route('forms.form6.print', $app->application_id) }}" 
                                         target="_blank" 
                                         onclick="event.stopPropagation()"
-                                        class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800 border-2 border-slate-300 rounded-lg text-xs sm:text-sm font-bold transition cursor-pointer min-h-[38px]"
+                                        class="inline-flex items-center gap-1 px-3 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800 border border-slate-300 rounded-lg text-xs sm:text-sm font-bold transition cursor-pointer min-h-10"
                                         title="Open printable CS Form 6"
                                     >
                                         <i class="ph ph-printer text-base"></i>
@@ -483,7 +483,7 @@
                                         <button 
                                             type="button" 
                                             onclick="event.stopPropagation(); openCancelModal('{{ $app->application_id }}', '{{ $app->reference_code }}', '{{ $cancelDeadline }}', {{ $workdaysRemainingToCancel }}, '{{ $app->status }}')"
-                                            class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 border-2 border-rose-300 rounded-lg text-xs sm:text-sm font-bold transition cursor-pointer min-h-[38px]"
+                                            class="inline-flex items-center gap-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-300 rounded-lg text-xs sm:text-sm font-bold transition cursor-pointer min-h-10"
                                             title="Cancel application ({{ $workdaysRemainingToCancel }} working day{{ $workdaysRemainingToCancel > 1 ? 's' : '' }} left in 7-working-day window{{ $app->status === 'Approved' ? ' • Currently Approved' : '' }})"
                                         >
                                             <i class="ph ph-x-circle text-base text-rose-700"></i>
@@ -605,15 +605,15 @@
                     </div>
 
                     <!-- Sub-Option B: Special Monetization (50% or more) -->
-                    <div class="p-3 rounded-xl border bg-white transition {{ $monetizationInfo['special']['is_eligible'] ? 'border-purple-200 hover:border-purple-400 hover:bg-purple-50/40 cursor-pointer shadow-2xs' : 'border-slate-200 opacity-70 hover:border-rose-300 cursor-pointer' }}"
+                    <div class="p-3 rounded-xl border bg-white transition {{ $monetizationInfo['special']['is_eligible'] ? 'border-gov-200 hover:border-gov-400 hover:bg-gov-50/40 cursor-pointer shadow-2xs' : 'border-slate-200 opacity-70 hover:border-rose-300 cursor-pointer' }}"
                          onclick="chooseApplicationType('monetization_special')">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full {{ $monetizationInfo['special']['is_eligible'] ? 'bg-purple-600' : 'bg-slate-300' }}"></span>
+                                <span class="w-2 h-2 rounded-full {{ $monetizationInfo['special']['is_eligible'] ? 'bg-gov-700' : 'bg-slate-300' }}"></span>
                                 <span class="text-xs font-bold text-slate-900">Special Monetization (50% or more of VL & SL)</span>
                             </div>
                             @if($monetizationInfo['special']['is_eligible'])
-                                <span class="text-[10px] font-mono font-bold text-purple-800 bg-purple-100 px-2 py-0.5 rounded border border-purple-200">
+                                <span class="text-[10px] font-mono font-bold text-gov-800 bg-gov-100 px-2 py-0.5 rounded border border-gov-200">
                                     {{ number_format($monetizationInfo['special']['min_days'], 0) }} – {{ number_format($monetizationInfo['special']['max_days'], 0) }} days
                                 </span>
                             @else
@@ -1023,7 +1023,7 @@
                                     @if($isCredit)
                                         <span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-900 font-bold border border-blue-300">Cumulative</span>
                                     @elseif($allowance['period'] === 'per event')
-                                        <span class="px-2.5 py-1 rounded-full bg-purple-100 text-purple-900 font-bold border border-purple-300">Per Event</span>
+                                        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">Per Event</span>
                                     @else
                                         <span class="px-2.5 py-1 rounded-full bg-slate-200 text-slate-900 font-bold border border-slate-300">Annually</span>
                                     @endif
@@ -1118,14 +1118,14 @@
                     </div>
 
                     <!-- Special Monetization Card in Limits Modal -->
-                    <div class="p-3.5 rounded-xl border bg-white {{ $monetizationInfo['special']['is_eligible'] ? 'border-purple-300 ring-1 ring-purple-200 shadow-2xs' : 'border-slate-200 bg-slate-50/60' }} flex flex-col justify-between">
+                    <div class="p-3.5 rounded-xl border bg-white {{ $monetizationInfo['special']['is_eligible'] ? 'border-gov-300 ring-1 ring-gov-200 shadow-2xs' : 'border-slate-200 bg-slate-50/60' }} flex flex-col justify-between">
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
                                 <div class="flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full {{ $monetizationInfo['special']['is_eligible'] ? 'bg-purple-600' : 'bg-slate-300' }}"></span>
+                                    <span class="w-2 h-2 rounded-full {{ $monetizationInfo['special']['is_eligible'] ? 'bg-gov-700' : 'bg-slate-300' }}"></span>
                                     <span class="text-xs font-bold text-slate-900">Special Monetization</span>
                                 </div>
-                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {{ $monetizationInfo['special']['is_eligible'] ? 'bg-purple-100 text-purple-800 border border-purple-200' : 'bg-slate-200 text-slate-600' }}">
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded {{ $monetizationInfo['special']['is_eligible'] ? 'bg-gov-100 text-gov-800 border border-gov-200' : 'bg-slate-200 text-slate-600' }}">
                                     {{ $monetizationInfo['special']['is_eligible'] ? 'ELIGIBLE' : 'NOT ELIGIBLE' }}
                                 </span>
                             </div>
@@ -1150,7 +1150,7 @@
                                 <div class="flex items-center justify-between py-1">
                                     <span class="text-slate-700 font-semibold">Allowable Days:</span>
                                     @if($monetizationInfo['special']['is_eligible'])
-                                        <span class="font-mono font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
+                                        <span class="font-mono font-bold text-gov-700 bg-gov-50 px-2 py-0.5 rounded border border-gov-200">
                                             {{ number_format($monetizationInfo['special']['min_days'], 0) }} to {{ number_format($monetizationInfo['special']['max_days'], 0) }} days
                                         </span>
                                     @else
@@ -1162,7 +1162,7 @@
 
                         @if($monetizationInfo['special']['is_eligible'])
                             <div class="mt-3 pt-2 border-t border-slate-100 flex items-center justify-end text-[11px]">
-                                <button type="button" onclick="closeLimitsModal(); openMonetizationFilingModal('special')" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-purple-900 bg-purple-100 hover:bg-purple-200 border border-purple-300 rounded-lg transition cursor-pointer">
+                                <button type="button" onclick="closeLimitsModal(); openMonetizationFilingModal('special')" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-white bg-gov-700 hover:bg-gov-800 border border-gov-700 rounded-lg transition cursor-pointer">
                                     <i class="ph-bold ph-coins text-sm"></i>
                                     <span>Apply Special</span>
                                 </button>

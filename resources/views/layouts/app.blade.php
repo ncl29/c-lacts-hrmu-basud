@@ -394,7 +394,7 @@
             <div id="sidePanelBackdrop" onclick="toggleSidePanel()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-30 hidden md:hidden"></div>
 
             <!-- Side Panel (Desktop Fixed + Mobile Off-Canvas: Stationary while screen scrolls) -->
-            <aside id="sidePanel" class="fixed top-0 md:top-[65px] bottom-0 left-0 z-50 md:z-30 w-72 bg-slate-900 text-slate-200 border-r border-slate-800 shrink-0 flex flex-col justify-between transition-transform duration-200 ease-in-out -translate-x-full md:translate-x-0 h-full md:h-[calc(100vh-65px)] overflow-hidden">
+            <aside id="sidePanel" class="fixed top-0 md:top-16 bottom-0 left-0 z-50 md:z-30 w-72 bg-slate-900 text-slate-200 border-r border-slate-800 shrink-0 flex flex-col justify-between transition-transform duration-200 ease-in-out -translate-x-full md:translate-x-0 h-full md:h-[calc(100vh-64px)] overflow-hidden">
                 
                 <!-- Mobile Close Bar -->
                 <div class="md:hidden flex items-center justify-between p-3 border-b border-slate-800 bg-slate-950 shrink-0">
